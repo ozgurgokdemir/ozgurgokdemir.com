@@ -2,8 +2,11 @@
 module.exports = {
   singleQuote: true,
   astroAllowShorthand: true,
-  pluginSearchDirs: [__dirname],
-  plugins: [require.resolve('prettier-plugin-astro')],
+  pluginSearchDirs: false,
+  plugins: [
+    require.resolve('prettier-plugin-astro'),
+    require.resolve('prettier-plugin-tailwindcss'),
+  ],
   overrides: [
     {
       files: '*.astro',
