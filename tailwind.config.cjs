@@ -1,3 +1,5 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,astro,ts,tsx}'],
@@ -29,6 +31,10 @@ module.exports = {
     container: {
       center: true,
       padding: '2rem',
+    },
+    fontFamily: {
+      primary: ['InterVariable', 'Inter', ...fontFamily.sans],
+      secondary: ['Poppins', ...fontFamily.sans],
     },
     fontSize: {
       'heading-display': [

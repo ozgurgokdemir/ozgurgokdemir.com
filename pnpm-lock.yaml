@@ -2,6 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@astrojs/tailwind': ^3.1.3
+  '@fontsource-variable/inter': ^5.0.2
+  '@fontsource/poppins': ^5.0.2
   '@typescript-eslint/eslint-plugin': ^5.59.8
   '@typescript-eslint/parser': ^5.59.8
   astro: ^2.5.6
@@ -18,6 +20,8 @@ specifiers:
 
 dependencies:
   '@astrojs/tailwind': 3.1.3_3l6xl7sjv4hxk6cn4xv4ehwpsu
+  '@fontsource-variable/inter': 5.0.2
+  '@fontsource/poppins': 5.0.2
   astro: 2.5.6
   tailwindcss: 3.3.2
 
@@ -808,6 +812,20 @@ packages:
       }
     engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
     dev: true
+
+  /@fontsource-variable/inter/5.0.2:
+    resolution:
+      {
+        integrity: sha512-8b+AfzKPOnF+oHgPTpjILQxZUWTnccu/8saZHmMp9hVYcrYZAYZUmAhjCVdy77m19bnbWNVdeMfo63s7fjARPA==,
+      }
+    dev: false
+
+  /@fontsource/poppins/5.0.2:
+    resolution:
+      {
+        integrity: sha512-504RESq2qbyVxxpjP2TyVQODOWakuBHBD3AtYurtmNHosC4x+mjyOlRSdW2QjsILezlwFCnLkYuGUzYiV44sEg==,
+      }
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution:

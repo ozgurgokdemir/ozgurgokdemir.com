@@ -1,4 +1,7 @@
 ---
+import '@fontsource-variable/inter';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
 import '@/styles/globals.css';
 
 type Props = {
@@ -21,7 +24,7 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
   </head>
-  <body class="bg-primary text-body-base-400 text-neutral">
+  <body class="bg-primary font-primary text-body-base-400 text-neutral">
     <slot />
   </body>
 </html>
