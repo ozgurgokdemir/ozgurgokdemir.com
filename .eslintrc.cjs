@@ -49,6 +49,27 @@ module.exports = {
         ecmaVersion: 'latest',
       },
     },
+    {
+      files: ['*.mjs'],
+      env: {
+        node: true,
+      },
+      extends: ['eslint:recommended', 'prettier'],
+      parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 2015,
+      },
+    },
+    {
+      files: ['*.cjs'],
+      env: {
+        node: true,
+      },
+      extends: ['eslint:recommended', 'prettier'],
+      parserOptions: {
+        sourceType: 'script',
+        ecmaVersion: 2015,
+      },
+    },
   ],
-  ignorePatterns: ['*.config.mjs'],
 };

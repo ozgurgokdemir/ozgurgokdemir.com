@@ -1,0 +1,27 @@
+---
+import '@/styles/globals.css';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const {
+  title = 'Özgür Gökdemir',
+  description = "I'm a passionate frontend developer with a strong foundation in HTML, CSS, and JavaScript. I specialize in building responsive and performant web applications using modern technologies like React, Next.js, and TypeScript. I'm also passionate about UI/UX design because it allows me to create intuitive and visually appealing user experiences.",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body class="bg-primary text-body-base-400 text-neutral">
+    <slot />
+  </body>
+</html>

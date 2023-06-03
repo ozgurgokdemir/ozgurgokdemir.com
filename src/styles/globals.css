@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 233deg 100% 4%;
+    --color-accent: 153deg 60% 53%;
+    --color-neutral: 0deg 0% 100%;
+  }
+
+  :root[data-theme='light'] {
+    --color-primary: 0deg 0% 100%;
+    --color-accent: 153deg 60% 53%;
+    --color-neutral: 0deg 0% 0%;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  html[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
