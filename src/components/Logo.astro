@@ -1,0 +1,18 @@
+---
+import { Icon } from 'astro-icon';
+
+type Props = {
+  href: string;
+};
+
+const { href } = Astro.props;
+---
+
+<a {href} class="flex h-fit select-none items-center gap-2">
+  <Icon name="logo" alt="logo" class="h-6 text-accent md:h-[1.875rem]" />
+  <span
+    class="font-secondary text-label-xl-500 text-neutral md:text-heading-sm md:font-medium"
+  >
+    Özgür
+  </span>
+</a>

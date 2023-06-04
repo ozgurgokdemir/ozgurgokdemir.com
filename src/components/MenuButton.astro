@@ -1,0 +1,18 @@
+---
+import { Icon } from 'astro-icon';
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<button type="button" aria-label="Menu Button" class={className}>
+  <Icon
+    name="bars"
+    aria-hidden="true"
+    focusable="false"
+    class="h-6 text-neutral"
+  />
+</button>
