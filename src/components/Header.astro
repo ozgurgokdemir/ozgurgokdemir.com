@@ -1,0 +1,58 @@
+---
+import { Icon } from 'astro-icon';
+
+const links = [
+  { href: '#', title: 'Home' },
+  { href: '#projects', title: 'Projects' },
+  { href: '#skills', title: 'Skills' },
+  { href: '#blog', title: 'Blog' },
+];
+---
+
+<header class="sticky top-0 bg-primary/70 backdrop-blur-xl">
+  <nav
+    aria-label="Main Navigation"
+    class="container flex h-24 items-center justify-between"
+  >
+    <a href="#" class="flex h-fit select-none items-center gap-2">
+      <Icon name="logo" alt="logo" class="h-6 text-accent md:h-[1.875rem]" />
+      <span
+        class="font-secondary text-label-xl-500 text-neutral md:text-heading-sm md:font-medium"
+      >
+        Özgür
+      </span>
+    </a>
+    <button type="button" class="md:hidden">
+      <Icon name="bars" class="h-6 text-neutral" />
+    </button>
+    <ul class="hidden gap-8 md:flex">
+      {
+        links.map(({ href, title }) => (
+          <li>
+            <a
+              class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
+              {href}
+            >
+              {title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="hidden items-center gap-6 md:flex">
+      <button type="button" class="group overflow-hidden rounded-full">
+        <Icon
+          name="sun"
+          alt="theme toggle"
+          class="h-6 text-neutral/70 transition-colors duration-300 group-hover:text-neutral group-focus-visible:text-neutral"
+        />
+      </button>
+      <a
+        href="#contact"
+        class="flex h-8 items-center justify-center rounded-lg border border-neutral/10 bg-surface px-4 text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
+      >
+        Contact
+      </a>
+    </div>
+  </nav>
+</header>

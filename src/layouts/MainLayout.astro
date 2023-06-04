@@ -4,6 +4,8 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@/styles/globals.css';
 
+import Header from '@/components/Header.astro';
+
 type Props = {
   title?: string;
   description?: string;
@@ -25,6 +27,9 @@ const {
     <meta name="description" content={description} />
   </head>
   <body class="bg-primary font-primary text-body-base-400 text-neutral">
-    <slot />
+    <Header />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>

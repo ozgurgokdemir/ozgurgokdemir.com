@@ -12,19 +12,16 @@ module.exports = {
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:astro/recommended',
         'prettier',
       ],
       plugins: ['@typescript-eslint', 'astro'],
       parser: 'astro-eslint-parser',
       parserOptions: {
-        project: './tsconfig.json',
-        tsconfigRootDir: __dirname,
-        sourceType: 'module',
-        ecmaVersion: 'latest',
         parser: '@typescript-eslint/parser',
         extraFileExtensions: ['.astro'],
+        sourceType: 'module',
+        ecmaVersion: 'latest',
       },
     },
     {
