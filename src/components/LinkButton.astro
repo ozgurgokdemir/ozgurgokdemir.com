@@ -1,28 +1,57 @@
 ---
-import { twMerge } from 'tailwind-merge';
+import { Icon } from 'astro-icon';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 type Props = {
   href: string;
   text: string;
+  icon?: string;
+  type?: 'default' | 'accent';
+  size?: 'medium' | 'large';
   class?: string;
 };
 
-const { href, text, class: className } = Astro.props;
+const {
+  href,
+  text,
+  icon,
+  type = 'default',
+  size = 'large',
+  class: className,
+} = Astro.props;
 ---
 
 <a
   {href}
-  data-button
-  class={twMerge(
-    'h-8 relative rounded-lg p-px bg-neutral/10 text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral inline-block focus-visible:text-neutral',
-    'before:absolute before:w-full before:inset-0 before:z-10 before:h-full before:rounded-lg before:bg-[radial-gradient(4rem_circle_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 before:hover:opacity-100',
-    'after:absolute after:w-full after:inset-0 after:-z-10 after:h-full after:rounded-lg after:bg-[radial-gradient(3rem_circle_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30',
+  data-button={type === 'default'}
+  class={twJoin(
+    'relative inline-block rounded-lg p-px transition-colors duration-300',
+    'before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-lg before:bg-[radial-gradient(circle_4rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 before:hover:opacity-100',
+    'after:absolute after:inset-0 after:-z-10 after:h-full after:w-full after:rounded-lg after:bg-[radial-gradient(circle_3rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30',
+    type === 'default'
+      ? 'bg-neutral/10 text-neutral/70 hover:text-neutral focus-visible:text-neutral'
+      : 'bg-accent text-primary',
+    size === 'large' ? 'h-12 text-label-base-500' : 'h-8 text-label-sm-500',
     className
   )}
 >
   <div
-    class="flex h-full w-full items-center justify-center rounded-lg bg-primary px-4"
+    class={twMerge(
+      'flex h-full w-full items-center justify-center gap-3 rounded-lg bg-primary',
+      type === 'default' ? 'bg-primary' : 'bg-accent',
+      size === 'large' ? 'px-6' : 'px-4'
+    )}
   >
+    {
+      icon && (
+        <Icon
+          name={icon}
+          aria-hidden="true"
+          focusable="false"
+          class={size === 'large' ? 'h-5' : 'h-[1.125rem]'}
+        />
+      )
+    }
     {text}
   </div>
 </a>

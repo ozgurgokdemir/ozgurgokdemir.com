@@ -7,6 +7,7 @@ module.exports = {
     require.resolve('prettier-plugin-astro'),
     require.resolve('prettier-plugin-tailwindcss'),
   ],
+  tailwindFunctions: ['twMerge', 'twJoin'],
   overrides: [
     {
       files: '*.astro',
