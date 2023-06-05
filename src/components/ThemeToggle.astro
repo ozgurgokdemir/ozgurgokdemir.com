@@ -3,14 +3,22 @@ import { Icon } from 'astro-icon';
 ---
 
 <button
+  id="theme-toggle"
   type="button"
   aria-label="Theme Toggle"
-  class="group overflow-hidden rounded-full"
+  class="rounded-full text-neutral/70 transition-colors duration-[50ms] hover:text-neutral focus-visible:text-neutral"
 >
-  <Icon
-    name="sun"
-    aria-hidden="true"
-    focusable="false"
-    class="h-6 text-neutral/70 transition-colors duration-300 group-hover:text-neutral group-focus-visible:text-neutral"
-  />
+  <Icon name="sun" aria-hidden="true" focusable="false" class="h-6" />
 </button>
+
+<script>
+  const toggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+
+  const handleClick = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
+  toggle.addEventListener('click', handleClick);
+</script>
