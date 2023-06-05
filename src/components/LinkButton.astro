@@ -12,10 +12,36 @@ const { href, text, class: className } = Astro.props;
 
 <a
   {href}
+  data-button
   class={twMerge(
-    'flex h-8 items-center justify-center rounded-lg border border-neutral/10 bg-surface px-4 text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral',
+    'h-8 relative rounded-lg p-px bg-neutral/10 text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral inline-block focus-visible:text-neutral',
+    'before:absolute before:w-full before:inset-0 before:z-10 before:h-full before:rounded-lg before:bg-[radial-gradient(4rem_circle_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 before:hover:opacity-100',
+    'after:absolute after:w-full after:inset-0 after:-z-10 after:h-full after:rounded-lg after:bg-[radial-gradient(3rem_circle_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30',
     className
   )}
 >
-  {text}
+  <div
+    class="flex h-full w-full items-center justify-center rounded-lg bg-primary px-4"
+  >
+    {text}
+  </div>
 </a>
+
+<script>
+  type Element = HTMLButtonElement | HTMLAnchorElement;
+
+  const buttons = document.querySelectorAll<Element>('[data-button]');
+
+  const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
+    requestAnimationFrame(() =>
+      buttons.forEach((button) => {
+        const { left, top } = button.getBoundingClientRect();
+        const [x, y] = [clientX - left, clientY - top];
+        button.style.setProperty('--mouse-x', `${x}px`);
+        button.style.setProperty('--mouse-y', `${y}px`);
+      })
+    );
+  };
+
+  document.addEventListener('mousemove', handleMouseMove);
+</script>
