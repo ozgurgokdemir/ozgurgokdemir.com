@@ -1,9 +1,63 @@
 ---
+import LinkButton from '@/components/LinkButton.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
 ---
 
 <MainLayout>
-  <div class="container">
-    <h1>Astro</h1>
-  </div>
+  <section
+    id="hero"
+    aria-label="Hero"
+    class="container flex flex-col items-center gap-8 pb-16 pt-32 text-center"
+  >
+    <h1
+      class="bg-gradient-to-b from-neutral/70 to-neutral bg-clip-text font-secondary text-[1.8125rem] font-semibold leading-tight text-transparent xs:text-[2.25rem] sm:text-[3rem] md:text-[4rem] lg:text-heading-display"
+    >
+      Hi, I'm a <span class="text-accent">passionate</span> frontend developer
+    </h1>
+    <p class="text-body-base-400 text-neutral/70 md:text-[1.5rem]">
+      I specialize in building responsive and performant web applications.
+    </p>
+    <div class="mt-4 flex w-full flex-col justify-center gap-6 sm:flex-row">
+      <LinkButton
+        href="#contact"
+        text="Let's Talk"
+        icon="chat-bubble"
+        type="accent"
+      />
+      <div
+        class="flex items-center justify-between before:order-2 before:h-6 before:w-px before:bg-neutral/10 sm:hidden"
+      >
+        <LinkButton
+          href="https://www.linkedin.com/in/ozgurgokdemir/"
+          text="LinkedIn"
+          icon="simple-icons:linkedin"
+          type="ghost"
+          external={true}
+          class="order-1"
+        />
+        <LinkButton
+          href="https://github.com/ozgurgokdemir/"
+          text="GitHub"
+          icon="simple-icons:github"
+          type="ghost"
+          external={true}
+          class="order-3"
+        />
+      </div>
+      <LinkButton
+        href="https://www.linkedin.com/in/ozgurgokdemir/"
+        text="LinkedIn"
+        icon="simple-icons:linkedin"
+        external={true}
+        class="hidden sm:inline-block"
+      />
+      <LinkButton
+        href="https://github.com/ozgurgokdemir/"
+        text="GitHub"
+        icon="simple-icons:github"
+        external={true}
+        class="hidden sm:inline-block"
+      />
+    </div>
+  </section>
 </MainLayout>

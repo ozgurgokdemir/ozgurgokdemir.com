@@ -1,4 +1,5 @@
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,6 +9,7 @@ module.exports = {
       primary: 'hsl(var(--color-primary) / <alpha-value>)',
       accent: 'hsl(var(--color-accent) / <alpha-value>)',
       neutral: 'hsl(var(--color-neutral) / <alpha-value>)',
+      transparent: colors.transparent,
     },
     boxShadow: {
       stroke: 'inset 0 0 0 1px hsl(var(--color-neutral) / 0.1)',
