@@ -15,13 +15,13 @@
     --color-neutral: 0deg 0% 0%;
   }
 
-  html {
+  /* html {
     color-scheme: dark;
   }
 
   html[data-theme='light'] {
     color-scheme: light;
-  }
+  } */
 
   body {
     -webkit-tap-highlight-color: transparent;
