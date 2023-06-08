@@ -23,7 +23,7 @@ const HIGHLIGHTED_PROJECTS = [
   <section
     id="hero"
     aria-label="Hero"
-    class="container flex flex-col items-center gap-8 pb-16 pt-32 text-center"
+    class="container flex flex-col items-center gap-8 pb-16 pt-[6.5rem] text-center md:pt-32"
   >
     <h1
       class="bg-gradient-to-b from-neutral/70 to-neutral bg-clip-text font-secondary text-[1.8125rem] font-semibold leading-tight text-transparent xs:text-[2.25rem] sm:text-[3rem] md:text-[4rem] lg:text-heading-display"
@@ -81,7 +81,9 @@ const HIGHLIGHTED_PROJECTS = [
     aria-label="Projects"
     class="container flex flex-col gap-16 py-16"
   >
-    <h2 class="text-center font-secondary text-heading-lg">
+    <h2
+      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
+    >
       Highlighted Projects
     </h2>
     {

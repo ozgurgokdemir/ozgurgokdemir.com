@@ -1,7 +1,7 @@
 ---
 import { Image } from '@astrojs/image/components';
-import ProjectLink from '@/components/ProjectLink.astro';
 import { twJoin } from 'tailwind-merge';
+import ProjectLink from '@/components/ProjectLink.astro';
 
 type Props = {
   image: string;
@@ -32,9 +32,11 @@ const { image, title, source, website, highlighted } = Astro.props;
       class="relative z-10 h-full w-full rounded-2xl bg-primary"
     />
   </div>
-  <div class="z-0 flex items-center justify-between">
-    <h3 class="font-secondary text-heading-sm">{title}</h3>
-    <div class="flex gap-8">
+  <div
+    class="z-0 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"
+  >
+    <h3 class="font-secondary text-label-xl-600 sm:text-heading-sm">{title}</h3>
+    <div class="flex gap-4 sm:gap-8">
       <ProjectLink
         href={source}
         text={source ? 'Source' : 'Private'}

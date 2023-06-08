@@ -16,9 +16,9 @@ const { href, text, icon } = Astro.props;
   rel="noopener noreferrer"
   role={!href ? 'link' : null}
   aria-disabled={!href}
-  class={`flex items-center gap-3 text-label-base-600 text-neutral/70 transition-colors duration-300 ${
+  class={`flex items-center h-8 sm:h-auto border border-neutral/10 sm:border-none rounded-lg sm:rounded-none px-3 sm:px-0 gap-3 text-label-base-600 text-neutral/70 transition-colors duration-300 ${
     href
-      ? 'hover:text-neutral focus-visible:text-neutral'
+      ? 'hover:text-neutral focus-visible:text-neutral hover:border-neutral/30 focus-visible:border-neutral/30'
       : 'cursor-not-allowed'
   }`}
 >
