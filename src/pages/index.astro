@@ -1,6 +1,22 @@
 ---
-import LinkButton from '@/components/LinkButton.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
+import LinkButton from '@/components/LinkButton.astro';
+import Project from '@/components/Project.astro';
+
+const HIGHLIGHTED_PROJECTS = [
+  {
+    image: '/assets/images/nextjs-ecommerce.png',
+    title: 'Next.js E-Commerce',
+    source: 'https://github.com/ozgurgokdemir/nextjs-ecommerce',
+    website: 'https://nextjs-ecommerce-taupe-six.vercel.app/',
+  },
+  {
+    image: '/assets/images/react-restaurant.png',
+    title: 'React Restáurant',
+    source: 'https://github.com/ozgurgokdemir/react-restaurant',
+    website: null,
+  },
+];
 ---
 
 <MainLayout>
@@ -59,5 +75,25 @@ import MainLayout from '@/layouts/MainLayout.astro';
         class="hidden sm:inline-block"
       />
     </div>
+  </section>
+  <section
+    id="projects"
+    aria-label="Projects"
+    class="container flex flex-col gap-16 py-16"
+  >
+    <h2 class="text-center font-secondary text-heading-lg">
+      Highlighted Projects
+    </h2>
+    {
+      HIGHLIGHTED_PROJECTS.map((project, index) => (
+        <Project
+          image={project.image}
+          title={project.title}
+          source={project.source}
+          website={project.website}
+          highlighted={index === 0}
+        />
+      ))
+    }
   </section>
 </MainLayout>

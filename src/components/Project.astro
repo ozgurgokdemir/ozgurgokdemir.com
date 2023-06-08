@@ -1,0 +1,50 @@
+---
+import { Image } from '@astrojs/image/components';
+import ProjectLink from '@/components/ProjectLink.astro';
+import { twJoin } from 'tailwind-merge';
+
+type Props = {
+  image: string;
+  title: string;
+  source: string | null;
+  website: string | null;
+  highlighted: boolean;
+};
+
+const { image, title, source, website, highlighted } = Astro.props;
+---
+
+<article class="flex flex-col gap-6">
+  <div
+    class={twJoin(
+      'relative inline-block aspect-video w-full rounded-2xl after:absolute after:rounded-2xl after:transition-colors after:duration-300',
+      highlighted
+        ? 'before:absolute before:inset-0 before:rounded-2xl before:bg-accent/50 before:blur-2xl after:-inset-0.5 after:bg-accent'
+        : 'after:-inset-px after:bg-neutral/10'
+    )}
+  >
+    <Image
+      src={image}
+      alt={title}
+      format="webp"
+      width={1136}
+      height={639}
+      class="relative z-10 h-full w-full rounded-2xl bg-primary"
+    />
+  </div>
+  <div class="z-0 flex items-center justify-between">
+    <h3 class="font-secondary text-heading-sm">{title}</h3>
+    <div class="flex gap-8">
+      <ProjectLink
+        href={source}
+        text={source ? 'Source' : 'Private'}
+        icon={source ? 'code-bracket' : 'lock-closed'}
+      />
+      <ProjectLink
+        href={website}
+        text={website ? 'Visit Website' : 'Not Available'}
+        icon={website ? 'eye' : 'eye-slash'}
+      />
+    </div>
+  </div>
+</article>

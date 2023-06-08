@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon';
+
+type Props = {
+  href: string | null;
+  text: string;
+  icon: string;
+};
+
+const { href, text, icon } = Astro.props;
+---
+
+<a
+  {href}
+  target="_blank"
+  rel="noopener noreferrer"
+  role={!href ? 'link' : null}
+  aria-disabled={!href}
+  class={`flex items-center gap-3 text-label-base-600 text-neutral/70 transition-colors duration-300 ${
+    href
+      ? 'hover:text-neutral focus-visible:text-neutral'
+      : 'cursor-not-allowed'
+  }`}
+>
+  <Icon name={icon} aria-hidden="true" focusable="false" class="h-5" />
+  {text}
+</a>
