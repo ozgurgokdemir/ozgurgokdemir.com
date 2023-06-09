@@ -67,11 +67,16 @@ const {
 
   const buttons = document.querySelectorAll<Element>('[data-button]');
 
+  const GRADIENT_SIZE = 48;
+
   const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
     requestAnimationFrame(() =>
       buttons.forEach((button) => {
-        const { left, top } = button.getBoundingClientRect();
+        const { left, top, width, height } = button.getBoundingClientRect();
         const [x, y] = [clientX - left, clientY - top];
+        const isXInRange = x >= -GRADIENT_SIZE && x <= width + GRADIENT_SIZE;
+        const isYInRange = y >= -GRADIENT_SIZE && y <= height + GRADIENT_SIZE;
+        if (!isXInRange || !isYInRange) return;
         button.style.setProperty('--mouse-x', `${x}px`);
         button.style.setProperty('--mouse-y', `${y}px`);
       })
@@ -79,4 +84,13 @@ const {
   };
 
   document.addEventListener('mousemove', handleMouseMove);
+
+  const handleBlur = () => {
+    buttons.forEach((button) => {
+      button.style.removeProperty('--mouse-x');
+      button.style.removeProperty('--mouse-y');
+    });
+  };
+
+  window.addEventListener('blur', handleBlur);
 </script>
