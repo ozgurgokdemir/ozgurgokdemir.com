@@ -17,10 +17,10 @@ const { image, title, source, website, highlighted } = Astro.props;
 <article class="flex flex-col gap-6">
   <div
     class={twJoin(
-      'relative inline-block aspect-video w-full rounded-2xl after:absolute after:rounded-2xl after:transition-colors after:duration-300',
+      'relative inline-block aspect-video w-full rounded-2xl after:absolute after:rounded-2xl',
       highlighted
-        ? 'before:absolute before:inset-0 before:rounded-2xl before:bg-accent/50 before:blur-2xl after:-inset-0.5 after:bg-accent'
-        : 'after:-inset-px after:bg-neutral/10'
+        ? 'before: before:absolute before:inset-0 before:animate-rotate before:rounded-2xl before:bg-conic-gradient before:from-accent before:via-accent/50 before:to-accent before:blur-lg after:-inset-0.5 after:animate-rotate after:bg-conic-gradient after:from-accent after:via-accent/50 after:to-accent'
+        : 'after:-inset-px after:bg-neutral/10 after:transition-colors after:duration-300'
     )}
   >
     <Image
@@ -50,3 +50,11 @@ const { image, title, source, website, highlighted } = Astro.props;
     </div>
   </div>
 </article>
+
+<style>
+  @property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+</style>

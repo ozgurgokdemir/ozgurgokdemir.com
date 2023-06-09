@@ -271,8 +271,21 @@ module.exports = {
       backgroundColor: {
         surface: 'hsl(var(--color-neutral) / 0.02)',
       },
+      backgroundImage: {
+        'conic-gradient':
+          'conic-gradient(from var(--gradient-angle, 0deg), var(--tw-gradient-stops));',
+      },
       aspectRatio: {
         '4/3': '4 / 3',
+      },
+      keyframes: {
+        rotate: {
+          '0%': { '--gradient-angle': '0deg' },
+          '100%': { '--gradient-angle': '360deg' },
+        },
+      },
+      animation: {
+        rotate: 'rotate 5s linear infinite',
       },
     },
   },
