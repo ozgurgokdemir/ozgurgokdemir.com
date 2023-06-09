@@ -2,6 +2,7 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import LinkButton from '@/components/LinkButton.astro';
 import Project from '@/components/Project.astro';
+import TechCard from '@/components/TechCard.astro';
 
 const HIGHLIGHTED_PROJECTS = [
   {
@@ -15,6 +16,129 @@ const HIGHLIGHTED_PROJECTS = [
     title: 'React Restáurant',
     source: 'https://github.com/ozgurgokdemir/react-restaurant',
     website: null,
+  },
+];
+
+const TECHNOLOGIES = [
+  {
+    title: 'JavaScript',
+    icon: 'simple-icons:javascript',
+    color: '#F7DF1E',
+  },
+  {
+    title: 'TypeScript',
+    icon: 'simple-icons:typescript',
+    color: '#3178C6',
+  },
+  {
+    title: 'React',
+    icon: 'simple-icons:react',
+    color: '#61DAFB',
+  },
+  {
+    title: 'Next.js',
+    icon: 'simple-icons:nextdotjs',
+    color: 'hsl(var(--color-neutral))',
+  },
+  {
+    title: 'Redux',
+    icon: 'simple-icons:redux',
+    color: '#764ABC',
+  },
+  {
+    title: 'React Query',
+    icon: 'simple-icons:react',
+    color: '#FF4154',
+  },
+  {
+    title: 'HTML5/CSS3',
+    icon: 'simple-icons:html5',
+    color: '#E34F26',
+  },
+  {
+    title: 'SASS',
+    icon: 'simple-icons:sass',
+    color: '#CC6699',
+  },
+  {
+    title: 'Tailwind CSS',
+    icon: 'simple-icons:tailwindcss',
+    color: '#06B6D4',
+  },
+  {
+    title: 'Chakra UI',
+    icon: 'simple-icons:chakraui',
+    color: '#319795',
+  },
+  {
+    title: 'Framer Motion',
+    icon: 'simple-icons:framer',
+    color: '#0055FF',
+  },
+  {
+    title: 'Storybook',
+    icon: 'simple-icons:storybook',
+    color: '#FF4785',
+  },
+  {
+    title: 'Supabase',
+    icon: 'simple-icons:supabase',
+    color: '#3FCF8E',
+  },
+  {
+    title: 'Prisma',
+    icon: 'simple-icons:prisma',
+    color: 'hsl(var(--color-neutral))',
+  },
+  {
+    title: 'PostgreSQL',
+    icon: 'simple-icons:postgresql',
+    color: '#4169E1',
+  },
+  {
+    title: 'MongoDB',
+    icon: 'simple-icons:mongodb',
+    color: '#47A248',
+  },
+  {
+    title: 'Strapi',
+    icon: 'simple-icons:strapi',
+    color: '#4945FF',
+  },
+  {
+    title: 'Stripe',
+    icon: 'simple-icons:stripe',
+    color: '#635BFF',
+  },
+  {
+    title: 'Astro',
+    icon: 'simple-icons:astro',
+    color: '#FF5D01',
+  },
+  {
+    title: 'Vite',
+    icon: 'simple-icons:vite',
+    color: '#646CFF',
+  },
+  {
+    title: 'Jest',
+    icon: 'simple-icons:jest',
+    color: '#C21325',
+  },
+  {
+    title: 'ESLint',
+    icon: 'simple-icons:eslint',
+    color: '#4B32C3',
+  },
+  {
+    title: 'Git',
+    icon: 'simple-icons:git',
+    color: '#F05032',
+  },
+  {
+    title: 'Figma',
+    icon: 'simple-icons:figma',
+    color: '#F24E1E',
   },
 ];
 ---
@@ -97,5 +221,25 @@ const HIGHLIGHTED_PROJECTS = [
         />
       ))
     }
+  </section>
+  <section
+    id="skills"
+    aria-label="Skills"
+    class="container flex flex-col gap-16 py-16"
+  >
+    <h2
+      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
+    >
+      Skills & Expertise
+    </h2>
+    <ul class="grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-6 lg:grid-cols-6">
+      {
+        TECHNOLOGIES.map(({ title, icon, color }) => (
+          <li>
+            <TechCard {title} {icon} {color} />
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </MainLayout>

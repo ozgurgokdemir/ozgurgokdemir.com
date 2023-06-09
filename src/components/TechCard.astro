@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon';
+
+type Props = {
+  title: string;
+  icon: string;
+  color: string;
+};
+
+const { title, icon, color } = Astro.props;
+---
+
+<div
+  class="aspect-square rounded-xl bg-neutral/10 p-px transition-colors duration-300 sm:aspect-auto sm:h-32"
+>
+  <div
+    class="flex h-full w-full flex-col items-center justify-center gap-4 rounded-xl bg-primary transition-colors duration-300"
+  >
+    <Icon
+      name={icon}
+      aria-hidden="true"
+      focusable="false"
+      class="h-12 transition-colors duration-300"
+      style={{ color }}
+    />
+    <h3
+      class="hidden font-secondary text-label-sm-600 text-neutral transition-colors duration-300 sm:block md:text-label-base-600"
+    >
+      {title}
+    </h3>
+  </div>
+</div>
