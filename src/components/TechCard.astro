@@ -11,7 +11,8 @@ const { title, icon, color } = Astro.props;
 ---
 
 <div
-  class="aspect-square rounded-xl bg-neutral/10 p-px transition-colors duration-300 sm:aspect-auto sm:h-32"
+  data-tech-card
+  class="relative aspect-square rounded-xl bg-neutral/10 p-px transition-colors duration-300 before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-xl before:bg-[radial-gradient(circle_12rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 after:absolute after:inset-0 after:-z-10 after:h-full after:w-full after:rounded-xl after:bg-[radial-gradient(circle_8rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30 before:hover:opacity-100 sm:aspect-auto sm:h-32"
 >
   <div
     class="flex h-full w-full flex-col items-center justify-center gap-4 rounded-xl bg-primary transition-colors duration-300"
@@ -30,3 +31,42 @@ const { title, icon, color } = Astro.props;
     </h3>
   </div>
 </div>
+
+<script>
+  const container = document.getElementById('skills') as HTMLElement;
+
+  const cards = container.querySelectorAll<HTMLDivElement>('[data-tech-card]');
+
+  let isGradientVisible = false;
+
+  const updateMousePosition = (clientX: number, clientY: number) => {
+    cards.forEach((card) => {
+      const { left, top } = card.getBoundingClientRect();
+      const [x, y] = [clientX - left, clientY - top];
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  };
+
+  const removeMousePosition = () => {
+    cards.forEach((card) => {
+      card.style.removeProperty('--mouse-x');
+      card.style.removeProperty('--mouse-y');
+    });
+  };
+
+  const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
+    const { top, bottom } = container.getBoundingClientRect();
+
+    if (clientY > top && clientY < bottom) {
+      requestAnimationFrame(() => updateMousePosition(clientX, clientY));
+      isGradientVisible = true;
+    } else {
+      if (!isGradientVisible) return;
+      removeMousePosition();
+      isGradientVisible = false;
+    }
+  };
+
+  document.addEventListener('mousemove', handleMouseMove);
+</script>
