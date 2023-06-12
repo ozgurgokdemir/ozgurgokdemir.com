@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import LinkButton from '@/components/LinkButton.astro';
 import Project from '@/components/Project.astro';
 import TechCard from '@/components/TechCard.astro';
+import InputField from '@/components/InputField.astro';
 
 const HIGHLIGHTED_PROJECTS = [
   {
@@ -241,5 +242,27 @@ const TECHNOLOGIES = [
         ))
       }
     </ul>
+  </section>
+  <section
+    id="contact"
+    aria-label="Contact"
+    class="container flex flex-col gap-16 py-16"
+  >
+    <h2
+      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
+    >
+      Get in Touch
+    </h2>
+    <form class="mx-auto grid w-full max-w-[536px] gap-6 sm:grid-cols-2">
+      <InputField id="name" label="Name" type="text" />
+      <InputField id="email" label="Email" type="email" />
+      <InputField
+        id="message"
+        label="Message"
+        type="textarea"
+        class="sm:col-span-2"
+      />
+      <button type="submit" class="sm:col-start-2">Send Message</button>
+    </form>
   </section>
 </MainLayout>
