@@ -1,6 +1,6 @@
 ---
 import MainLayout from '@/layouts/MainLayout.astro';
-import LinkButton from '@/components/LinkButton.astro';
+import Button from '@/components/Button.astro';
 import Project from '@/components/Project.astro';
 import TechCard from '@/components/TechCard.astro';
 import InputField from '@/components/InputField.astro';
@@ -159,7 +159,7 @@ const TECHNOLOGIES = [
       I specialize in building responsive and performant web applications.
     </p>
     <div class="mt-4 flex w-full flex-col justify-center gap-6 sm:flex-row">
-      <LinkButton
+      <Button
         href="#contact"
         text="Let's Talk"
         icon="chat-bubble"
@@ -168,7 +168,7 @@ const TECHNOLOGIES = [
       <div
         class="flex items-center justify-between before:order-2 before:h-6 before:w-px before:bg-neutral/10 sm:hidden"
       >
-        <LinkButton
+        <Button
           href="https://www.linkedin.com/in/ozgurgokdemir/"
           text="LinkedIn"
           icon="simple-icons:linkedin"
@@ -176,7 +176,7 @@ const TECHNOLOGIES = [
           external={true}
           class="order-1"
         />
-        <LinkButton
+        <Button
           href="https://github.com/ozgurgokdemir/"
           text="GitHub"
           icon="simple-icons:github"
@@ -185,14 +185,14 @@ const TECHNOLOGIES = [
           class="order-3"
         />
       </div>
-      <LinkButton
+      <Button
         href="https://www.linkedin.com/in/ozgurgokdemir/"
         text="LinkedIn"
         icon="simple-icons:linkedin"
         external={true}
         class="hidden sm:inline-block"
       />
-      <LinkButton
+      <Button
         href="https://github.com/ozgurgokdemir/"
         text="GitHub"
         icon="simple-icons:github"

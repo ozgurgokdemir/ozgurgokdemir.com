@@ -1,9 +1,9 @@
 ---
+import Button from '@/components/Button.astro';
 import Logo from '@/components/Logo.astro';
 import MenuButton from '@/components/MenuButton.astro';
 import NavLink from '@/components/NavLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
-import LinkButton from '@/components/LinkButton.astro';
 
 const links = [
   { href: '#', text: 'Home' },
@@ -33,7 +33,7 @@ const links = [
     </ul>
     <div class="hidden items-center gap-6 md:flex">
       <ThemeToggle />
-      <LinkButton href="#contact" text="Contact" size="medium" />
+      <Button href="#contact" text="Contact" size="medium" />
     </div>
   </nav>
 </header>
