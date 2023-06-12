@@ -163,7 +163,7 @@ const TECHNOLOGIES = [
         href="#contact"
         text="Let's Talk"
         icon="chat-bubble"
-        type="accent"
+        variant="accent"
       />
       <div
         class="flex items-center justify-between before:order-2 before:h-6 before:w-px before:bg-neutral/10 sm:hidden"
@@ -172,7 +172,7 @@ const TECHNOLOGIES = [
           href="https://www.linkedin.com/in/ozgurgokdemir/"
           text="LinkedIn"
           icon="simple-icons:linkedin"
-          type="ghost"
+          variant="ghost"
           external={true}
           class="order-1"
         />
@@ -180,7 +180,7 @@ const TECHNOLOGIES = [
           href="https://github.com/ozgurgokdemir/"
           text="GitHub"
           icon="simple-icons:github"
-          type="ghost"
+          variant="ghost"
           external={true}
           class="order-3"
         />
@@ -262,7 +262,12 @@ const TECHNOLOGIES = [
         type="textarea"
         class="sm:col-span-2"
       />
-      <button type="submit" class="sm:col-start-2">Send Message</button>
+      <Button
+        type="submit"
+        text="Send Message"
+        variant="accent"
+        class="sm:col-start-2"
+      />
     </form>
   </section>
 </MainLayout>

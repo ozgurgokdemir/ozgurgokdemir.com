@@ -1,40 +1,59 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
+import type { EitherOneOrAnother } from '@/lib/types';
 import { Icon } from 'astro-icon';
 import { twJoin, twMerge } from 'tailwind-merge';
 
 type Props = {
-  href: string;
   text: string;
   icon?: string;
-  external?: boolean;
-  type?: 'default' | 'accent' | 'ghost';
+  variant?: 'default' | 'accent' | 'ghost';
   size?: 'medium' | 'large';
+  id?: string;
   class?: string;
-};
+} & EitherOneOrAnother<
+  { href: string; external?: boolean },
+  Pick<HTMLAttributes<'button'>, 'type' | 'disabled'>
+>;
 
 const {
-  href,
   text,
   icon,
-  external = false,
-  type = 'default',
+  variant = 'default',
   size = 'large',
+  id,
   class: className,
+  href,
+  external = false,
+  type = 'button',
+  disabled = false,
 } = Astro.props;
+
+const ButtonTag = href ? 'a' : 'button';
+
+const anchorProps = {
+  href,
+  target: external ? '_blank' : null,
+  rel: external ? 'noopener noreferrer' : null,
+};
+
+const buttonProps = {
+  type,
+  disabled,
+};
 ---
 
-<a
-  {href}
-  target={external ? '_blank' : '_self'}
-  rel={external ? 'noopener noreferrer' : undefined}
-  data-button={type === 'default'}
+<ButtonTag
+  {id}
+  {...href ? anchorProps : buttonProps}
+  data-button={variant === 'default'}
   class={twJoin(
     'relative inline-block rounded-lg p-px transition duration-300',
     'before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-lg before:bg-[radial-gradient(circle_4rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 before:hover:opacity-100',
     'after:absolute after:inset-0 after:-z-10 after:h-full after:w-full after:rounded-lg after:bg-[radial-gradient(circle_3rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30',
-    type === 'accent'
+    variant === 'accent'
       ? 'bg-accent text-primary'
-      : type === 'ghost'
+      : variant === 'ghost'
       ? 'bg-primary text-neutral/70 hover:text-neutral focus-visible:text-neutral'
       : 'bg-neutral/10 text-neutral/70 hover:text-neutral focus-visible:text-neutral',
     size === 'large' ? 'h-12 text-label-base-500' : 'h-8 text-label-sm-500',
@@ -44,7 +63,7 @@ const {
   <div
     class={twMerge(
       'flex h-full w-full items-center justify-center gap-3 rounded-lg bg-primary transition-[background-color] duration-300',
-      type === 'accent' ? 'bg-accent' : 'bg-primary',
+      variant === 'accent' ? 'bg-accent' : 'bg-primary',
       size === 'large' ? 'px-6' : 'px-4'
     )}
   >
@@ -60,7 +79,7 @@ const {
     }
     {text}
   </div>
-</a>
+</ButtonTag>
 
 <script>
   type Element = HTMLButtonElement | HTMLAnchorElement;
