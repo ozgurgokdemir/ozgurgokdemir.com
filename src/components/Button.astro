@@ -52,7 +52,7 @@ const buttonProps = {
     'before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-lg before:bg-[radial-gradient(circle_4rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] before:from-neutral/10 before:opacity-0 before:transition-opacity before:duration-300 before:hover:opacity-100',
     'after:absolute after:inset-0 after:-z-10 after:h-full after:w-full after:rounded-lg after:bg-[radial-gradient(circle_3rem_at_var(--mouse-x)_var(--mouse-y),_var(--tw-gradient-stops))] after:from-neutral/30',
     variant === 'accent'
-      ? 'bg-accent text-primary'
+      ? 'bg-accent text-primary shadow-accent hover:shadow-xl focus-visible:shadow-xl'
       : variant === 'ghost'
       ? 'bg-primary text-neutral/70 hover:text-neutral focus-visible:text-neutral'
       : 'bg-neutral/10 text-neutral/70 hover:text-neutral focus-visible:text-neutral',

@@ -12,6 +12,7 @@ module.exports = {
       transparent: colors.transparent,
     },
     boxShadow: {
+      xl: '0 0 25px -5px var(--tw-shadow-color), 0 0 10px -6px var(--tw-shadow-color)',
       stroke: 'inset 0 0 0 1px hsl(var(--color-neutral) / 0.1)',
       'stroke-t': 'inset 0 1px 0 0 hsl(var(--color-neutral) / 0.1)',
       'stroke-r': 'inset -1px 0 0 0 hsl(var(--color-neutral) / 0.1)',
