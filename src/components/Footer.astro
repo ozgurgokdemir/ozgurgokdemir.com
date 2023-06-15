@@ -24,11 +24,11 @@ const FOOTER_DATA = {
 <footer class="mt-16 border-t border-neutral/10">
   <nav
     aria-label="Secondary Navigation"
-    class="container flex justify-between py-16"
+    class="container flex flex-col gap-16 py-16 sm:flex-row sm:justify-between sm:gap-0"
   >
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col items-center gap-4 sm:items-start">
       <Logo href="#" />
-      <ul class="flex flex-col gap-3">
+      <ul class="flex flex-col items-center gap-3 sm:items-start">
         {
           FOOTER_DATA.info.map(({ href, text }) => (
             <li>
@@ -38,13 +38,13 @@ const FOOTER_DATA = {
         }
       </ul>
     </div>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col items-center gap-4 sm:items-start">
       <h3
         class="font-secondary text-label-base-600 text-neutral transition-colors duration-300"
       >
         Links
       </h3>
-      <ul class="flex flex-col gap-3">
+      <ul class="flex flex-col items-center gap-3 sm:items-start">
         {
           FOOTER_DATA.links.map(({ href, text }) => (
             <li>
@@ -54,13 +54,13 @@ const FOOTER_DATA = {
         }
       </ul>
     </div>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col items-center gap-4 sm:items-start">
       <h3
         class="font-secondary text-label-base-600 text-neutral transition-colors duration-300"
       >
         Socials
       </h3>
-      <ul class="flex flex-col gap-3">
+      <ul class="flex flex-col items-center gap-3 sm:items-start">
         {
           FOOTER_DATA.socials.map(({ href, text }) => (
             <li>
