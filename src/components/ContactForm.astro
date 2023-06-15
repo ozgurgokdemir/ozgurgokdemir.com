@@ -1,0 +1,82 @@
+---
+import InputField from '@/components/InputField.astro';
+import Button from '@/components/Button.astro';
+---
+
+<form
+  id="contact-form"
+  class="mx-auto grid w-full max-w-xl gap-6 sm:grid-cols-2"
+>
+  <InputField id="name" label="Name" type="text" autocomplete="name" required />
+  <InputField
+    id="email"
+    label="Email"
+    type="email"
+    autocomplete="email"
+    required
+  />
+  <InputField
+    id="message"
+    label="Message"
+    type="textarea"
+    class="sm:col-span-2"
+    required
+  />
+  <Button
+    type="submit"
+    text="Send Message"
+    icon="paper-airplane"
+    variant="accent"
+    class="sm:col-start-2"
+  />
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+
+  const handleFormSubmit = async (event: SubmitEvent) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+
+    try {
+      const response = await fetch(
+        'https://formsubmit.co/ajax/ozgurgokd@gmail.com',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error(response.statusText);
+
+      const data = await response.json();
+
+      if (data.success !== 'true') throw new Error(data.message);
+
+      form.reset();
+
+      alert(data.message);
+    } catch (error) {
+      const { message } = error as Error;
+
+      console.error(message);
+
+      alert('Apologies, an unexpected error occurred. Please try again later.');
+    }
+  };
+
+  form.addEventListener('submit', handleFormSubmit);
+</script>
