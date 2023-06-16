@@ -8,7 +8,12 @@ type Props = {
 const { class: className } = Astro.props;
 ---
 
-<button type="button" aria-label="Menu Button" class={className}>
+<button
+  id="menu-button"
+  type="button"
+  aria-label="Menu Button"
+  class={className}
+>
   <Icon
     name="bars"
     aria-hidden="true"
@@ -16,3 +21,13 @@ const { class: className } = Astro.props;
     class="h-6 text-neutral"
   />
 </button>
+
+<script>
+  const menu = document.getElementById('menu') as HTMLDialogElement;
+
+  const button = document.getElementById('menu-button') as HTMLButtonElement;
+
+  const handleClick = () => menu.showModal();
+
+  button.addEventListener('click', handleClick);
+</script>

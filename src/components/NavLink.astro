@@ -4,12 +4,13 @@ type Props = {
   text: string;
 };
 
-const { href, text } = Astro.props;
+const { href, text, ...restProps } = Astro.props;
 ---
 
 <a
-  class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
   {href}
+  {...restProps}
+  class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
 >
   {text}
 </a>

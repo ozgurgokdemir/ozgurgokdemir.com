@@ -1,0 +1,47 @@
+---
+import NavLink from '@/components/NavLink.astro';
+
+const links = [
+  { href: '#', text: 'Home' },
+  { href: '#projects', text: 'Projects' },
+  { href: '#skills', text: 'Skills' },
+  { href: '#blog', text: 'Blog' },
+  { href: '#contact', text: 'Contact' },
+];
+---
+
+<dialog
+  id="menu"
+  class="fixed top-24 z-40 mr-0 mt-0 rounded-bl-lg bg-primary/70 p-0 px-8 py-6 backdrop-blur-xl transition-colors duration-300 backdrop:opacity-0"
+>
+  <ul class="flex flex-col items-end gap-8">
+    {
+      links.map(({ href, text }) => (
+        <li>
+          <NavLink {href} {text} data-menu-link />
+        </li>
+      ))
+    }
+  </ul>
+</dialog>
+
+<script>
+  const menu = document.getElementById('menu') as HTMLDialogElement;
+
+  const handleClick = (event: MouseEvent) => {
+    const { clientX, clientY, target } = event;
+    const { left, right, top, bottom } = menu.getBoundingClientRect();
+
+    if (
+      clientX < left ||
+      clientX > right ||
+      clientY < top ||
+      clientY > bottom ||
+      (target as HTMLElement).hasAttribute('data-menu-link')
+    ) {
+      menu.close();
+    }
+  };
+
+  menu.addEventListener('click', handleClick);
+</script>
