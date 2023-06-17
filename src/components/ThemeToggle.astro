@@ -1,18 +1,30 @@
 ---
 import { Icon } from 'astro-icon';
+import { twJoin } from 'tailwind-merge';
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 ---
 
 <button
-  id="theme-toggle"
+  data-theme-toggle
   type="button"
   aria-label="Theme Toggle"
-  class="rounded-full text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
+  class={twJoin(
+    'rounded-full text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral',
+    className
+  )}
 >
   <Icon name="sun" aria-hidden="true" focusable="false" class="h-6" />
 </button>
 
 <script>
-  const toggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+  const toggles = document.querySelectorAll<HTMLButtonElement>(
+    '[data-theme-toggle]'
+  );
 
   const handleClick = () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -20,5 +32,5 @@ import { Icon } from 'astro-icon';
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
-  toggle.addEventListener('click', handleClick);
+  toggles.forEach((toggle) => toggle.addEventListener('click', handleClick));
 </script>

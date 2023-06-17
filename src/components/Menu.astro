@@ -1,5 +1,6 @@
 ---
 import NavLink from '@/components/NavLink.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
 
 type Props = {
   links: {
@@ -15,15 +16,10 @@ const { links } = Astro.props;
   id="menu"
   class="fixed top-24 z-40 mr-0 mt-0 rounded-bl-lg bg-primary/70 p-0 px-8 py-6 backdrop-blur-xl transition-colors duration-300 backdrop:opacity-0"
 >
-  <ul class="flex flex-col items-end gap-8">
-    {
-      links.map(({ href, text }) => (
-        <li>
-          <NavLink {href} {text} data-menu-link />
-        </li>
-      ))
-    }
-  </ul>
+  <nav aria-label="Main" class="flex flex-col items-center gap-8">
+    {links.map(({ href, text }) => <NavLink {href} {text} data-menu-link />)}
+    <ThemeToggle />
+  </nav>
 </dialog>
 
 <script>
