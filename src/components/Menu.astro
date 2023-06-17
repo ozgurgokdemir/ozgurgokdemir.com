@@ -1,13 +1,14 @@
 ---
 import NavLink from '@/components/NavLink.astro';
 
-const links = [
-  { href: '#', text: 'Home' },
-  { href: '#projects', text: 'Projects' },
-  { href: '#skills', text: 'Skills' },
-  { href: '#blog', text: 'Blog' },
-  { href: '#contact', text: 'Contact' },
-];
+type Props = {
+  links: {
+    href: string;
+    text: string;
+  }[];
+};
+
+const { links } = Astro.props;
 ---
 
 <dialog

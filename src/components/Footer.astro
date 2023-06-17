@@ -2,17 +2,22 @@
 import Logo from '@/components/Logo.astro';
 import NavLink from '@/components/NavLink.astro';
 
+type Props = {
+  links: {
+    href: string;
+    text: string;
+  }[];
+};
+
+const { links } = Astro.props;
+
 const FOOTER_DATA = {
   info: [
     { href: '#contact', text: 'Ankara, Turkey' },
     { href: 'tel:+905452863606', text: '+90 545 286 36 06' },
     { href: 'mailto:ozgurgokd@gmail.com', text: 'ozgurgokd@gmail.com' },
   ],
-  links: [
-    { href: '#projects', text: 'Projects' },
-    { href: '#skills', text: 'Skills' },
-    { href: '#blog', text: 'Blog' },
-  ],
+  links: links.filter((link) => link.href !== '#' && link.href !== '#contact'),
   socials: [
     { href: 'https://www.linkedin.com/in/ozgurgokdemir/', text: 'LinkedIn' },
     { href: 'https://github.com/ozgurgokdemir/', text: 'GitHub' },

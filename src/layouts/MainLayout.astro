@@ -17,6 +17,14 @@ const {
   title = 'Özgür Gökdemir',
   description = "I'm a passionate frontend developer with a strong foundation in HTML, CSS, and JavaScript. I specialize in building responsive and performant web applications using modern technologies like React, Next.js, and TypeScript. I'm also passionate about UI/UX design because it allows me to create intuitive and visually appealing user experiences.",
 } = Astro.props;
+
+const NAVIGATION_LINKS = [
+  { href: '#', text: 'Home' },
+  { href: '#projects', text: 'Projects' },
+  { href: '#skills', text: 'Skills' },
+  { href: '#blog', text: 'Blog' },
+  { href: '#contact', text: 'Contact' },
+];
 ---
 
 <html lang="en">
@@ -31,11 +39,11 @@ const {
   <body
     class="bg-primary font-primary text-body-base-400 text-neutral transition-colors duration-300"
   >
-    <Header />
-    <Menu />
+    <Header links={NAVIGATION_LINKS} />
+    <Menu links={NAVIGATION_LINKS} />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer links={NAVIGATION_LINKS} />
   </body>
 </html>

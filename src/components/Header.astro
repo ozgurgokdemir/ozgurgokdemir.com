@@ -5,12 +5,16 @@ import MenuButton from '@/components/MenuButton.astro';
 import NavLink from '@/components/NavLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 
-const links = [
-  { href: '#', text: 'Home' },
-  { href: '#projects', text: 'Projects' },
-  { href: '#skills', text: 'Skills' },
-  { href: '#blog', text: 'Blog' },
-];
+type Props = {
+  links: {
+    href: string;
+    text: string;
+  }[];
+};
+
+const { links } = Astro.props;
+
+const headerLinks = links.filter((link) => link.href !== '#contact');
 ---
 
 <header
@@ -24,7 +28,7 @@ const links = [
     <MenuButton class="md:hidden" />
     <ul class="hidden gap-8 md:flex">
       {
-        links.map(({ href, text }) => (
+        headerLinks.map(({ href, text }) => (
           <li>
             <NavLink {href} {text} />
           </li>
