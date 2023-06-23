@@ -1,0 +1,19 @@
+---
+type Props = {
+  href: string;
+  text: string;
+  external?: true;
+};
+
+const { href, text, external, ...restProps } = Astro.props;
+---
+
+<a
+  {href}
+  target={external ? '_blank' : null}
+  rel={external ? 'noopener noreferrer' : null}
+  {...restProps}
+  class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
+>
+  {text}
+</a>

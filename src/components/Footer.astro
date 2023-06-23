@@ -1,6 +1,6 @@
 ---
 import Logo from '@/components/Logo.astro';
-import NavLink from '@/components/NavLink.astro';
+import Link from '@/components/Link.astro';
 
 type Props = {
   links: {
@@ -37,7 +37,7 @@ const FOOTER_DATA = {
         {
           FOOTER_DATA.info.map(({ href, text }) => (
             <li>
-              <NavLink {href} {text} />
+              <Link {href} {text} />
             </li>
           ))
         }
@@ -53,7 +53,7 @@ const FOOTER_DATA = {
         {
           FOOTER_DATA.links.map(({ href, text }) => (
             <li>
-              <NavLink {href} {text} />
+              <Link {href} {text} />
             </li>
           ))
         }
@@ -69,7 +69,7 @@ const FOOTER_DATA = {
         {
           FOOTER_DATA.socials.map(({ href, text }) => (
             <li>
-              <NavLink {href} {text} />
+              <Link {href} {text} external />
             </li>
           ))
         }
