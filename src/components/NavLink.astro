@@ -1,4 +1,6 @@
 ---
+import Link from '@/components/Link.astro';
+
 type Props = {
   href: string;
   text: string;
@@ -7,10 +9,28 @@ type Props = {
 const { href, text, ...restProps } = Astro.props;
 ---
 
-<a
-  {href}
-  {...restProps}
-  class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
->
-  {text}
-</a>
+<Link data-nav-link {href} {text} {...restProps} />
+
+<style>
+  [data-nav-link][aria-current='page'] {
+    @apply text-neutral;
+  }
+</style>
+
+<script>
+  const setCurrentNavLink = () => {
+    const hash = window.location.hash;
+
+    const navLinks =
+      document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+    navLinks.forEach((navLink) => {
+      const ariaCurrent = hash === navLink.hash ? 'page' : 'false';
+      navLink.setAttribute('aria-current', ariaCurrent);
+    });
+  };
+
+  setCurrentNavLink();
+
+  window.addEventListener('hashchange', setCurrentNavLink);
+</script>

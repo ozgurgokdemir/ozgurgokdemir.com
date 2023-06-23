@@ -1,11 +1,14 @@
 ---
+import { twJoin } from 'tailwind-merge';
+
 type Props = {
   href: string;
   text: string;
   external?: true;
+  class?: string;
 };
 
-const { href, text, external, ...restProps } = Astro.props;
+const { href, text, external, class: className, ...restProps } = Astro.props;
 ---
 
 <a
@@ -13,7 +16,10 @@ const { href, text, external, ...restProps } = Astro.props;
   target={external ? '_blank' : null}
   rel={external ? 'noopener noreferrer' : null}
   {...restProps}
-  class="text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral"
+  class={twJoin(
+    'text-label-sm-500 text-neutral/70 transition-colors duration-300 hover:text-neutral focus-visible:text-neutral',
+    className
+  )}
 >
   {text}
 </a>
