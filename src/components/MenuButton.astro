@@ -12,6 +12,8 @@ const { class: className } = Astro.props;
   id="menu-button"
   type="button"
   aria-label="Menu Button"
+  aria-expanded="false"
+  aria-controls="menu"
   class={className}
 >
   <Icon
@@ -27,7 +29,11 @@ const { class: className } = Astro.props;
 
   const button = document.getElementById('menu-button') as HTMLButtonElement;
 
-  const handleClick = () => menu.showModal();
+  const handleClick = () => {
+    menu.showModal();
+    menu.setAttribute('aria-hidden', 'false');
+    button.setAttribute('aria-expanded', 'true');
+  };
 
   button.addEventListener('click', handleClick);
 </script>
