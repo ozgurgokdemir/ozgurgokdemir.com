@@ -4,6 +4,7 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@/styles/globals.css';
 
+import { SEO } from 'astro-seo';
 import Header from '@/components/Header.astro';
 import Menu from '@/components/Menu.astro';
 import Footer from '@/components/Footer.astro';
@@ -14,8 +15,8 @@ type Props = {
 };
 
 const {
-  title = 'Özgür Gökdemir',
-  description = "I'm a passionate frontend developer with a strong foundation in HTML, CSS, and JavaScript. I specialize in building responsive and performant web applications using modern technologies like React, Next.js, and TypeScript. I'm also passionate about UI/UX design because it allows me to create intuitive and visually appealing user experiences.",
+  title = 'Özgür Gökdemir - Frontend Developer Portfolio',
+  description = 'Özgür Gökdemir is a frontend developer proficient in HTML, CSS, JavaScript, React, Next.js, Tailwind CSS, and TypeScript, specializing in building responsive web apps.',
 } = Astro.props;
 
 const NAVIGATION_LINKS = [
@@ -25,18 +26,32 @@ const NAVIGATION_LINKS = [
   { href: '#blog', text: 'Blog' },
   { href: '#contact', text: 'Contact' },
 ];
+
+const URL = 'https://ozgurgokdemir.com/';
 ---
 
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <SEO
+      {title}
+      {description}
+      canonical={URL}
+      charset="utf-8"
+      openGraph={{
+        basic: {
+          title:
+            'Özgür Gökdemir - Frontend Developer: Crafting Seamless User Experiences',
+          type: 'website',
+          image: '/assets/images/ozgur-gokdemir.png',
+          url: URL,
+        },
+      }}
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta name="description" content={description} />
   </head>
   <body
     class="bg-primary font-primary text-body-base-400 text-neutral transition-colors duration-300"
