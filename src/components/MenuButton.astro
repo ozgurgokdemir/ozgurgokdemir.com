@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 
 type Props = {
   class?: string;
@@ -17,10 +17,10 @@ const { class: className } = Astro.props;
   class={className}
 >
   <Icon
-    name="bars"
+    name="heroicons:bars-3-bottom-right"
     aria-hidden="true"
     focusable="false"
-    class="h-6 text-neutral transition-colors duration-300"
+    class="h-6 w-6 text-neutral transition-colors duration-300"
   />
 </button>
 

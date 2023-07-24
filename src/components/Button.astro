@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import type { EitherOneOrAnother } from '@/lib/types';
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 import { twJoin, twMerge } from 'tailwind-merge';
 
 type Props = {
@@ -73,7 +73,7 @@ const buttonProps = {
           name={icon}
           aria-hidden="true"
           focusable="false"
-          class={size === 'large' ? 'h-5' : 'h-[1.125rem]'}
+          class={size === 'large' ? 'h-5 w-5' : 'h-[1.125rem] w-[1.125rem]'}
         />
       )
     }

@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 import { twJoin } from 'tailwind-merge';
 
 type Props = {
@@ -18,7 +18,12 @@ const { class: className } = Astro.props;
     className
   )}
 >
-  <Icon name="sun" aria-hidden="true" focusable="false" class="h-6" />
+  <Icon
+    name="heroicons:sun"
+    aria-hidden="true"
+    focusable="false"
+    class="h-6 w-6"
+  />
 </button>
 
 <script>

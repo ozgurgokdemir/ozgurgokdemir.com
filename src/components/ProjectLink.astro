@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 
 type Props = {
   href: string | null;
@@ -22,6 +22,6 @@ const { href, text, icon } = Astro.props;
       : 'cursor-not-allowed'
   }`}
 >
-  <Icon name={icon} aria-hidden="true" focusable="false" class="h-5" />
+  <Icon name={icon} aria-hidden="true" focusable="false" class="h-5 w-5" />
   {text}
 </a>

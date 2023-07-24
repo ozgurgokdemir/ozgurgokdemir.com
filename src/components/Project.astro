@@ -40,12 +40,16 @@ const { image, title, source, website, highlighted } = Astro.props;
       <ProjectLink
         href={source}
         text={source ? 'Source' : 'Private'}
-        icon={source ? 'code-bracket' : 'lock-closed'}
+        icon={source
+          ? 'heroicons:code-bracket-20-solid'
+          : 'heroicons:lock-closed-20-solid'}
       />
       <ProjectLink
         href={website}
         text={website ? 'Visit Website' : 'Not Available'}
-        icon={website ? 'eye' : 'eye-slash'}
+        icon={website
+          ? 'heroicons:eye-20-solid'
+          : 'heroicons:eye-slash-20-solid'}
       />
     </div>
   </div>

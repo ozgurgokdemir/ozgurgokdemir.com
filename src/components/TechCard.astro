@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import { Icon } from 'astro-icon/components';
 
 type Props = {
   title: string;
@@ -21,7 +21,7 @@ const { title, icon, color } = Astro.props;
       name={icon}
       aria-hidden="true"
       focusable="false"
-      class="h-12 transition-colors duration-300"
+      class="h-12 w-12 transition-colors duration-300"
       style={{ color }}
     />
     <h3
