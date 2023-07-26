@@ -33,39 +33,32 @@ const { title, icon, color } = Astro.props;
 </div>
 
 <script>
-  const container = document.getElementById('skills') as HTMLElement;
+  import {
+    getMouseState,
+    updateMousePosition,
+    removeMousePosition,
+  } from '@/lib/mouse-effect';
 
-  const cards = container.querySelectorAll<HTMLDivElement>('[data-tech-card]');
+  const cards = document.querySelectorAll<HTMLDivElement>('[data-tech-card]');
 
-  let isGradientVisible = false;
+  const GRADIENT_SIZE = 128;
 
-  const updateMousePosition = (clientX: number, clientY: number) => {
-    cards.forEach((card) => {
-      const { left, top } = card.getBoundingClientRect();
-      const [x, y] = [clientX - left, clientY - top];
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+  const handleMouseMove = (event: MouseEvent) => {
+    requestAnimationFrame(() => {
+      cards.forEach((card) => {
+        const { isInRange, position } = getMouseState(
+          card,
+          event,
+          GRADIENT_SIZE
+        );
+
+        if (isInRange) {
+          updateMousePosition(card, position);
+        } else {
+          removeMousePosition(card);
+        }
+      });
     });
-  };
-
-  const removeMousePosition = () => {
-    cards.forEach((card) => {
-      card.style.removeProperty('--mouse-x');
-      card.style.removeProperty('--mouse-y');
-    });
-  };
-
-  const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-    const { top, bottom } = container.getBoundingClientRect();
-
-    if (clientY > top && clientY < bottom) {
-      requestAnimationFrame(() => updateMousePosition(clientX, clientY));
-      isGradientVisible = true;
-    } else {
-      if (!isGradientVisible) return;
-      removeMousePosition();
-      isGradientVisible = false;
-    }
   };
 
   document.addEventListener('mousemove', handleMouseMove);

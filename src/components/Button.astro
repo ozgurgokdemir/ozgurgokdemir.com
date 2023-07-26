@@ -82,33 +82,31 @@ const buttonProps = {
 </ButtonTag>
 
 <script>
+  import {
+    getMouseState,
+    updateMousePosition,
+    removeMousePosition,
+  } from '@/lib/mouse-effect';
+
   type Element = HTMLButtonElement | HTMLAnchorElement;
 
   const buttons = document.querySelectorAll<Element>('[data-button]');
 
   const GRADIENT_SIZE = 48;
 
-  const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-    requestAnimationFrame(() =>
+  const handleMouseMove = (event: MouseEvent) => {
+    requestAnimationFrame(() => {
       buttons.forEach((button) => {
-        const { left, top, width, height } = button.getBoundingClientRect();
-        const [x, y] = [clientX - left, clientY - top];
-        const isXInRange = x >= -GRADIENT_SIZE && x <= width + GRADIENT_SIZE;
-        const isYInRange = y >= -GRADIENT_SIZE && y <= height + GRADIENT_SIZE;
-        if (!isXInRange || !isYInRange) return;
-        button.style.setProperty('--mouse-x', `${x}px`);
-        button.style.setProperty('--mouse-y', `${y}px`);
-      })
-    );
+        const { position } = getMouseState(button, event, GRADIENT_SIZE);
+        updateMousePosition(button, position);
+      });
+    });
   };
 
   document.addEventListener('mousemove', handleMouseMove);
 
   const handleBlur = () => {
-    buttons.forEach((button) => {
-      button.style.removeProperty('--mouse-x');
-      button.style.removeProperty('--mouse-y');
-    });
+    buttons.forEach((button) => removeMousePosition(button));
   };
 
   window.addEventListener('blur', handleBlur);

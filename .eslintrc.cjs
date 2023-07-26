@@ -65,6 +65,9 @@ module.exports = {
         sourceType: 'module',
         ecmaVersion: 'latest',
       },
+      rules: {
+        '@typescript-eslint/triple-slash-reference': 'off',
+      },
     },
     {
       files: ['*.mjs'],
