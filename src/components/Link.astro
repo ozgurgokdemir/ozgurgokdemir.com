@@ -8,6 +8,8 @@ type Props = {
   class?: string;
 };
 
+export type { Props as LinkProps };
+
 const { href, text, external, class: className, ...restProps } = Astro.props;
 ---
 

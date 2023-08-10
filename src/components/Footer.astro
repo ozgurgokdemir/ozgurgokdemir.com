@@ -1,23 +1,20 @@
 ---
+import type { LinkProps } from '@/components/Link.astro';
+
 import Logo from '@/components/Logo.astro';
 import Link from '@/components/Link.astro';
 
-type Props = {
-  links: {
-    href: string;
-    text: string;
-  }[];
-};
+type Props = { links: LinkProps[] };
 
 const { links } = Astro.props;
 
-const FOOTER_DATA = {
+const FOOTER_DATA: Record<string, LinkProps[]> = {
   info: [
     { href: '#contact', text: 'Ankara, Turkey' },
     { href: 'tel:+905452863606', text: '+90 545 286 36 06' },
     { href: 'mailto:ozgurgokd@gmail.com', text: 'ozgurgokd@gmail.com' },
   ],
-  links: links.filter((link) => link.href !== '#' && link.href !== '#contact'),
+  links: links.filter((link) => link.href !== '#'),
   socials: [
     { href: 'https://www.linkedin.com/in/ozgurgokdemir/', text: 'LinkedIn' },
     { href: 'https://github.com/ozgurgokdemir/', text: 'GitHub' },

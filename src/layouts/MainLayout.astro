@@ -4,6 +4,8 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@/styles/globals.css';
 
+import type { LinkProps } from '@/components/Link.astro';
+
 import { SEO } from 'astro-seo';
 import Header from '@/components/Header.astro';
 import Menu from '@/components/Menu.astro';
@@ -19,13 +21,18 @@ const {
   description = 'Özgür Gökdemir is a frontend developer proficient in HTML, CSS, JavaScript, React, Next.js, Tailwind CSS, and TypeScript, specializing in building responsive web apps.',
 } = Astro.props;
 
-const NAVIGATION_LINKS = [
+const NAVIGATION_LINKS: LinkProps[] = [
   { href: '#', text: 'Home' },
   { href: '#projects', text: 'Projects' },
   { href: '#skills', text: 'Skills' },
-  { href: '#blog', text: 'Blog' },
   { href: '#contact', text: 'Contact' },
 ];
+
+const RESUME_LINK: LinkProps = {
+  href: '/Ozgur_Gokdemir_Resume.pdf',
+  text: 'Resume',
+  external: true,
+};
 
 const URL = 'https://ozgurgokdemir.com/';
 ---
@@ -39,8 +46,7 @@ const URL = 'https://ozgurgokdemir.com/';
       charset="utf-8"
       openGraph={{
         basic: {
-          title:
-            'Özgür Gökdemir - Frontend Developer: Crafting Seamless User Experiences',
+          title: 'Özgür Gökdemir - Frontend Developer',
           type: 'website',
           image: '/assets/images/ozgur-gokdemir.png',
           url: URL,
@@ -56,8 +62,8 @@ const URL = 'https://ozgurgokdemir.com/';
   <body
     class="bg-primary font-primary text-body-base-400 text-neutral transition-colors duration-300"
   >
-    <Header links={NAVIGATION_LINKS} />
-    <Menu links={NAVIGATION_LINKS} />
+    <Header links={NAVIGATION_LINKS} resume={RESUME_LINK} />
+    <Menu links={NAVIGATION_LINKS} resume={RESUME_LINK} />
     <main>
       <slot />
     </main>

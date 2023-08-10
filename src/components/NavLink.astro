@@ -1,15 +1,12 @@
 ---
-import Link from '@/components/Link.astro';
+import Link, { type LinkProps } from '@/components/Link.astro';
 
-type Props = {
-  href: string;
-  text: string;
-};
+type Props = LinkProps;
 
-const { href, text, ...restProps } = Astro.props;
+const { href, text, external, ...restProps } = Astro.props;
 ---
 
-<Link data-nav-link {href} {text} {...restProps} />
+<Link data-nav-link {href} {text} {external} {...restProps} />
 
 <style>
   [data-nav-link][aria-current='page'] {
@@ -19,7 +16,7 @@ const { href, text, ...restProps } = Astro.props;
 
 <script>
   const setCurrentNavLink = () => {
-    const hash = window.location.hash;
+    const { hash } = window.location;
 
     const navLinks =
       document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');

@@ -1,4 +1,6 @@
 ---
+import type { LinkProps } from '@/components/Link.astro';
+
 import Button from '@/components/Button.astro';
 import Logo from '@/components/Logo.astro';
 import MenuButton from '@/components/MenuButton.astro';
@@ -6,15 +8,11 @@ import NavLink from '@/components/NavLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 
 type Props = {
-  links: {
-    href: string;
-    text: string;
-  }[];
+  links: LinkProps[];
+  resume: LinkProps;
 };
 
-const { links } = Astro.props;
-
-const headerLinks = links.filter((link) => link.href !== '#contact');
+const { links, resume } = Astro.props;
 ---
 
 <header
@@ -28,16 +26,16 @@ const headerLinks = links.filter((link) => link.href !== '#contact');
     <MenuButton class="md:hidden" />
     <ul class="hidden gap-8 md:flex">
       {
-        headerLinks.map(({ href, text }) => (
+        links.map(({ href, text, external }) => (
           <li>
-            <NavLink {href} {text} />
+            <NavLink {href} {text} {external} />
           </li>
         ))
       }
     </ul>
     <div class="hidden items-center gap-6 md:flex">
       <ThemeToggle />
-      <Button href="#contact" text="Contact" size="medium" />
+      <Button {...resume} size="medium" />
     </div>
   </nav>
 </header>

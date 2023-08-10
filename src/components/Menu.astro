@@ -1,15 +1,16 @@
 ---
+import type { LinkProps } from '@/components/Link.astro';
+
 import NavLink from '@/components/NavLink.astro';
+import Link from '@/components/Link.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 
 type Props = {
-  links: {
-    href: string;
-    text: string;
-  }[];
+  links: LinkProps[];
+  resume: LinkProps;
 };
 
-const { links } = Astro.props;
+const { links, resume } = Astro.props;
 ---
 
 <dialog
@@ -18,7 +19,8 @@ const { links } = Astro.props;
   class="fixed z-40 mr-0 translate-x-full rounded-l-lg border-y border-l border-neutral/10 bg-primary/70 p-0 px-8 py-6 backdrop-blur-xl transition duration-300 backdrop:opacity-0"
 >
   <nav aria-label="Main" class="flex flex-col items-center gap-8">
-    {links.map(({ href, text }) => <NavLink {href} {text} data-menu-link />)}
+    {links.map((link) => <NavLink data-menu-link {...link} />)}
+    <Link data-menu-link {...resume} />
     <ThemeToggle />
   </nav>
 </dialog>
