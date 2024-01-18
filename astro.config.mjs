@@ -17,6 +17,7 @@ export default defineConfig({
       include: {
         heroicons: ['*'],
         'simple-icons': ['*'],
+        'devicon-plain': ['*'],
       },
     }),
   ],
