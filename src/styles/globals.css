@@ -10,4 +10,8 @@
     font-display: swap;
     src: url('fonts/manrope.woff2') format('woff2');
   }
+
+  :root {
+    color-scheme: dark;
+  }
 }
