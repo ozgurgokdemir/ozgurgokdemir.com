@@ -1,0 +1,24 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type Props = {
+  href: string;
+  alt: string;
+  icon: string;
+  class?: string;
+};
+
+const { href, alt, icon, class: className } = Astro.props;
+---
+
+<a
+  {href}
+  target="_blank"
+  class:list={[
+    'grid place-items-center text-white/80 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline',
+    className,
+  ]}
+  aria-label={alt}
+>
+  <Icon name={icon} size={20} />
+</a>

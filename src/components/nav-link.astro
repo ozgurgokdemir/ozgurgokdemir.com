@@ -1,0 +1,53 @@
+---
+type Props = {
+  href: string;
+  class?: string;
+};
+
+const { href, class: className } = Astro.props;
+---
+
+<a
+  {href}
+  class:list={[
+    'text-base font-semibold text-white/60 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline aria-[current=page]:text-white',
+    className,
+  ]}
+  data-nav-link
+>
+  <slot />
+</a>
+
+<script>
+  const navBar = document.querySelector<HTMLDivElement>('[data-nav-bar]');
+
+  const navLinks =
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+  const updateCurrentNavLink = () => {
+    const { pathname } = window.location;
+
+    navLinks.forEach((navLink) => {
+      const ariaCurrent = pathname === navLink.pathname ? 'page' : 'false';
+      navLink.setAttribute('aria-current', ariaCurrent);
+
+      if (ariaCurrent === 'false' || !navBar) return;
+
+      const activeLinkRect = navLink.getBoundingClientRect();
+      const navBarRect = navBar.getBoundingClientRect();
+
+      navBar.style.setProperty(
+        '--indicator-width',
+        `${activeLinkRect.width / 2}px`,
+      );
+      navBar.style.setProperty(
+        '--indicator-left',
+        `${activeLinkRect.left - navBarRect.left + activeLinkRect.width / 4}px`,
+      );
+    });
+  };
+
+  updateCurrentNavLink();
+
+  document.addEventListener('astro:after-swap', updateCurrentNavLink);
+</script>

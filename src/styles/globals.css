@@ -12,6 +12,10 @@
   }
 
   :root {
+    --header-height: 4rem;
+
+    @apply md:[--header-height:5rem];
+
     color-scheme: dark;
   }
 }

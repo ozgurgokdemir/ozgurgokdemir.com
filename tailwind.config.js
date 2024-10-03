@@ -8,6 +8,16 @@ export default {
       fontFamily: {
         sans: ['Manrope', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        '2xl': undefined,
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          md: '2.5rem',
+        },
+      },
     },
   },
   plugins: [],

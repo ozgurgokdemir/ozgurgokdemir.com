@@ -13,6 +13,7 @@ export default defineConfig({
       include: {
         heroicons: ['*'],
         'simple-icons': ['*'],
+        'fa6-brands': ['*'],
       },
     }),
   ],

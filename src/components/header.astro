@@ -1,0 +1,47 @@
+---
+import Logo from '@/components/logo.astro';
+import NavLink from '@/components/nav-link.astro';
+import SocialLink from '@/components/social-link.astro';
+import HamburgerButton from '@/components/hamburger-button.astro';
+import MobileMenu from '@/components/mobile-menu.astro';
+---
+
+<header
+  class="sticky top-0 z-30 bg-black/80 backdrop-blur-lg"
+  transition:persist
+>
+  <div
+    class="container grid h-[--header-height] grid-cols-2 items-center border-b border-white/10 px-0 md:grid-cols-[1fr_auto_1fr] md:px-10"
+  >
+    <div class="inline-flex place-content-start self-stretch md:self-auto">
+      <Logo class="px-4 md:px-0" />
+    </div>
+    <nav
+      class="relative hidden place-content-center items-center gap-8 after:absolute after:-bottom-2 after:left-[--indicator-left] after:h-0.5 after:w-[--indicator-width] after:rounded-full after:bg-emerald-400 after:transition-[width,left] md:inline-flex"
+      data-nav-bar
+    >
+      <NavLink href="/">Home</NavLink>
+      <NavLink href="/about">About</NavLink>
+      <NavLink href="/projects">Projects</NavLink>
+      <NavLink href="/contact">Contact</NavLink>
+    </nav>
+    <div
+      class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
+    >
+      <SocialLink
+        href="https://linkedin.com/in/ozgurgokdemir"
+        alt="LinkedIn"
+        icon="fa6-brands:linkedin-in"
+        class="w-[3.25rem] md:w-auto"
+      />
+      <SocialLink
+        href="https://github.com/ozgurgokdemir"
+        alt="GitHub"
+        icon="simple-icons:github"
+        class="w-[3.25rem] md:w-auto"
+      />
+      <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
+      <MobileMenu />
+    </div>
+  </div>
+</header>
