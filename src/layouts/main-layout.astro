@@ -8,6 +8,38 @@ type Props = {
 };
 
 const { title } = Astro.props;
+
+const NAVIGATION_LINKS = [
+  {
+    href: '/',
+    text: 'Home',
+  },
+  {
+    href: '/about',
+    text: 'About',
+  },
+  {
+    href: '/projects',
+    text: 'Projects',
+  },
+  {
+    href: '/contact',
+    text: 'Contact',
+  },
+];
+
+const SOCIAL_LINKS = [
+  {
+    href: 'https://linkedin.com/in/ozgurgokdemir',
+    alt: 'LinkedIn',
+    icon: 'fa6-brands:linkedin-in',
+  },
+  {
+    href: 'https://github.com/ozgurgokdemir',
+    alt: 'GitHub',
+    icon: 'simple-icons:github',
+  },
+];
 ---
 
 <html lang="en">
@@ -27,7 +59,7 @@ const { title } = Astro.props;
     <ViewTransitions />
   </head>
   <body class="bg-black font-sans text-base font-medium text-white/60">
-    <Header />
+    <Header navigationLinks={NAVIGATION_LINKS} socialLinks={SOCIAL_LINKS} />
     <slot />
   </body>
 </html>

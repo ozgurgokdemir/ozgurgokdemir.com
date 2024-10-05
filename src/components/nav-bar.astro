@@ -1,0 +1,67 @@
+---
+type Props = {
+  orientation?: 'vertical' | 'horizontal';
+  class?: string;
+};
+
+const { orientation = 'vertical', class: className } = Astro.props;
+---
+
+<nav
+  class:list={[
+    'relative after:absolute',
+    orientation === 'vertical'
+      ? 'after:left-0 after:top-[calc(var(--indicator-top)+0.75rem)] after:h-6 after:w-0.5 after:rounded-r-full after:bg-emerald-400 after:transition-[top]'
+      : 'after:-bottom-2 after:left-[--indicator-left] after:h-0.5 after:w-[--indicator-width] after:rounded-full after:bg-emerald-400 after:transition-[width,left]',
+    className,
+  ]}
+  data-nav-bar
+  data-orientation={orientation}
+>
+  <slot />
+</nav>
+
+<script>
+  const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
+
+  const navigations = Array.from(navBars, (navBar) => ({
+    navBar,
+    navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+  }));
+
+  const updateNavigation = () => {
+    const { pathname } = window.location;
+
+    navigations.forEach(({ navBar, navLinks }) => {
+      navLinks.forEach((navLink) => {
+        const ariaCurrent = pathname === navLink.pathname ? 'page' : 'false';
+        navLink.setAttribute('aria-current', ariaCurrent);
+
+        if (ariaCurrent === 'false') return;
+
+        const activeLinkRect = navLink.getBoundingClientRect();
+        const navBarRect = navBar.getBoundingClientRect();
+
+        if (navBar.dataset.orientation === 'vertical') {
+          navBar.style.setProperty(
+            '--indicator-top',
+            `${activeLinkRect.top - navBarRect.top}px`,
+          );
+        } else {
+          navBar.style.setProperty(
+            '--indicator-width',
+            `${activeLinkRect.width / 2}px`,
+          );
+          navBar.style.setProperty(
+            '--indicator-left',
+            `${activeLinkRect.left - navBarRect.left + activeLinkRect.width / 4}px`,
+          );
+        }
+      });
+    });
+  };
+
+  updateNavigation();
+
+  document.addEventListener('astro:after-swap', updateNavigation);
+</script>

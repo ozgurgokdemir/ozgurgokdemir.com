@@ -1,9 +1,24 @@
 ---
 import Logo from '@/components/logo.astro';
+import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 import SocialLink from '@/components/social-link.astro';
 import HamburgerButton from '@/components/hamburger-button.astro';
 import MobileMenu from '@/components/mobile-menu.astro';
+
+type Props = {
+  navigationLinks: {
+    href: string;
+    text: string;
+  }[];
+  socialLinks: {
+    href: string;
+    alt: string;
+    icon: string;
+  }[];
+};
+
+const { navigationLinks, socialLinks } = Astro.props;
 ---
 
 <header
@@ -16,32 +31,26 @@ import MobileMenu from '@/components/mobile-menu.astro';
     <div class="inline-flex place-content-start self-stretch md:self-auto">
       <Logo class="px-4 md:px-0" />
     </div>
-    <nav
-      class="relative hidden place-content-center items-center gap-8 after:absolute after:-bottom-2 after:left-[--indicator-left] after:h-0.5 after:w-[--indicator-width] after:rounded-full after:bg-emerald-400 after:transition-[width,left] md:inline-flex"
-      data-nav-bar
+    <NavBar
+      orientation="horizontal"
+      class="hidden place-content-center items-center gap-8 md:inline-flex"
     >
-      <NavLink href="/">Home</NavLink>
-      <NavLink href="/about">About</NavLink>
-      <NavLink href="/projects">Projects</NavLink>
-      <NavLink href="/contact">Contact</NavLink>
-    </nav>
+      {
+        navigationLinks.map(({ href, text }) => (
+          <NavLink {href}>{text}</NavLink>
+        ))
+      }
+    </NavBar>
     <div
       class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
     >
-      <SocialLink
-        href="https://linkedin.com/in/ozgurgokdemir"
-        alt="LinkedIn"
-        icon="fa6-brands:linkedin-in"
-        class="w-[3.25rem] md:w-auto"
-      />
-      <SocialLink
-        href="https://github.com/ozgurgokdemir"
-        alt="GitHub"
-        icon="simple-icons:github"
-        class="w-[3.25rem] md:w-auto"
-      />
+      {
+        socialLinks.map(({ href, alt, icon }) => (
+          <SocialLink {href} {alt} {icon} class="w-[3.25rem] md:w-auto" />
+        ))
+      }
       <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
-      <MobileMenu />
+      <MobileMenu links={navigationLinks} />
     </div>
   </div>
 </header>

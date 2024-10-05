@@ -17,37 +17,3 @@ const { href, class: className } = Astro.props;
 >
   <slot />
 </a>
-
-<script>
-  const navBar = document.querySelector<HTMLDivElement>('[data-nav-bar]');
-
-  const navLinks =
-    document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
-
-  const updateCurrentNavLink = () => {
-    const { pathname } = window.location;
-
-    navLinks.forEach((navLink) => {
-      const ariaCurrent = pathname === navLink.pathname ? 'page' : 'false';
-      navLink.setAttribute('aria-current', ariaCurrent);
-
-      if (ariaCurrent === 'false' || !navBar) return;
-
-      const activeLinkRect = navLink.getBoundingClientRect();
-      const navBarRect = navBar.getBoundingClientRect();
-
-      navBar.style.setProperty(
-        '--indicator-width',
-        `${activeLinkRect.width / 2}px`,
-      );
-      navBar.style.setProperty(
-        '--indicator-left',
-        `${activeLinkRect.left - navBarRect.left + activeLinkRect.width / 4}px`,
-      );
-    });
-  };
-
-  updateCurrentNavLink();
-
-  document.addEventListener('astro:after-swap', updateCurrentNavLink);
-</script>

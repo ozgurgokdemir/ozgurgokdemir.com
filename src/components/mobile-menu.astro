@@ -1,3 +1,17 @@
+---
+import NavBar from '@/components/nav-bar.astro';
+import NavLink from '@/components/nav-link.astro';
+
+type Props = {
+  links: {
+    href: string;
+    text: string;
+  }[];
+};
+
+const { links } = Astro.props;
+---
+
 <div
   id="mobile-menu"
   class="group absolute right-2 top-[calc(var(--header-height)-0.5rem)] z-40 w-36 overflow-hidden rounded-xl border border-white/10 bg-black/80 py-3 backdrop-blur-lg transition-[opacity,margin-top] duration-300 aria-[hidden=true]:invisible data-[expanded=false]:-mt-4 data-[expanded=false]:opacity-0"
@@ -5,34 +19,15 @@
   data-expanded="false"
   data-mobile-menu
 >
-  <nav
-    class="relative flex flex-col after:absolute after:left-0 after:top-[--indicator-top] after:h-6 after:w-0.5 after:rounded-r-full after:bg-emerald-400 after:transition-[top]"
-  >
-    <a
-      href="/"
-      class="flex h-12 items-center px-4 font-sans text-base font-semibold text-white/60 transition-colors hover:text-white aria-[current=page]:text-white"
-    >
-      Home
-    </a>
-    <a
-      href="/about"
-      class="flex h-12 items-center px-4 font-sans text-base font-semibold text-white/60 transition-colors hover:text-white aria-[current=page]:text-white"
-    >
-      About
-    </a>
-    <a
-      href="/projects"
-      class="flex h-12 items-center px-4 font-sans text-base font-semibold text-white/60 transition-colors hover:text-white aria-[current=page]:text-white"
-    >
-      Projects
-    </a>
-    <a
-      href="/contact"
-      class="flex h-12 items-center px-4 font-sans text-base font-semibold text-white/60 transition-colors hover:text-white aria-[current=page]:text-white"
-    >
-      Contact
-    </a>
-  </nav>
+  <NavBar orientation="vertical" class="felx flex-col">
+    {
+      links.map(({ href, text }) => (
+        <NavLink {href} class="flex h-12 items-center px-4">
+          {text}
+        </NavLink>
+      ))
+    }
+  </NavBar>
 </div>
 
 <script>
@@ -44,34 +39,11 @@
     '[data-hamburger-button]',
   ) as HTMLButtonElement;
 
-  const navLinks = mobileMenu.querySelectorAll('a');
-
   let timeout: ReturnType<typeof setTimeout>;
 
   let isExpanded = false;
 
-  const updateCurrentNavLink = () => {
-    const { pathname } = window.location;
-
-    navLinks.forEach((navLink) => {
-      const ariaCurrent = pathname === navLink.pathname ? 'page' : 'false';
-      navLink.setAttribute('aria-current', ariaCurrent);
-
-      if (ariaCurrent === 'false' || !mobileMenu) return;
-
-      const activeLinkRect = navLink.getBoundingClientRect();
-      const navBarRect = mobileMenu.getBoundingClientRect();
-
-      mobileMenu.style.setProperty(
-        '--indicator-top',
-        `${activeLinkRect.top - navBarRect.top}px`,
-      );
-    });
-  };
-
   const handleClick = (event: MouseEvent) => {
-    updateCurrentNavLink();
-
     if (!isExpanded) return;
 
     const { clientX, clientY, target } = event;
@@ -118,8 +90,6 @@
   }
 
   hamburgerButton.addEventListener('click', toggle);
-
-  document.addEventListener('astro:after-swap', updateCurrentNavLink);
 
   document.addEventListener('astro:page-load', close);
 
