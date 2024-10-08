@@ -2,6 +2,7 @@
 export default {
   singleQuote: true,
   astroAllowShorthand: true,
+  tailwindFunctions: ['tv'],
   plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
   overrides: [
     {
