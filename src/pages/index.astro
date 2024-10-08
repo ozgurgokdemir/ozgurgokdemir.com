@@ -1,7 +1,31 @@
 ---
 import MainLayout from '@/layouts/main-layout.astro';
+import { Icon } from 'astro-icon/components';
+import LinkButton from '@/components/link-button.astro';
 ---
 
 <MainLayout title="Özgür Gökdemir — Frontend Developer">
-  <h1>Astro</h1>
+  <div
+    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:pb-40 md:pt-56"
+  >
+    <h1
+      class="text-5xl font-semibold text-white md:text-center md:text-[5rem] md:leading-tight"
+    >
+      Hi, I’m Özgür Gökdemir.
+      <br />
+      I’m a frontend developer.
+    </h1>
+    <p class="text-xl font-semibold text-white/60">
+      I build high-performance and responsive web applications.
+    </p>
+    <div class="flex items-center gap-4 pt-2 md:pt-5">
+      <LinkButton href="/contact">
+        <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" size={20} />
+        Let's Talk
+      </LinkButton>
+      <LinkButton href="/projects" variant="secondary">
+        View my work
+      </LinkButton>
+    </div>
+  </div>
 </MainLayout>
