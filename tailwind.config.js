@@ -18,6 +18,13 @@ export default {
           md: '2.5rem',
         },
       },
+      backgroundImage: {
+        'gradient-radial-to-b':
+          'radial-gradient(circle at top, var(--tw-gradient-stops))',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
     },
   },
   plugins: [],

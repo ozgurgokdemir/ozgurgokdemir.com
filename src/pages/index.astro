@@ -2,10 +2,12 @@
 import MainLayout from '@/layouts/main-layout.astro';
 import { Icon } from 'astro-icon/components';
 import LinkButton from '@/components/link-button.astro';
+import { Image } from 'astro:assets';
+import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 ---
 
 <MainLayout title="Özgür Gökdemir — Frontend Developer">
-  <div
+  <section
     class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:pb-40 md:pt-56"
   >
     <h1
@@ -27,5 +29,40 @@ import LinkButton from '@/components/link-button.astro';
         View my work
       </LinkButton>
     </div>
-  </div>
+  </section>
+  <section
+    class="container flex flex-col gap-16 py-16 md:flex-row md:items-center md:gap-8 md:py-36"
+  >
+    <div class="flex flex-1 flex-col items-start gap-6 md:mr-12 md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        Get to know me.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        I’m a frontend developer based in Türkiye, specializing in building
+        dynamic web applications using TypeScript, React, and Next.js. I develop
+        interactive features and optimize user experiences to deliver fast,
+        efficient, and user-friendly solutions. Whether working independently or
+        as part of a team, I aim to meet both business and user needs.
+      </p>
+      <LinkButton href="/about" variant="secondary" class="group gap-2">
+        More about me
+        <Icon
+          name="heroicons:arrow-long-right-20-solid"
+          size={20}
+          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+        />
+      </LinkButton>
+    </div>
+    <div
+      class="relative h-fit flex-1 rounded-4xl bg-gradient-radial-to-b from-white/20 to-transparent p-4 after:absolute after:inset-4 after:rounded-2xl after:bg-gradient-to-b after:from-transparent after:to-black"
+    >
+      <Image
+        src={ozgurGokdemir}
+        alt="Özgür Gökdemir"
+        width={500}
+        height={500}
+        class="w-full rounded-2xl bg-black/60 backdrop-blur-lg"
+      />
+    </div>
+  </section>
 </MainLayout>
