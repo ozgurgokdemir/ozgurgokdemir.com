@@ -1,9 +1,19 @@
 ---
-import MainLayout from '@/layouts/main-layout.astro';
 import { Icon } from 'astro-icon/components';
-import LinkButton from '@/components/link-button.astro';
 import { Image } from 'astro:assets';
+import MainLayout from '@/layouts/main-layout.astro';
+import LinkButton from '@/components/link-button.astro';
+import FeaturedProjectCard from '@/components/featured-project-card.astro';
 import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
+import ecommerce from '@/assets/nextjs-ecommerce.png';
+
+const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
+  title: 'eCommerce',
+  description: 'A modern ecommerce example.',
+  image: ecommerce,
+  color: '#2563eb',
+  href: '/projects/ecommerce',
+}));
 ---
 
 <MainLayout title="Özgür Gökdemir — Frontend Developer">
@@ -64,5 +74,32 @@ import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
         class="w-full rounded-2xl bg-black/60 backdrop-blur-lg"
       />
     </div>
+  </section>
+  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-36">
+    <div class="flex flex-col items-start gap-6 md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        A glimpse into my work.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        Here are some projects I've loved working on.
+      </p>
+      <LinkButton href="/projects" variant="secondary" class="group gap-2">
+        See all projects
+        <Icon
+          name="heroicons:arrow-long-right-20-solid"
+          size={20}
+          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+        />
+      </LinkButton>
+    </div>
+    <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+      {
+        FEATURED_PROJECTS.map((project) => (
+          <li class="md:even:-translate-y-36">
+            <FeaturedProjectCard {...project} />
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </MainLayout>
