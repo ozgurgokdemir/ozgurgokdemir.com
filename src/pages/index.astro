@@ -4,8 +4,16 @@ import { Image } from 'astro:assets';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
 import FeaturedProjectCard from '@/components/featured-project-card.astro';
+import ContactViaEmail from '@/components/contact-via-email.astro';
+import Separator from '@/components/separator.astro';
 import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 import ecommerce from '@/assets/nextjs-ecommerce.png';
+import FormField from '@/components/form-field.astro';
+import FormLabel from '@/components/form-label.astro';
+import FormInput from '@/components/form-input.astro';
+import FormTextarea from '@/components/form-textarea.astro';
+import Button from '@/components/button.astro';
+import Frame from '@/components/frame.astro';
 
 const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
   title: 'eCommerce',
@@ -41,9 +49,9 @@ const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
     </div>
   </section>
   <section
-    class="container flex flex-col gap-16 py-16 md:flex-row md:items-center md:gap-8 md:py-36"
+    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
   >
-    <div class="flex flex-1 flex-col items-start gap-6 md:mr-12 md:gap-8">
+    <div class="flex flex-col items-start gap-6 md:mr-12 md:gap-8">
       <h2 class="text-4xl font-semibold text-white md:text-5xl">
         Get to know me.
       </h2>
@@ -63,9 +71,7 @@ const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
         />
       </LinkButton>
     </div>
-    <div
-      class="relative h-fit flex-1 rounded-4xl bg-gradient-radial-to-b from-white/20 to-transparent p-4 after:absolute after:inset-4 after:rounded-2xl after:bg-gradient-to-b after:from-transparent after:to-black"
-    >
+    <Frame border overlay>
       <Image
         src={ozgurGokdemir}
         alt="Özgür Gökdemir"
@@ -73,7 +79,7 @@ const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
         height={500}
         class="w-full rounded-2xl bg-black/60 backdrop-blur-lg"
       />
-    </div>
+    </Frame>
   </section>
   <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-36">
     <div class="flex flex-col items-start gap-6 md:gap-8">
@@ -101,5 +107,60 @@ const FEATURED_PROJECTS = Array.from({ length: 4 }, () => ({
         ))
       }
     </ul>
+  </section>
+  <section
+    class="container grid gap-6 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
+  >
+    <div class="flex flex-col gap-6 md:items-start md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        Get in touch.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        I’m open to opportunities—let’s connect.
+      </p>
+      <ContactViaEmail>
+        <br class="hidden md:block" />
+      </ContactViaEmail>
+    </div>
+    <Separator class="md:hidden" />
+    <Frame border={{ lg: true }}>
+      <form
+        class="grid gap-6 lg:rounded-2xl lg:bg-black/60 lg:p-8 xl:grid-cols-2"
+      >
+        <FormField>
+          <FormLabel for="name">Name</FormLabel>
+          <FormInput
+            type="text"
+            name="name"
+            id="name"
+            placeholder="John Doe"
+            required
+          />
+        </FormField>
+        <FormField>
+          <FormLabel for="email">Email</FormLabel>
+          <FormInput
+            type="email"
+            name="name"
+            id="email"
+            placeholder="example@gmail.com"
+            required
+          />
+        </FormField>
+        <FormField class="col-span-full">
+          <FormLabel for="message">Message</FormLabel>
+          <FormTextarea
+            rows={5}
+            name="message"
+            id="message"
+            placeholder="Your message."
+            required
+          />
+        </FormField>
+        <Button type="submit" class="mt-3 xl:col-start-2">
+          Send message
+        </Button>
+      </form>
+    </Frame>
   </section>
 </MainLayout>

@@ -1,7 +1,8 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import { withTV } from 'tailwind-variants/transformer';
 
 /** @type {import('tailwindcss').Config} */
-export default {
+export default withTV({
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
   theme: {
     extend: {
@@ -20,7 +21,7 @@ export default {
       },
       backgroundImage: {
         'gradient-radial-to-b':
-          'radial-gradient(circle at top, var(--tw-gradient-stops))',
+          'radial-gradient(circle farthest-side at top, var(--tw-gradient-stops))',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -28,4 +29,4 @@ export default {
     },
   },
   plugins: [],
-};
+});
