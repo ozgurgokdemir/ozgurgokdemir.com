@@ -15,9 +15,8 @@ const { navigationLinks } = Astro.props;
 <NavBar
   orientation="vertical"
   id="mobile-menu"
-  class="group fixed right-2 top-[calc(var(--header-height)-0.5rem)] z-40 w-36 overflow-hidden rounded-xl border border-white/10 bg-black/60 py-3 backdrop-blur-lg transition-[visibility,transform,opacity] duration-300 aria-[hidden=true]:invisible aria-[hidden=true]:-translate-y-4 aria-[hidden=true]:opacity-0"
+  class="group absolute right-2 top-[calc(var(--header-height)-0.5rem)] z-40 w-36 overflow-hidden rounded-xl border border-white/10 bg-black/60 py-3 backdrop-blur-lg transition-[visibility,transform,opacity] duration-300 aria-[hidden=true]:invisible aria-[hidden=true]:-translate-y-4 aria-[hidden=true]:opacity-0"
   aria-hidden="true"
-  transition:persist
 >
   <ul class="flex flex-col">
     {

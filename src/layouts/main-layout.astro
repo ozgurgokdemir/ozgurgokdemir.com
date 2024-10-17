@@ -2,7 +2,6 @@
 import '@/styles/globals.css';
 import { ViewTransitions } from 'astro:transitions';
 import Header from '@/components/header.astro';
-import MobileMenu from '@/components/mobile-menu.astro';
 import Footer from '@/components/footer.astro';
 
 type Props = {
@@ -62,7 +61,6 @@ const SOCIAL_LINKS = [
   </head>
   <body class="grid bg-black font-sans text-base font-medium text-white/60">
     <Header navigationLinks={NAVIGATION_LINKS} socialLinks={SOCIAL_LINKS} />
-    <MobileMenu navigationLinks={NAVIGATION_LINKS} />
     <main class="min-h-[calc(100dvh-var(--header-height))]">
       <slot />
     </main>

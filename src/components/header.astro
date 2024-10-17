@@ -4,6 +4,7 @@ import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 import SocialLink from '@/components/social-link.astro';
 import HamburgerButton from '@/components/hamburger-button.astro';
+import MobileMenu from '@/components/mobile-menu.astro';
 
 type Props = {
   navigationLinks: {
@@ -21,7 +22,7 @@ const { navigationLinks, socialLinks } = Astro.props;
 ---
 
 <header
-  class="sticky top-0 z-30 bg-black/80 backdrop-blur-lg"
+  class="sticky top-0 z-30 before:absolute before:inset-0 before:-z-10 before:bg-black/80 before:backdrop-blur-lg"
   transition:persist
 >
   <div
@@ -53,6 +54,7 @@ const { navigationLinks, socialLinks } = Astro.props;
         ))
       }
       <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
+      <MobileMenu {navigationLinks} />
     </div>
   </div>
 </header>
