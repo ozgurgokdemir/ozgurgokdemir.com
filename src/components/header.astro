@@ -4,7 +4,6 @@ import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 import SocialLink from '@/components/social-link.astro';
 import HamburgerButton from '@/components/hamburger-button.astro';
-import MobileMenu from '@/components/mobile-menu.astro';
 
 type Props = {
   navigationLinks: {
@@ -33,13 +32,17 @@ const { navigationLinks, socialLinks } = Astro.props;
     </div>
     <NavBar
       orientation="horizontal"
-      class="hidden place-content-center items-center gap-8 md:inline-flex"
+      class="hidden place-content-center md:inline-block"
     >
-      {
-        navigationLinks.map(({ href, text }) => (
-          <NavLink {href}>{text}</NavLink>
-        ))
-      }
+      <ul class="flex items-center gap-8">
+        {
+          navigationLinks.map(({ href, text }) => (
+            <li>
+              <NavLink {href}>{text}</NavLink>
+            </li>
+          ))
+        }
+      </ul>
     </NavBar>
     <div
       class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
@@ -50,7 +53,6 @@ const { navigationLinks, socialLinks } = Astro.props;
         ))
       }
       <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
-      <MobileMenu links={navigationLinks} />
     </div>
   </div>
 </header>

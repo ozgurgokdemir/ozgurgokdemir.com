@@ -1,19 +1,18 @@
 ---
-type Props = {
-  href: string;
-  class?: string;
-};
+import type { HTMLAttributes } from 'astro/types';
 
-const { href, class: className } = Astro.props;
+type Props = HTMLAttributes<'a'>;
+
+const { class: className, ...props } = Astro.props;
 ---
 
 <a
-  {href}
   class:list={[
     'text-base font-semibold text-white/60 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline aria-[current=page]:text-white',
     className,
   ]}
   data-nav-link
+  {...props}
 >
   <slot />
 </a>

@@ -3,47 +3,45 @@ import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 
 type Props = {
-  links: {
+  navigationLinks: {
     href: string;
     text: string;
   }[];
 };
 
-const { links } = Astro.props;
+const { navigationLinks } = Astro.props;
 ---
 
-<div
+<NavBar
+  orientation="vertical"
   id="mobile-menu"
-  class="group absolute right-2 top-[calc(var(--header-height)-0.5rem)] z-40 w-36 overflow-hidden rounded-xl border border-white/10 bg-black/80 py-3 backdrop-blur-lg transition-[opacity,margin-top] duration-300 aria-[hidden=true]:invisible data-[expanded=false]:-mt-4 data-[expanded=false]:opacity-0"
+  class="group fixed right-2 top-[calc(var(--header-height)-0.5rem)] z-40 w-36 overflow-hidden rounded-xl border border-white/10 bg-black/60 py-3 backdrop-blur-lg transition-[visibility,transform,opacity] duration-300 aria-[hidden=true]:invisible aria-[hidden=true]:-translate-y-4 aria-[hidden=true]:opacity-0"
   aria-hidden="true"
-  data-expanded="false"
-  data-mobile-menu
+  transition:persist
 >
-  <NavBar orientation="vertical" class="felx flex-col">
+  <ul class="flex flex-col">
     {
-      links.map(({ href, text }) => (
-        <NavLink {href} class="flex h-12 items-center px-4">
-          {text}
-        </NavLink>
+      navigationLinks.map(({ href, text }) => (
+        <li>
+          <NavLink {href} class="flex h-12 items-center px-4" aria-label={text}>
+            {text}
+          </NavLink>
+        </li>
       ))
     }
-  </NavBar>
-</div>
+  </ul>
+</NavBar>
 
 <script>
-  const mobileMenu = document.querySelector(
-    '[data-mobile-menu]',
-  ) as HTMLDivElement;
+  const mobileMenu = document.getElementById('mobile-menu') as HTMLDivElement;
 
   const hamburgerButton = document.querySelector(
-    '[data-hamburger-button]',
+    '[aria-controls="mobile-menu"]',
   ) as HTMLButtonElement;
-
-  let timeout: ReturnType<typeof setTimeout>;
 
   let isExpanded = false;
 
-  const handleClick = (event: MouseEvent) => {
+  function handleClick(event: MouseEvent) {
     if (!isExpanded) return;
 
     const { clientX, clientY, target } = event;
@@ -53,45 +51,35 @@ const { links } = Astro.props;
       clientX < left || clientX > right || clientY < top || clientY > bottom;
 
     if (isClickOutsideMenu && !hamburgerButton.contains(target as Node)) {
-      close();
+      closeMenu();
     }
-  };
+  }
 
-  function open() {
+  function openMenu() {
+    mobileMenu.setAttribute('aria-hidden', 'false');
     hamburgerButton.setAttribute('aria-expanded', 'true');
     hamburgerButton.setAttribute('aria-label', 'close menu');
-
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    mobileMenu.setAttribute('data-expanded', 'true');
-
     isExpanded = true;
   }
 
-  function close() {
+  function closeMenu() {
+    mobileMenu.setAttribute('aria-hidden', 'true');
     hamburgerButton.setAttribute('aria-expanded', 'false');
     hamburgerButton.setAttribute('aria-label', 'open menu');
-
-    mobileMenu.setAttribute('data-expanded', 'false');
-
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      mobileMenu.setAttribute('aria-hidden', 'true');
-    }, 300);
-
     isExpanded = false;
   }
 
-  function toggle() {
+  function toggleMenu() {
     if (isExpanded) {
-      close();
+      closeMenu();
     } else {
-      open();
+      openMenu();
     }
   }
 
-  hamburgerButton.addEventListener('click', toggle);
+  hamburgerButton.addEventListener('click', toggleMenu);
 
-  document.addEventListener('astro:page-load', close);
+  document.addEventListener('astro:page-load', closeMenu);
 
   document.addEventListener('click', handleClick);
 </script>
