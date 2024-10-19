@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'form'>;
+---
+
+<form {...Astro.props}>
+  <slot />
+</form>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  const contactForm = document.querySelector('form') as HTMLFormElement;
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    const formData = new FormData(contactForm);
+    await actions.sendMessage(formData);
+  }
+
+  contactForm.addEventListener('submit', handleSubmit);
+</script>
