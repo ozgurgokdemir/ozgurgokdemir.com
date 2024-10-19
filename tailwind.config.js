@@ -26,6 +26,15 @@ export default withTV({
       borderRadius: {
         '4xl': '2rem',
       },
+      keyframes: {
+        plop: {
+          '0%, 100%': { opacity: '.2' },
+          '20%': { opacity: '1' },
+        },
+      },
+      animation: {
+        plop: 'plop 1s ease-in-out infinite',
+      },
     },
   },
   plugins: [],
