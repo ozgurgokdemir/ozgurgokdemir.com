@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import { ViewTransitions } from 'astro:transitions';
 import Header from '@/components/header.astro';
 import Footer from '@/components/footer.astro';
+import Toast from '@/components/toast.astro';
 
 type Props = {
   title: string;
@@ -65,5 +66,6 @@ const SOCIAL_LINKS = [
       <slot />
     </main>
     <Footer socialLinks={SOCIAL_LINKS} />
+    <Toast />
   </body>
 </html>
