@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import LinkButton from '@/components/link-button.astro';
+import underConstructionSvg from '@/assets/under-construction.svg';
+
+type Props = HTMLAttributes<'section'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div
+  class:list={[
+    'grid gap-16 md:grid-cols-2 md:items-center md:gap-8',
+    className,
+  ]}
+  {...props}
+>
+  <div class="flex flex-col items-start gap-6 md:mr-12 md:gap-8">
+    <h1 class="text-4xl font-semibold text-white md:text-5xl">Coming soon.</h1>
+    <p class="text-lg font-semibold text-white/60">
+      This page is currently under development.
+    </p>
+    <LinkButton href="/" variant="secondary" class="group gap-2">
+      Go to homepage
+      <Icon
+        name="heroicons:arrow-long-right-20-solid"
+        size={20}
+        class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+      />
+    </LinkButton>
+  </div>
+  <Image src={underConstructionSvg} alt="Under Construction" loading="eager" />
+</div>
