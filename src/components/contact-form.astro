@@ -12,45 +12,47 @@ type Props = HTMLAttributes<'form'>;
   import { actions } from 'astro:actions';
   import { showToast } from '@/utils/toast';
 
-  const contactForm = document.querySelector('form') as HTMLFormElement;
+  document.addEventListener('astro:page-load', () => {
+    const contactForm = document.querySelector('form') as HTMLFormElement;
 
-  const submitButton = contactForm.querySelector(
-    'button[type="submit"]',
-  ) as HTMLButtonElement;
+    const submitButton = contactForm.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
 
-  function setButtonLoading(isLoading: boolean) {
-    submitButton.dataset.loading = isLoading.toString();
-    submitButton.disabled = isLoading;
-  }
-
-  async function handleSubmit(event: SubmitEvent) {
-    event.preventDefault();
-    const formData = new FormData(contactForm);
-
-    setButtonLoading(true);
-
-    try {
-      const { error } = await actions.sendMessage(formData);
-      if (error) {
-        throw new Error(error.message);
-      }
-      showToast({
-        title: 'Message sent.',
-        description:
-          'Thank you for reaching out. I’ll get back to you as soon as possible.',
-        status: 'success',
-      });
-      contactForm.reset();
-    } catch {
-      showToast({
-        title: 'Failed to submit.',
-        description: 'Message could not be sent. Please try again later.',
-        status: 'error',
-      });
+    function setButtonLoading(isLoading: boolean) {
+      submitButton.dataset.loading = isLoading.toString();
+      submitButton.disabled = isLoading;
     }
 
-    setButtonLoading(false);
-  }
+    async function handleSubmit(event: SubmitEvent) {
+      event.preventDefault();
+      const formData = new FormData(contactForm);
 
-  contactForm.addEventListener('submit', handleSubmit);
+      setButtonLoading(true);
+
+      try {
+        const { error } = await actions.sendMessage(formData);
+        if (error) {
+          throw new Error(error.message);
+        }
+        showToast({
+          title: 'Message sent.',
+          description:
+            'Thank you for reaching out. I’ll get back to you as soon as possible.',
+          status: 'success',
+        });
+        contactForm.reset();
+      } catch {
+        showToast({
+          title: 'Failed to submit.',
+          description: 'Message could not be sent. Please try again later.',
+          status: 'error',
+        });
+      }
+
+      setButtonLoading(false);
+    }
+
+    contactForm.addEventListener('submit', handleSubmit);
+  });
 </script>
