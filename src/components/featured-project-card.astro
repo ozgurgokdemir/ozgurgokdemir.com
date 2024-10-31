@@ -7,14 +7,14 @@ type Props = HTMLAttributes<'a'> & {
   title: string;
   description: string;
   image: ImageMetadata;
-  color?: string;
+  color: string;
 };
 
 const {
   title,
   description,
   image,
-  color = '#059669',
+  color,
   class: className,
   ...props
 } = Astro.props;
@@ -22,7 +22,7 @@ const {
 
 <a
   class:list={[
-    'group relative inline-flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-2 outline-offset-2 outline-blue-500 focus-visible:outline',
+    'group relative flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-2 outline-offset-2 outline-blue-500 focus-visible:outline',
     'before:absolute before:inset-0 before:bg-gradient-radial-to-b before:from-white/20 before:to-white/15 before:opacity-0 before:transition-opacity hover:before:opacity-100',
     'after:absolute after:inset-0 after:bg-gradient-radial-to-b after:from-white/20 after:to-white/10 after:transition-opacity hover:after:opacity-0',
     className,
@@ -45,7 +45,7 @@ const {
   </div>
   <div class="z-10 flex flex-col p-2 md:gap-2 md:p-6">
     <h3 class="text-lg font-semibold text-white md:text-2xl">{title}</h3>
-    <p class="text-base font-medium text-white/60 md:text-lg">
+    <p class="truncate text-base font-medium text-white/60 md:text-lg">
       {description}
     </p>
   </div>
