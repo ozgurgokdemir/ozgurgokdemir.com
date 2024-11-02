@@ -16,7 +16,10 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
-<ProjectDetailsLayout title=`${project.data.title} - Özgür Gökdemir`>
+<ProjectDetailsLayout
+  title=`${project.data.title} - Özgür Gökdemir`
+  description={project.data.description}
+>
   <section
     class="relative before:absolute before:inset-0 before:-z-10 before:bg-gradient-radial-to-b before:from-[--gradient-color] before:opacity-50"
     style={`--gradient-color:${project.data.color};`}
