@@ -1,6 +1,5 @@
 ---
-import '@/styles/globals.css';
-import { ViewTransitions } from 'astro:transitions';
+import BaseLayout from '@/layouts/base-layout.astro';
 import Header from '@/components/header.astro';
 import Footer from '@/components/footer.astro';
 import Toast from '@/components/toast.astro';
@@ -44,31 +43,11 @@ const SOCIAL_LINKS = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <link
-      rel="preload"
-      href="fonts/manrope.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <ViewTransitions />
-  </head>
-  <body class="grid bg-black font-sans text-base font-medium text-white/60">
-    <Header navigationLinks={NAVIGATION_LINKS} socialLinks={SOCIAL_LINKS} />
-    <main class="min-h-[calc(100dvh-var(--header-height))]">
-      <slot />
-    </main>
-    <Footer socialLinks={SOCIAL_LINKS} />
-    <Toast />
-  </body>
-</html>
+<BaseLayout {title}>
+  <Header navigationLinks={NAVIGATION_LINKS} socialLinks={SOCIAL_LINKS} />
+  <main class="min-h-[calc(100dvh-var(--header-height))]">
+    <slot />
+  </main>
+  <Footer socialLinks={SOCIAL_LINKS} />
+  <Toast />
+</BaseLayout>
