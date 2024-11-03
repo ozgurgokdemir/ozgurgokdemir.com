@@ -1,0 +1,19 @@
+---
+import BaseLayout, { type BaseLayoutProps } from '@/layouts/base-layout.astro';
+import BackButton from '@/components/back-button.astro';
+
+type Props = BaseLayoutProps;
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout {title} {description}>
+  <header
+    class="fixed left-0 right-0 top-0 z-30 flex h-24 w-full items-center px-4 md:h-36 md:px-12"
+  >
+    <BackButton />
+  </header>
+  <main class="max-h-dvh overflow-hidden">
+    <slot />
+  </main>
+</BaseLayout>

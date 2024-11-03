@@ -1,0 +1,35 @@
+---
+import Button from '@/components/button.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Button
+  variant="secondary"
+  class="group gap-2 backdrop-blur-lg"
+  data-back-button
+>
+  <Icon
+    name="heroicons:arrow-long-left-20-solid"
+    size={20}
+    class="text-emerald-400/60 transition-transform group-hover:-translate-x-1"
+  />
+  Back
+</Button>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+  import { getHistory } from '@/utils/history';
+
+  document.addEventListener('astro:page-load', () => {
+    const backButton = document.querySelector(
+      '[data-back-button]',
+    ) as HTMLButtonElement;
+
+    function handleNavigateBack() {
+      const history = getHistory();
+      navigate(history?.previous ?? '/');
+    }
+
+    backButton.addEventListener('click', handleNavigateBack);
+  });
+</script>

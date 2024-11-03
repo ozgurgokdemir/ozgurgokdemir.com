@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { tv, type VariantProps } from 'tailwind-variants';
+import LoadingEllipsis from './loading-ellipsis.astro';
+
+export type ButtonVariants = VariantProps<typeof buttonStyles>;
+
+type Props = HTMLAttributes<'button'> & ButtonVariants;
+
+const {
+  variant = 'primary',
+  type = 'button',
+  class: className,
+  ...props
+} = Astro.props;
+
+export const buttonStyles = tv({
+  base: 'group relative inline-flex h-10 items-center justify-center gap-3 rounded-full px-6 text-base font-semibold outline-2 outline-offset-2 outline-blue-500 transition-colors focus-visible:outline disabled:cursor-not-allowed',
+  variants: {
+    variant: {
+      primary:
+        'bg-emerald-400 text-black [&:not(:disabled)]:hover:bg-emerald-500',
+      secondary: 'bg-emerald-400/10 text-emerald-400 hover:bg-emerald-400/15',
+    },
+  },
+});
+---
+
+<button {type} class={buttonStyles({ variant, className })} {...props}>
+  <span
+    class="invisible absolute inset-0 grid place-items-center opacity-0 transition-[visibility,opacity] group-data-[loading=true]:visible group-data-[loading=true]:opacity-100"
+  >
+    <LoadingEllipsis />
+  </span>
+  <span
+    class="visible flex size-full items-center justify-center gap-3 transition-[visibility,opacity] group-data-[loading=true]:invisible group-data-[loading=true]:opacity-0"
+  >
+    <slot />
+  </span>
+</button>

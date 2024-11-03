@@ -1,0 +1,60 @@
+---
+import Logo from '@/components/logo.astro';
+import NavBar from '@/components/nav-bar.astro';
+import NavLink from '@/components/nav-link.astro';
+import SocialLink from '@/components/social-link.astro';
+import HamburgerButton from '@/components/hamburger-button.astro';
+import MobileMenu from '@/components/mobile-menu.astro';
+
+type Props = {
+  navigationLinks: {
+    href: string;
+    text: string;
+  }[];
+  socialLinks: {
+    href: string;
+    alt: string;
+    icon: string;
+  }[];
+};
+
+const { navigationLinks, socialLinks } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-30 before:absolute before:inset-0 before:-z-10 before:bg-black/80 before:backdrop-blur-lg"
+  transition:persist
+>
+  <div
+    class="container grid h-[--header-height] grid-cols-2 items-center border-b border-white/10 px-0 md:grid-cols-[1fr_auto_1fr] md:px-10"
+  >
+    <div class="inline-flex place-content-start self-stretch md:self-auto">
+      <Logo class="px-4 md:px-0" />
+    </div>
+    <NavBar
+      orientation="horizontal"
+      class="hidden place-content-center md:inline-block"
+    >
+      <ul class="flex items-center gap-8">
+        {
+          navigationLinks.map(({ href, text }) => (
+            <li>
+              <NavLink {href}>{text}</NavLink>
+            </li>
+          ))
+        }
+      </ul>
+    </NavBar>
+    <div
+      class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
+    >
+      {
+        socialLinks.map(({ href, alt, icon }) => (
+          <SocialLink {href} {alt} {icon} class="w-[3.25rem] md:w-auto" />
+        ))
+      }
+      <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
+      <MobileMenu {navigationLinks} />
+    </div>
+  </div>
+</header>

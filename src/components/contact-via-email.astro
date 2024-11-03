@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { Icon } from 'astro-icon/components';
+import { env } from '@/config/env';
+
+type Props = Omit<HTMLAttributes<'a'>, 'href'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<a
+  href={`mailto:${env.EMAIL_ADDRESS}`}
+  class:list={[
+    'flex items-center gap-4 rounded-2xl bg-emerald-400/10 p-2 pr-4 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:bg-emerald-400/15 focus-visible:outline',
+    className,
+  ]}
+  {...props}
+>
+  <div
+    class="grid h-16 w-16 flex-shrink-0 place-items-center rounded-lg bg-black/60"
+  >
+    <Icon name="heroicons:envelope" size={24} class="text-emerald-400" />
+  </div>
+  <p class="text-base font-medium text-white/60">
+    Prefer to email me directly?
+    <slot />
+    <span class="text-emerald-400">{env.EMAIL_ADDRESS}</span>
+  </p>
+</a>

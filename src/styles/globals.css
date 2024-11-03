@@ -3,43 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: swap;
+    src: url('/manrope.woff2') format('woff2');
+  }
+
   :root {
-    --color-primary: 233deg 100% 4%;
-    --color-accent: 153deg 60% 53%;
-    --color-neutral: 0deg 0% 100%;
-  }
+    --header-height: 4rem;
 
-  :root[data-theme='light'] {
-    --color-primary: 0deg 0% 100%;
-    --color-accent: 153deg 60% 53%;
-    --color-neutral: 0deg 0% 0%;
-  }
+    @apply md:[--header-height:5rem];
 
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
-  }
-
-  html::-webkit-scrollbar {
-    width: 1rem;
-  }
-
-  html::-webkit-scrollbar-track {
-    background-color: inherit;
-  }
-
-  html::-webkit-scrollbar-thumb {
-    background-clip: content-box;
-    background-color: hsla(var(--color-neutral) / 0.2);
-    border: 0.25rem solid transparent;
-    border-radius: 0.375rem;
-  }
-
-  html::-webkit-scrollbar-thumb:hover {
-    background-color: hsla(var(--color-neutral) / 0.3);
-  }
-
-  body {
-    -webkit-tap-highlight-color: transparent;
+    color-scheme: dark;
   }
 }

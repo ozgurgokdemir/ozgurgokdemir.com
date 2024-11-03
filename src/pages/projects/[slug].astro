@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectDetailsLayout from '@/layouts/project-details-layout.astro';
+import { Image } from 'astro:assets';
+import LinkButton from '@/components/link-button.astro';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectDetailsLayout
+  title=`${project.data.title} - Özgür Gökdemir`
+  description={project.data.description}
+>
+  <section
+    class="relative before:absolute before:inset-0 before:-z-10 before:bg-gradient-radial-to-b before:from-[--gradient-color] before:opacity-50"
+    style={`--gradient-color:${project.data.color};`}
+  >
+    <div class="container flex flex-col gap-16 pt-32 md:gap-24 md:pt-36">
+      <div class="flex flex-col gap-6 md:items-center md:gap-8">
+        <h1
+          class="text-4xl font-semibold text-white md:text-[3.5rem] md:leading-none"
+        >
+          {project.data.title}
+        </h1>
+        <p class="text-lg font-semibold text-white/60">
+          {project.data.description}
+        </p>
+        {
+          (project.data.livePreview || project.data.sourceCode) && (
+            <div class="mt-2 flex flex-wrap gap-4 md:flex-row">
+              {project.data.livePreview && (
+                <LinkButton
+                  href={project.data.livePreview}
+                  target="_blank"
+                  variant="secondary"
+                >
+                  <Icon
+                    name="heroicons:eye-20-solid"
+                    size={20}
+                    class="text-emerald-400/60"
+                  />
+                  Live preview
+                </LinkButton>
+              )}
+              {project.data.sourceCode && (
+                <LinkButton
+                  href={project.data.sourceCode}
+                  target="_blank"
+                  variant="secondary"
+                >
+                  <Icon
+                    name="heroicons:code-bracket-20-solid"
+                    size={20}
+                    class="text-emerald-400/60"
+                  />
+                  Source code
+                </LinkButton>
+              )}
+            </div>
+          )
+        }
+      </div>
+      <div
+        class="relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black"
+      >
+        <Image
+          src={project.data.image}
+          alt={project.data.title}
+          class="rounded-lg"
+        />
+      </div>
+    </div>
+  </section>
+</ProjectDetailsLayout>

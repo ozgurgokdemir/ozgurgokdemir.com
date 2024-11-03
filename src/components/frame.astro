@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { tv, type VariantProps } from 'tailwind-variants';
+
+type FrameVariants = VariantProps<typeof frameStyles>;
+
+type Props = HTMLAttributes<'div'> & FrameVariants;
+
+const { border, overlay, class: className, ...props } = Astro.props;
+
+const frameStyles = tv(
+  {
+    variants: {
+      border: {
+        true: 'rounded-4xl bg-gradient-radial-to-b from-white/20 p-4',
+      },
+      overlay: {
+        true: 'relative after:absolute after:inset-4 after:rounded-2xl after:bg-gradient-to-b after:from-transparent after:to-black',
+      },
+    },
+  },
+  {
+    responsiveVariants: true,
+  },
+);
+---
+
+<div class={frameStyles({ border, overlay, className })} {...props}>
+  <slot />
+</div>

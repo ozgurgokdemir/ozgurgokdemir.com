@@ -1,265 +1,177 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro';
-import Button from '@/components/Button.astro';
-import Project from '@/components/Project.astro';
-import TechCard from '@/components/TechCard.astro';
-import ContactForm from '@/components/ContactForm.astro';
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import MainLayout from '@/layouts/main-layout.astro';
+import LinkButton from '@/components/link-button.astro';
+import FeaturedProjectCard from '@/components/featured-project-card.astro';
+import ContactViaEmail from '@/components/contact-via-email.astro';
+import Separator from '@/components/separator.astro';
+import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
+import FormField from '@/components/form-field.astro';
+import FormLabel from '@/components/form-label.astro';
+import FormInput from '@/components/form-input.astro';
+import FormTextarea from '@/components/form-textarea.astro';
+import Button from '@/components/button.astro';
+import Frame from '@/components/frame.astro';
+import ContactForm from '@/components/contact-form.astro';
 
-const HIGHLIGHTED_PROJECTS = [
-  {
-    image: '/assets/images/nextjs-ecommerce.png',
-    title: 'Next.js E-Commerce',
-    source: 'https://github.com/ozgurgokdemir/nextjs-ecommerce',
-    website: 'https://nextjs-ecommerce-taupe-six.vercel.app/',
-  },
-  {
-    image: '/assets/images/react-restaurant.png',
-    title: 'React Restáurant',
-    source: 'https://github.com/ozgurgokdemir/react-restaurant',
-    website: null,
-  },
-];
-
-const TECHNOLOGIES = [
-  {
-    title: 'JavaScript',
-    icon: 'simple-icons:javascript',
-    color: '#F7DF1E',
-  },
-  {
-    title: 'TypeScript',
-    icon: 'simple-icons:typescript',
-    color: '#3178C6',
-  },
-  {
-    title: 'React',
-    icon: 'simple-icons:react',
-    color: '#61DAFB',
-  },
-  {
-    title: 'Next.js',
-    icon: 'simple-icons:nextdotjs',
-    color: 'hsl(var(--color-neutral))',
-  },
-  {
-    title: 'Redux',
-    icon: 'simple-icons:redux',
-    color: '#764ABC',
-  },
-  {
-    title: 'React Query',
-    icon: 'simple-icons:reactquery',
-    color: '#FF4154',
-  },
-  {
-    title: 'HTML5/CSS3',
-    icon: 'simple-icons:html5',
-    color: '#E34F26',
-  },
-  {
-    title: 'SASS',
-    icon: 'simple-icons:sass',
-    color: '#CC6699',
-  },
-  {
-    title: 'Tailwind CSS',
-    icon: 'simple-icons:tailwindcss',
-    color: '#06B6D4',
-  },
-  {
-    title: 'Radix UI',
-    icon: 'simple-icons:radixui',
-    color: 'hsl(var(--color-neutral))',
-  },
-  {
-    title: 'Framer Motion',
-    icon: 'simple-icons:framer',
-    color: '#0055FF',
-  },
-  {
-    title: 'Storybook',
-    icon: 'simple-icons:storybook',
-    color: '#FF4785',
-  },
-  {
-    title: 'Stripe',
-    icon: 'simple-icons:stripe',
-    color: '#635BFF',
-  },
-  {
-    title: 'Strapi',
-    icon: 'simple-icons:strapi',
-    color: '#4945FF',
-  },
-  {
-    title: 'Prisma',
-    icon: 'simple-icons:prisma',
-    color: 'hsl(var(--color-neutral))',
-  },
-  {
-    title: 'MongoDB',
-    icon: 'simple-icons:mongodb',
-    color: '#47A248',
-  },
-  {
-    title: 'Supabase',
-    icon: 'simple-icons:supabase',
-    color: '#3FCF8E',
-  },
-  {
-    title: 'C#',
-    icon: 'devicon-plain:csharp',
-    color: '#68217A',
-  },
-  {
-    title: 'Astro',
-    icon: 'simple-icons:astro',
-    color: '#FF5D01',
-  },
-  {
-    title: 'Vite',
-    icon: 'simple-icons:vite',
-    color: '#646CFF',
-  },
-  {
-    title: 'Vitest',
-    icon: 'simple-icons:vitest',
-    color: '#6E9F18',
-  },
-  {
-    title: 'ESLint',
-    icon: 'simple-icons:eslint',
-    color: '#4B32C3',
-  },
-  {
-    title: 'Git',
-    icon: 'simple-icons:git',
-    color: '#F05032',
-  },
-  {
-    title: 'Figma',
-    icon: 'simple-icons:figma',
-    color: '#F24E1E',
-  },
-];
+const featuredProjects = await getCollection(
+  'projects',
+  ({ data }) => data.featured,
+).then((projects) =>
+  projects.sort(
+    (a, b) => (a.data.sortOrder ?? Infinity) - (b.data.sortOrder ?? Infinity),
+  ),
+);
 ---
 
-<MainLayout>
+<MainLayout
+  title="Özgür Gökdemir — Frontend Developer"
+  description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
+>
   <section
-    id="hero"
-    aria-label="Hero"
-    class="container flex flex-col items-center gap-8 pb-16 pt-[6.5rem] text-center md:pt-32"
+    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:pb-40 md:pt-56"
   >
     <h1
-      class="bg-gradient-to-b from-neutral/70 to-neutral bg-clip-text font-secondary text-[25px] font-semibold leading-tight text-transparent xs:text-[2.125rem] sm:text-[2.875rem] md:text-[3.625rem] lg:text-heading-display"
+      class="text-5xl font-semibold text-white md:text-center md:text-[5rem] md:leading-tight"
     >
-      Hi, I'm
-      <span class="bg-gradient-to-b from-accent/70 to-accent bg-clip-text"
-        >Özgür Gökdemir</span
-      >,
+      Hi, I’m Özgür Gökdemir.
       <br />
-      a frontend developer
+      I’m a frontend developer.
     </h1>
-    <p
-      class="text-body-base-400 text-neutral/70 xs:text-[1.125rem] md:text-[1.375rem] lg:text-[1.5rem]"
-    >
-      I specialize in building responsive and performant web applications.
+    <p class="text-xl font-semibold text-white/60">
+      I build high-performance and responsive web applications.
     </p>
-    <div class="mt-4 flex w-full flex-col justify-center gap-6 sm:flex-row">
-      <Button
-        href="#contact"
-        text="Let's Talk"
-        icon="heroicons:chat-bubble-left-ellipsis-20-solid"
-        variant="accent"
-      />
-      <div
-        class="flex items-center justify-between before:order-2 before:h-6 before:w-px before:bg-neutral/10 sm:hidden"
-      >
-        <Button
-          href="https://www.linkedin.com/in/ozgurgokdemir/"
-          text="LinkedIn"
-          icon="simple-icons:linkedin"
-          variant="ghost"
-          external={true}
-          class="order-1"
-        />
-        <Button
-          href="https://github.com/ozgurgokdemir/"
-          text="GitHub"
-          icon="simple-icons:github"
-          variant="ghost"
-          external={true}
-          class="order-3"
-        />
-      </div>
-      <Button
-        href="https://www.linkedin.com/in/ozgurgokdemir/"
-        text="LinkedIn"
-        icon="simple-icons:linkedin"
-        external={true}
-        class="hidden sm:inline-block"
-      />
-      <Button
-        href="https://github.com/ozgurgokdemir/"
-        text="GitHub"
-        icon="simple-icons:github"
-        external={true}
-        class="hidden sm:inline-block"
-      />
+    <div class="flex items-center gap-4 pt-2 md:pt-5">
+      <LinkButton href="/contact">
+        <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" size={20} />
+        Let's Talk
+      </LinkButton>
+      <LinkButton href="/projects" variant="secondary">
+        View my work
+      </LinkButton>
     </div>
   </section>
   <section
-    id="projects"
-    aria-label="Projects"
-    class="container flex flex-col gap-16 py-16"
+    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
   >
-    <h2
-      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
-    >
-      Highlighted Projects
-    </h2>
-    {
-      HIGHLIGHTED_PROJECTS.map((project, index) => (
-        <Project
-          image={project.image}
-          title={project.title}
-          source={project.source}
-          website={project.website}
-          highlighted={index === 0}
+    <div class="flex flex-col items-start gap-6 md:mr-12 md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        Get to know me.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        I’m a frontend developer based in Türkiye, specializing in building
+        dynamic web applications using TypeScript, React, and Next.js. I develop
+        interactive features and optimize user experiences to deliver fast,
+        efficient, and user-friendly solutions. Whether working independently or
+        as part of a team, I aim to meet both business and user needs.
+      </p>
+      <LinkButton href="/about" variant="secondary" class="group gap-2">
+        More about me
+        <Icon
+          name="heroicons:arrow-long-right-20-solid"
+          size={20}
+          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
         />
-      ))
-    }
+      </LinkButton>
+    </div>
+    <Frame border overlay>
+      <Image
+        src={ozgurGokdemir}
+        alt="Özgür Gökdemir"
+        width={500}
+        height={500}
+        class="w-full rounded-2xl bg-black/60 backdrop-blur-lg"
+      />
+    </Frame>
   </section>
-  <section
-    id="skills"
-    aria-label="Skills"
-    class="container flex flex-col gap-16 py-16"
-  >
-    <h2
-      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
-    >
-      Skills & Expertise
-    </h2>
-    <ul class="grid grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-6 lg:grid-cols-6">
+  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-36">
+    <div class="flex flex-col items-start gap-6 md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        A glimpse into my work.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        Here are some projects I've loved working on.
+      </p>
+      <LinkButton href="/projects" variant="secondary" class="group gap-2">
+        See all projects
+        <Icon
+          name="heroicons:arrow-long-right-20-solid"
+          size={20}
+          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+        />
+      </LinkButton>
+    </div>
+    <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
       {
-        TECHNOLOGIES.map(({ title, icon, color }) => (
-          <li>
-            <TechCard {title} {icon} {color} />
+        featuredProjects.map((project) => (
+          <li class="md:even:-translate-y-36">
+            <FeaturedProjectCard
+              href={`/projects/${project.slug}`}
+              title={project.data.title}
+              description={project.data.description}
+              image={project.data.image}
+              color={project.data.color}
+            />
           </li>
         ))
       }
     </ul>
   </section>
   <section
-    id="contact"
-    aria-label="Contact"
-    class="container flex flex-col gap-16 py-16"
+    class="container grid gap-6 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
   >
-    <h2
-      class="text-center font-secondary text-heading-sm sm:text-heading-md md:text-heading-lg"
-    >
-      Get in Touch
-    </h2>
-    <ContactForm />
+    <div class="flex flex-col gap-6 md:items-start md:gap-8">
+      <h2 class="text-4xl font-semibold text-white md:text-5xl">
+        Get in touch.
+      </h2>
+      <p class="text-lg font-semibold text-white/60">
+        I’m open to opportunities—let’s connect.
+      </p>
+      <ContactViaEmail>
+        <br class="hidden md:block" />
+      </ContactViaEmail>
+    </div>
+    <Separator class="md:hidden" />
+    <Frame border={{ lg: true }}>
+      <ContactForm
+        class="grid gap-6 lg:rounded-2xl lg:bg-black/60 lg:p-8 xl:grid-cols-2"
+      >
+        <FormField>
+          <FormLabel for="name">Name</FormLabel>
+          <FormInput
+            type="text"
+            name="name"
+            id="name"
+            placeholder="John Doe"
+            required
+          />
+        </FormField>
+        <FormField>
+          <FormLabel for="email">Email</FormLabel>
+          <FormInput
+            type="email"
+            name="email"
+            id="email"
+            placeholder="example@gmail.com"
+            required
+          />
+        </FormField>
+        <FormField class="col-span-full">
+          <FormLabel for="message">Message</FormLabel>
+          <FormTextarea
+            rows={5}
+            name="message"
+            id="message"
+            placeholder="Your message."
+            required
+          />
+        </FormField>
+        <Button type="submit" class="mt-3 xl:col-start-2">
+          Send message
+        </Button>
+      </ContactForm>
+    </Frame>
   </section>
 </MainLayout>

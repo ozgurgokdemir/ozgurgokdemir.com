@@ -1,24 +1,24 @@
+// @ts-check
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import image from '@astrojs/image';
+import cloudflare from '@astrojs/cloudflare';
 import icon from 'astro-icon';
 
+// https://astro.build/config
 export default defineConfig({
+  output: 'hybrid',
+  adapter: cloudflare(),
   integrations: [
     tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
-    }),
-    image({
-      serviceEntryPoint: '@astrojs/image/sharp',
+      applyBaseStyles: false,
     }),
     icon({
       include: {
         heroicons: ['*'],
         'simple-icons': ['*'],
-        'devicon-plain': ['*'],
+        'fa6-brands': ['*'],
       },
     }),
   ],
+  site: 'https://ozgurgokdemir.com',
 });

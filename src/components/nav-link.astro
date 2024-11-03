@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<a
+  class:list={[
+    'text-base font-semibold text-white/60 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline aria-[current=page]:text-white',
+    className,
+  ]}
+  data-nav-link
+  {...props}
+>
+  <slot />
+</a>
