@@ -1,9 +1,6 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 import { Resend } from 'resend';
-import { env } from '@/config/env';
-
-const resend = new Resend(env.RESEND_API_KEY);
 
 export const server = {
   sendMessage: defineAction({
@@ -13,7 +10,11 @@ export const server = {
       email: z.string().email(),
       message: z.string(),
     }),
-    handler: async ({ name, email, message }) => {
+    handler: async ({ name, email, message }, context) => {
+      const { env } = context.locals.runtime;
+
+      const resend = new Resend(env.RESEND_API_KEY);
+
       const { error } = await resend.emails.send({
         from: `Özgür Gökdemir <${env.EMAIL_ADDRESS}>`,
         to: env.EMAIL_ADDRESS,
