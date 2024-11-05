@@ -1,10 +1,10 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<'form'>;
+type Props = Omit<HTMLAttributes<'form'>, 'id'>;
 ---
 
-<form {...Astro.props}>
+<form id="contact-form" {...Astro.props}>
   <slot />
 </form>
 
@@ -13,22 +13,26 @@ type Props = HTMLAttributes<'form'>;
   import { showToast } from '@/utils/toast';
 
   document.addEventListener('astro:page-load', () => {
-    const contactForm = document.querySelector('form') as HTMLFormElement;
+    const contactForm = document.getElementById(
+      'contact-form',
+    ) as HTMLFormElement | null;
 
-    const submitButton = contactForm.querySelector(
-      'button[type="submit"]',
-    ) as HTMLButtonElement;
-
-    function setButtonLoading(isLoading: boolean) {
-      submitButton.dataset.loading = isLoading.toString();
-      submitButton.disabled = isLoading;
-    }
+    if (!contactForm) return;
 
     async function handleSubmit(event: SubmitEvent) {
       event.preventDefault();
+
+      const contactForm = event.currentTarget as HTMLFormElement;
+
       const formData = new FormData(contactForm);
 
-      setButtonLoading(true);
+      const submitButton = contactForm.querySelector<HTMLButtonElement>(
+        'button[type="submit"]',
+      );
+
+      if (!submitButton) return;
+
+      setButtonLoading(submitButton, true);
 
       try {
         const { error } = await actions.sendMessage(formData);
@@ -50,7 +54,12 @@ type Props = HTMLAttributes<'form'>;
         });
       }
 
-      setButtonLoading(false);
+      setButtonLoading(submitButton, false);
+    }
+
+    function setButtonLoading(button: HTMLButtonElement, isLoading: boolean) {
+      button.dataset.loading = isLoading.toString();
+      button.disabled = isLoading;
     }
 
     contactForm.addEventListener('submit', handleSubmit);
