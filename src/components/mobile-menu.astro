@@ -32,53 +32,59 @@ const navigationCollection = await getCollection('navigation').then(
 </NavBar>
 
 <script>
-  const mobileMenu = document.getElementById('mobile-menu') as HTMLDivElement;
+  document.addEventListener('astro:page-load', () => {
+    let isExpanded = false;
 
-  const hamburgerButton = document.querySelector(
-    '[aria-controls="mobile-menu"]',
-  ) as HTMLButtonElement;
+    const mobileMenu = document.getElementById(
+      'mobile-menu',
+    ) as HTMLDivElement | null;
 
-  let isExpanded = false;
+    const hamburgerButton = document.querySelector<HTMLButtonElement>(
+      '[aria-controls="mobile-menu"]',
+    );
 
-  function handleClick(event: MouseEvent) {
-    if (!isExpanded) return;
+    if (!mobileMenu || !hamburgerButton) return;
 
-    const { clientX, clientY, target } = event;
-    const { left, right, top, bottom } = mobileMenu.getBoundingClientRect();
+    const handleClick = (event: MouseEvent) => {
+      if (!isExpanded) return;
 
-    const isClickOutsideMenu =
-      clientX < left || clientX > right || clientY < top || clientY > bottom;
+      const { clientX, clientY, target } = event;
+      const { left, right, top, bottom } = mobileMenu.getBoundingClientRect();
 
-    if (isClickOutsideMenu && !hamburgerButton.contains(target as Node)) {
-      closeMenu();
-    }
-  }
+      const isClickOutsideMenu =
+        clientX < left || clientX > right || clientY < top || clientY > bottom;
 
-  function openMenu() {
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    hamburgerButton.setAttribute('aria-expanded', 'true');
-    hamburgerButton.setAttribute('aria-label', 'close menu');
-    isExpanded = true;
-  }
+      if (isClickOutsideMenu && !hamburgerButton.contains(target as Node)) {
+        closeMenu();
+      }
+    };
 
-  function closeMenu() {
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    hamburgerButton.setAttribute('aria-expanded', 'false');
-    hamburgerButton.setAttribute('aria-label', 'open menu');
-    isExpanded = false;
-  }
+    const openMenu = () => {
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      hamburgerButton.setAttribute('aria-expanded', 'true');
+      hamburgerButton.setAttribute('aria-label', 'close menu');
+      isExpanded = true;
+    };
 
-  function toggleMenu() {
-    if (isExpanded) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  }
+    const closeMenu = () => {
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      hamburgerButton.setAttribute('aria-expanded', 'false');
+      hamburgerButton.setAttribute('aria-label', 'open menu');
+      isExpanded = false;
+    };
 
-  hamburgerButton.addEventListener('click', toggleMenu);
+    const toggleMenu = () => {
+      if (isExpanded) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    };
 
-  document.addEventListener('astro:page-load', closeMenu);
+    closeMenu();
 
-  document.addEventListener('click', handleClick);
+    hamburgerButton.addEventListener('click', toggleMenu);
+
+    document.addEventListener('click', handleClick);
+  });
 </script>
