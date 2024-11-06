@@ -36,14 +36,14 @@ const navBarStyles = tv({
 <script>
   import { isCurrentPath } from '@/utils/navigation';
 
-  const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
-
-  const navigations = Array.from(navBars, (navBar) => ({
-    navBar,
-    navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
-  }));
-
   function updateNavigation() {
+    const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
+
+    const navigations = Array.from(navBars, (navBar) => ({
+      navBar,
+      navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+    }));
+
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
         const ariaCurrent = isCurrentPath(navLink.pathname) ? 'page' : 'false';
