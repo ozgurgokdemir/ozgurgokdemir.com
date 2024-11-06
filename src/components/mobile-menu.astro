@@ -1,15 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 
-type Props = {
-  navigationLinks: {
-    href: string;
-    text: string;
-  }[];
-};
-
-const { navigationLinks } = Astro.props;
+const navigationCollection = await getCollection('navigation').then(
+  (collection) => collection.sort((a, b) => a.data.order - b.data.order),
+);
 ---
 
 <NavBar
@@ -20,10 +16,14 @@ const { navigationLinks } = Astro.props;
 >
   <ul class="flex flex-col">
     {
-      navigationLinks.map(({ href, text }) => (
+      navigationCollection.map(({ data }) => (
         <li>
-          <NavLink {href} class="flex h-12 items-center px-4" aria-label={text}>
-            {text}
+          <NavLink
+            href={data.pathname}
+            class="flex h-12 items-center px-4"
+            aria-label={data.text}
+          >
+            {data.text}
           </NavLink>
         </li>
       ))

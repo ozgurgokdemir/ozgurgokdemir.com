@@ -5,47 +5,13 @@ import Footer from '@/components/footer.astro';
 import Toast from '@/components/toast.astro';
 
 type Props = BaseLayoutProps;
-
-const { title, description } = Astro.props;
-
-const NAVIGATION_LINKS = [
-  {
-    href: '/',
-    text: 'Home',
-  },
-  {
-    href: '/about',
-    text: 'About',
-  },
-  {
-    href: '/projects',
-    text: 'Projects',
-  },
-  {
-    href: '/contact',
-    text: 'Contact',
-  },
-];
-
-const SOCIAL_LINKS = [
-  {
-    href: 'https://linkedin.com/in/ozgurgokdemir',
-    alt: 'LinkedIn',
-    icon: 'fa6-brands:linkedin-in',
-  },
-  {
-    href: 'https://github.com/ozgurgokdemir',
-    alt: 'GitHub',
-    icon: 'simple-icons:github',
-  },
-];
 ---
 
-<BaseLayout {title} {description}>
-  <Header navigationLinks={NAVIGATION_LINKS} socialLinks={SOCIAL_LINKS} />
+<BaseLayout {...Astro.props}>
+  <Header />
   <main class="min-h-[calc(100dvh-var(--header-height))]">
     <slot />
   </main>
-  <Footer socialLinks={SOCIAL_LINKS} />
+  <Footer />
   <Toast />
 </BaseLayout>

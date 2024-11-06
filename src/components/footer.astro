@@ -1,16 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import Logo from '@/components/logo.astro';
 import SocialLink from '@/components/social-link.astro';
 
-type Props = {
-  socialLinks: {
-    href: string;
-    alt: string;
-    icon: string;
-  }[];
-};
-
-const { socialLinks } = Astro.props;
+const socialCollection = await getCollection('social').then((collection) =>
+  collection.sort((a, b) => a.data.order - b.data.order),
+);
 ---
 
 <footer class="border-t border-white/10 bg-black/80 backdrop-blur-lg">
@@ -25,8 +20,8 @@ const { socialLinks } = Astro.props;
     </p>
     <div class="flex items-center gap-8 md:justify-self-end">
       {
-        socialLinks.map(({ href, alt, icon }) => (
-          <SocialLink {href} {alt} {icon} />
+        socialCollection.map(({ data }) => (
+          <SocialLink href={data.url} alt={data.text} icon={data.icon} />
         ))
       }
     </div>
