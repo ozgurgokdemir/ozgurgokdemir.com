@@ -1,0 +1,110 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<toast-notification
+  class:list={[
+    'group fixed bottom-4 left-4 right-4 z-40 grid max-w-96 grid-cols-[auto_1fr_auto] items-center gap-x-4 overflow-hidden rounded-2xl border border-white/10 bg-black/60 p-4 backdrop-blur-lg transition-[visibility,opacity,transform] duration-300 aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:-translate-x-full aria-hidden:opacity-0 sm:bottom-8 sm:left-8 sm:right-auto',
+    'after:absolute after:left-0 after:top-1/2 after:h-[calc(100%-2rem)] after:w-0.5 after:-translate-y-1/2 after:rounded-r-full data-[status=error]:after:bg-red-500 data-[status=success]:after:bg-green-500',
+  ]}
+  role="status"
+  aria-hidden="true"
+>
+  <Icon
+    name="heroicons:exclamation-triangle"
+    size={24}
+    class="text-red-500 group-[&:not([data-status=error])]:hidden"
+  />
+  <Icon
+    name="heroicons:check-circle"
+    size={24}
+    class="text-green-500 group-[&:not([data-status=success])]:hidden"
+  />
+  <div class="text-lg font-semibold text-white" data-title></div>
+  <div
+    class="col-start-2 -col-end-1 row-start-2 text-base font-medium text-white/60"
+    data-description
+  >
+  </div>
+  <button type="button" class="text-white/60 hover:text-white" data-close>
+    <Icon name="heroicons:x-mark-20-solid" size={20} />
+  </button>
+</toast-notification>
+
+<script>
+  const DURATION = 5000;
+
+  type ShowToastProps = {
+    title: string;
+    description: string;
+    status: 'success' | 'error';
+  };
+
+  class ToastNotification extends HTMLElement {
+    private timeout: NodeJS.Timeout | undefined;
+
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.addEventListener('mouseenter', this.cancelTimeout);
+      this.addEventListener('mouseleave', this.startTimeout);
+      this.closeButton?.addEventListener('click', this.closeToast);
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('mouseenter', this.cancelTimeout);
+      this.removeEventListener('mouseleave', this.startTimeout);
+      this.closeButton?.removeEventListener('click', this.closeToast);
+    }
+
+    get closeButton() {
+      return this.querySelector<HTMLButtonElement>('[data-close]');
+    }
+
+    get titleElement() {
+      return this.querySelector<HTMLDivElement>('[data-title]');
+    }
+
+    get descriptionElement() {
+      return this.querySelector<HTMLParagraphElement>('[data-description]');
+    }
+
+    showToast = ({ title, description, status }: ShowToastProps) => {
+      if (!this.titleElement || !this.descriptionElement) return;
+      this.cancelTimeout();
+
+      this.titleElement.textContent = title;
+      this.descriptionElement.textContent = description;
+
+      this.setAttribute('data-status', status);
+      this.setAttribute('aria-hidden', 'false');
+
+      this.startTimeout();
+    };
+
+    closeToast = () => {
+      this.cancelTimeout();
+      this.setAttribute('aria-hidden', 'true');
+    };
+
+    startTimeout = () => {
+      this.timeout = setTimeout(() => {
+        this.closeToast();
+      }, DURATION);
+    };
+
+    cancelTimeout = () => {
+      clearTimeout(this.timeout);
+    };
+  }
+
+  customElements.define('toast-notification', ToastNotification);
+
+  declare global {
+    interface HTMLElementTagNameMap {
+      'toast-notification': ToastNotification;
+    }
+  }
+</script>

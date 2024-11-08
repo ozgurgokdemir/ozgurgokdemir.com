@@ -10,7 +10,6 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
 
 <script>
   import { actions } from 'astro:actions';
-  import { showToast } from '@/utils/toast';
 
   document.addEventListener('astro:page-load', () => {
     const contactForm = document.getElementById(
@@ -34,12 +33,14 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
 
       setButtonLoading(submitButton, true);
 
+      const toast = document.querySelector('toast-notification');
+
       try {
         const { error } = await actions.sendMessage(formData);
         if (error) {
           throw new Error(error.message);
         }
-        showToast({
+        toast?.showToast({
           title: 'Message sent.',
           description:
             'Thank you for reaching out. I’ll get back to you as soon as possible.',
@@ -47,7 +48,7 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
         });
         contactForm.reset();
       } catch {
-        showToast({
+        toast?.showToast({
           title: 'Failed to submit.',
           description: 'Message could not be sent. Please try again later.',
           status: 'error',
