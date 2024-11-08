@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
 import icon from 'astro-icon';
@@ -23,6 +24,7 @@ export default defineConfig({
         'fa6-brands': ['*'],
       },
     }),
+    sitemap(),
   ],
   site: 'https://ozgurgokdemir.com',
 });
