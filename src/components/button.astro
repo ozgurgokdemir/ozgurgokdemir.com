@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import { tv, type VariantProps } from 'tailwind-variants';
-import LoadingEllipsis from './loading-ellipsis.astro';
+import LoadingEllipsis from '@/components/loading-ellipsis.astro';
 
 export type ButtonVariants = VariantProps<typeof buttonStyles>;
 
@@ -20,7 +20,9 @@ export const buttonStyles = tv({
     variant: {
       primary:
         'bg-emerald-400 text-black [&:not(:disabled)]:hover:bg-emerald-500',
-      secondary: 'bg-emerald-400/10 text-emerald-400 hover:bg-emerald-400/15',
+      secondary:
+        'bg-emerald-400/10 text-emerald-400 [&:not(:disabled)]:hover:bg-emerald-400/15',
+      tertiary: 'bg-white/10 text-white [&:not(:disabled)]:hover:bg-white/15',
     },
   },
 });
