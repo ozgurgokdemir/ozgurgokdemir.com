@@ -34,7 +34,7 @@ const navBarStyles = tv({
 </nav>
 
 <script>
-  import { isCurrentPath } from '@/utils/navigation';
+  import navigation from '@/utils/navigation';
 
   function updateNavigation() {
     const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
@@ -46,10 +46,10 @@ const navBarStyles = tv({
 
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
-        const ariaCurrent = isCurrentPath(navLink.pathname) ? 'page' : 'false';
-        navLink.setAttribute('aria-current', ariaCurrent);
+        const isCurrentPath = navigation.isCurrentPath(navLink.pathname);
+        navLink.setAttribute('aria-current', isCurrentPath ? 'page' : 'false');
 
-        if (ariaCurrent === 'false') return;
+        if (!isCurrentPath) return;
 
         const activeLinkRect = navLink.getBoundingClientRect();
         const navBarRect = navBar.getBoundingClientRect();

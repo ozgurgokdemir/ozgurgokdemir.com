@@ -1,12 +1,21 @@
 ---
-import Button from '@/components/button.astro';
+import type { ComponentProps } from 'astro/types';
 import { Icon } from 'astro-icon/components';
+import Button from '@/components/button.astro';
+
+type Props = Omit<ComponentProps<typeof Button>, 'variant' | 'id'> & {
+  fallback?: string;
+};
+
+const { fallback = '/', class: className, ...props } = Astro.props;
 ---
 
 <Button
+  id="back-button"
   variant="tertiary"
-  class="group gap-2 backdrop-blur-lg"
-  data-back-button
+  class:list={['gap-2 backdrop-blur-lg', className]}
+  data-fallback={fallback}
+  {...props}
 >
   <Icon
     name="heroicons:arrow-long-left-20-solid"
@@ -17,18 +26,22 @@ import { Icon } from 'astro-icon/components';
 </Button>
 
 <script>
-  import { navigate } from 'astro:transitions/client';
-  import { getHistory } from '@/utils/history';
+  import navigation from '@/utils/navigation';
 
   document.addEventListener('astro:page-load', () => {
-    const backButton = document.querySelector(
-      '[data-back-button]',
-    ) as HTMLButtonElement;
+    const backButton = document.getElementById(
+      'back-button',
+    ) as HTMLButtonElement | null;
 
-    function handleNavigateBack() {
-      const history = getHistory();
-      navigate(history?.previous ?? '/');
-    }
+    if (!backButton) return;
+
+    const handleNavigateBack = () => {
+      if (navigation.canGoBack()) {
+        navigation.back();
+      } else {
+        navigation.navigate(backButton.dataset.fallback ?? '/');
+      }
+    };
 
     backButton.addEventListener('click', handleNavigateBack);
   });
