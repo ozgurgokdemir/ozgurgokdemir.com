@@ -1,11 +1,48 @@
 ---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { sortByOrder } from '@/utils/content-collections';
 import MainLayout from '@/layouts/main-layout.astro';
-import ComingSoon from '@/components/coming-soon.astro';
+import ProjectCategoryList from '@/components/project-category-list';
+import ProjectList from '@/components/project-list';
+
+const categories = ['Featured', 'SaaS', 'E-commerce', 'Business', 'Personal'];
+
+const projectsCollection = await getCollection('projects').then(sortByOrder);
+
+const projects = await Promise.all(
+  projectsCollection.map(async (project) => ({
+    ...project.data,
+    image: await getImage({ src: project.data.image }),
+    slug: project.slug,
+  })),
+);
 ---
 
 <MainLayout
   title="Projects - Özgür Gökdemir"
   description="This page is currently under development."
 >
-  <ComingSoon class="container pt-16 md:h-full md:w-full md:pt-0" />
+  <section class="container pt-16 md:pt-36">
+    <h1
+      class="text-[2.5rem] font-semibold leading-none text-white md:text-center md:text-[3.5rem] md:leading-tight"
+    >
+      Take a look at the projects <br class="hidden lg:block" /> I’ve been building.
+    </h1>
+  </section>
+  <section class="container grid gap-4 py-16 md:gap-2 md:py-36">
+    <div
+      class="sticky top-[--header-height] z-20 -mx-4 -mt-3 overflow-x-hidden bg-black/80 backdrop-blur-lg before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:top-0 before:z-10 before:w-4 before:bg-gradient-to-r before:from-black after:pointer-events-none after:absolute after:bottom-0 after:right-0 after:top-0 after:z-10 after:w-4 after:bg-gradient-to-l after:from-black md:-mx-10 md:-mt-5 md:px-10"
+    >
+      <ProjectCategoryList {categories} client:only="react">
+        <Icon
+          name="heroicons:x-mark-20-solid"
+          size={20}
+          class="text-white/60 group-data-[current=false]:hidden"
+        />
+      </ProjectCategoryList>
+    </div>
+    <ProjectList {projects} client:only="react" />
+  </section>
 </MainLayout>

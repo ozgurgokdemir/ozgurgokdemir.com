@@ -2,12 +2,13 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { sortByOrder } from '@/utils/content-collections';
+import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
 import FeaturedProjectCard from '@/components/featured-project-card.astro';
 import ContactViaEmail from '@/components/contact-via-email.astro';
 import Separator from '@/components/separator.astro';
-import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 import FormField from '@/components/form-field.astro';
 import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
@@ -19,11 +20,7 @@ import ContactForm from '@/components/contact-form.astro';
 const featuredProjects = await getCollection(
   'projects',
   ({ data }) => data.featured,
-).then((projects) =>
-  projects.sort(
-    (a, b) => (a.data.sortOrder ?? Infinity) - (b.data.sortOrder ?? Infinity),
-  ),
-);
+).then(sortByOrder);
 ---
 
 <MainLayout
@@ -48,7 +45,7 @@ const featuredProjects = await getCollection(
         <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" size={20} />
         Let's Talk
       </LinkButton>
-      <LinkButton href="/projects" variant="secondary">
+      <LinkButton href="/projects?category=featured" variant="secondary">
         View my work
       </LinkButton>
     </div>

@@ -8,10 +8,11 @@ const projectsCollection = defineCollection({
       description: z.string(),
       image: image(),
       color: z.string(),
+      category: z.string(),
+      featured: z.boolean().default(false),
       livePreview: z.string().url().optional(),
       sourceCode: z.string().url().optional(),
-      featured: z.boolean().default(false),
-      sortOrder: z.number().optional(),
+      order: z.number().optional(),
     }),
 });
 
