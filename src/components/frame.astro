@@ -10,12 +10,13 @@ const { border, overlay, class: className, ...props } = Astro.props;
 
 const frameStyles = tv(
   {
+    base: 'relative z-0',
     variants: {
       border: {
-        true: 'rounded-4xl bg-gradient-radial-to-b from-white/20 p-4',
+        true: 'rounded-2xl bg-gradient-radial-to-b from-white/25 p-px before:absolute before:inset-px before:-z-10 before:rounded-[0.9375rem] before:bg-black/75 before:backdrop-blur-lg',
       },
       overlay: {
-        true: 'relative after:absolute after:inset-4 after:rounded-2xl after:bg-gradient-to-b after:from-transparent after:to-black',
+        true: 'after:absolute after:inset-px after:rounded-[0.9375rem] after:bg-gradient-to-b after:from-transparent after:to-black',
       },
     },
   },

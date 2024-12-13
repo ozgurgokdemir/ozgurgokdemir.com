@@ -3,12 +3,11 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { sortByOrder } from '@/utils/content-collections';
+import contactAndSocialLinks from '@/data/contact-and-social-links';
 import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
 import FeaturedProjectCard from '@/components/featured-project-card.astro';
-import ContactViaEmail from '@/components/contact-via-email.astro';
-import Separator from '@/components/separator.astro';
 import FormField from '@/components/form-field.astro';
 import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
@@ -28,7 +27,7 @@ const featuredProjects = await getCollection(
   description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
 >
   <section
-    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:pb-40 md:pt-56"
+    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:py-32 md:pt-56"
   >
     <h1
       class="text-5xl font-semibold text-white md:text-center md:text-[5rem] md:leading-tight"
@@ -37,7 +36,7 @@ const featuredProjects = await getCollection(
       <br />
       I’m a frontend developer.
     </h1>
-    <p class="text-xl font-semibold text-white/60">
+    <p class="text-xl font-medium text-white/60">
       I build high-performance and responsive web applications.
     </p>
     <div class="flex items-center gap-4 pt-2 md:pt-5">
@@ -51,13 +50,13 @@ const featuredProjects = await getCollection(
     </div>
   </section>
   <section
-    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
+    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-32"
   >
-    <div class="flex flex-col items-start gap-6 md:mr-12 md:gap-8">
+    <div class="flex flex-col items-start gap-6 md:gap-8 lg:pr-12">
       <h2 class="text-4xl font-semibold text-white md:text-5xl">
         Get to know me.
       </h2>
-      <p class="text-lg font-semibold text-white/60">
+      <p class="text-lg font-medium text-white/60">
         I’m a frontend developer based in Türkiye, specializing in building
         dynamic web applications using TypeScript, React, and Next.js. I develop
         interactive features and optimize user experiences to deliver fast,
@@ -79,16 +78,16 @@ const featuredProjects = await getCollection(
         alt="Özgür Gökdemir"
         width={500}
         height={500}
-        class="w-full rounded-2xl bg-black/60 backdrop-blur-lg"
+        class="w-full"
       />
     </Frame>
   </section>
-  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-36">
+  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-32">
     <div class="flex flex-col items-start gap-6 md:gap-8">
       <h2 class="text-4xl font-semibold text-white md:text-5xl">
         A glimpse into my work.
       </h2>
-      <p class="text-lg font-semibold text-white/60">
+      <p class="text-lg font-medium text-white/60">
         Here are some projects I've loved working on.
       </p>
       <LinkButton href="/projects" variant="secondary" class="group gap-2">
@@ -116,25 +115,41 @@ const featuredProjects = await getCollection(
       }
     </ul>
   </section>
-  <section
-    class="container grid gap-6 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-36"
-  >
-    <div class="flex flex-col gap-6 md:items-start md:gap-8">
+  <section class="container grid gap-16 py-16 md:grid-cols-2 md:gap-8 md:py-32">
+    <div class="flex flex-col gap-6 md:items-start md:gap-8 md:pt-8 lg:pr-12">
       <h2 class="text-4xl font-semibold text-white md:text-5xl">
         Get in touch.
       </h2>
-      <p class="text-lg font-semibold text-white/60">
-        I’m open to opportunities—let’s connect.
+      <p class="text-lg font-medium text-white/60">
+        I’m always open to new opportunities and collaborations. Whether you
+        have a project in mind or just want to say hello, feel free to reach
+        out!
       </p>
-      <ContactViaEmail>
-        <br class="hidden md:block" />
-      </ContactViaEmail>
+      <ul class="flex flex-col gap-4">
+        {
+          contactAndSocialLinks.map(({ url, icon, text }) => (
+            <li class="w-fit">
+              <a
+                href={url}
+                target="_blank"
+                class="group flex items-center gap-3 text-base font-medium outline-2 outline-offset-2 outline-blue-500 transition-transform hover:translate-x-2 focus-visible:outline"
+              >
+                <Icon
+                  name={icon}
+                  size={20}
+                  class="text-white/80 transition-colors group-hover:text-white"
+                />
+                <span class="text-white/60 transition-colors group-hover:text-white">
+                  {text}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
-    <Separator class="md:hidden" />
     <Frame border={{ lg: true }}>
-      <ContactForm
-        class="grid gap-6 lg:rounded-2xl lg:bg-black/60 lg:p-8 xl:grid-cols-2"
-      >
+      <ContactForm class="grid gap-6 lg:p-8">
         <FormField>
           <FormLabel for="name">Name</FormLabel>
           <FormInput
@@ -155,19 +170,17 @@ const featuredProjects = await getCollection(
             required
           />
         </FormField>
-        <FormField class="col-span-full">
+        <FormField>
           <FormLabel for="message">Message</FormLabel>
           <FormTextarea
-            rows={5}
+            rows={4}
             name="message"
             id="message"
             placeholder="Your message."
             required
           />
         </FormField>
-        <Button type="submit" class="mt-3 xl:col-start-2">
-          Send message
-        </Button>
+        <Button type="submit" class="md:w-fit">Send message</Button>
       </ContactForm>
     </Frame>
   </section>

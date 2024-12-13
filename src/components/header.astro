@@ -1,5 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
+import navigation from '@/data/navigation-links';
+import links from '@/data/contact-and-social-links';
 import Logo from '@/components/logo.astro';
 import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
@@ -7,12 +8,8 @@ import SocialLink from '@/components/social-link.astro';
 import HamburgerButton from '@/components/hamburger-button.astro';
 import MobileMenu from '@/components/mobile-menu.astro';
 
-const navigationCollection = await getCollection('navigation').then(
-  (collection) => collection.sort((a, b) => a.data.order - b.data.order),
-);
-
-const socialCollection = await getCollection('social').then((collection) =>
-  collection.sort((a, b) => a.data.order - b.data.order),
+const socialLinks = links.filter(({ title }) =>
+  ['LinkedIn', 'GitHub'].includes(title),
 );
 ---
 
@@ -32,9 +29,9 @@ const socialCollection = await getCollection('social').then((collection) =>
     >
       <ul class="flex items-center gap-8">
         {
-          navigationCollection.map(({ data }) => (
+          navigation.map(({ pathname, text }) => (
             <li>
-              <NavLink href={data.pathname}>{data.text}</NavLink>
+              <NavLink href={pathname}>{text}</NavLink>
             </li>
           ))
         }
@@ -44,11 +41,11 @@ const socialCollection = await getCollection('social').then((collection) =>
       class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
     >
       {
-        socialCollection.map(({ data }) => (
+        socialLinks.map(({ title, url, icon }) => (
           <SocialLink
-            href={data.url}
-            alt={data.text}
-            icon={data.icon}
+            href={url}
+            alt={title}
+            icon={icon}
             class="w-[3.25rem] md:w-auto"
           />
         ))

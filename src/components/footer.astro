@@ -1,10 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
+import contactAndSocialLinks from '@/data/contact-and-social-links';
 import Logo from '@/components/logo.astro';
 import SocialLink from '@/components/social-link.astro';
 
-const socialCollection = await getCollection('social').then((collection) =>
-  collection.sort((a, b) => a.data.order - b.data.order),
+const socialLinks = contactAndSocialLinks.filter(({ title }) =>
+  ['LinkedIn', 'GitHub'].includes(title),
 );
 ---
 
@@ -20,8 +20,8 @@ const socialCollection = await getCollection('social').then((collection) =>
     </p>
     <div class="flex items-center gap-8 md:justify-self-end">
       {
-        socialCollection.map(({ data }) => (
-          <SocialLink href={data.url} alt={data.text} icon={data.icon} />
+        socialLinks.map(({ title, url, icon }) => (
+          <SocialLink href={url} alt={title} icon={icon} />
         ))
       }
     </div>

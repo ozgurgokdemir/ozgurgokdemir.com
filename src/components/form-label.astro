@@ -6,6 +6,9 @@ type Props = HTMLAttributes<'label'>;
 const { class: className, ...props } = Astro.props;
 ---
 
-<label class:list={['text-lg font-semibold text-white', className]} {...props}>
+<label
+  class:list={['text-base font-semibold text-white', className]}
+  {...props}
+>
   <slot />
 </label>
