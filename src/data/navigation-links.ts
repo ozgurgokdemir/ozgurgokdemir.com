@@ -6,7 +6,7 @@ type NavigationLink = {
 const navigationLinks: NavigationLink[] = [
   { pathname: '/', text: 'Home' },
   { pathname: '/about', text: 'About' },
-  { pathname: '/projects', text: 'Projects' },
+  { pathname: '/projects?category=featured', text: 'Projects' },
   { pathname: '/contact', text: 'Contact' },
 ];
 
