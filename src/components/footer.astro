@@ -1,10 +1,11 @@
 ---
-import contactAndSocialLinks from '@/data/contact-and-social-links';
+import { getCollection } from 'astro:content';
 import Logo from '@/components/logo.astro';
 import SocialLink from '@/components/social-link.astro';
 
-const socialLinks = contactAndSocialLinks.filter(({ title }) =>
-  ['LinkedIn', 'GitHub'].includes(title),
+const contact = await getCollection(
+  'contact',
+  ({ data }) => data.id !== 'email',
 );
 ---
 
@@ -20,8 +21,8 @@ const socialLinks = contactAndSocialLinks.filter(({ title }) =>
     </p>
     <div class="flex items-center gap-8 md:justify-self-end">
       {
-        socialLinks.map(({ title, url, icon }) => (
-          <SocialLink href={url} alt={title} icon={icon} />
+        contact.map(({ data }) => (
+          <SocialLink href={data.url} alt={data.title} icon={data.icon} />
         ))
       }
     </div>

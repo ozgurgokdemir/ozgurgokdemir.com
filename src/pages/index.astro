@@ -1,9 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import { sortByOrder } from '@/utils/content-collections';
-import contactAndSocialLinks from '@/data/contact-and-social-links';
 import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
@@ -20,6 +19,8 @@ const featuredProjects = await getCollection(
   'projects',
   ({ data }) => data.featured,
 ).then(sortByOrder);
+
+const contact = await getCollection('contact');
 ---
 
 <MainLayout
@@ -104,7 +105,7 @@ const featuredProjects = await getCollection(
         featuredProjects.map((project) => (
           <li class="md:even:-translate-y-36">
             <FeaturedProjectCard
-              href={`/projects/${project.slug}`}
+              href={`/projects/${project.id}`}
               title={project.data.title}
               description={project.data.description}
               image={project.data.image}
@@ -127,20 +128,20 @@ const featuredProjects = await getCollection(
       </p>
       <ul class="flex flex-col gap-4">
         {
-          contactAndSocialLinks.map(({ url, icon, text }) => (
+          contact.map(({ data }) => (
             <li class="w-fit">
               <a
-                href={url}
+                href={data.url}
                 target="_blank"
                 class="group flex items-center gap-3 text-base font-medium outline-2 outline-offset-2 outline-blue-500 transition-transform hover:translate-x-2 focus-visible:outline"
               >
                 <Icon
-                  name={icon}
+                  name={data.icon}
                   size={20}
                   class="text-white/80 transition-colors group-hover:text-white"
                 />
                 <span class="text-white/60 transition-colors group-hover:text-white">
-                  {text}
+                  {data.text}
                 </span>
               </a>
             </li>

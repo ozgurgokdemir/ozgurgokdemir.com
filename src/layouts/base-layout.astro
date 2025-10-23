@@ -1,6 +1,6 @@
 ---
 import '@/styles/globals.css';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 export type BaseLayoutProps = {
   title: string;
@@ -44,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       crossorigin
     />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="grid bg-black font-sans text-base font-medium text-white/60">
     <slot />

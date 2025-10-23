@@ -1,0 +1,22 @@
+[
+  {
+    "id": "home",
+    "pathname": "/",
+    "text": "Home"
+  },
+  {
+    "id": "about",
+    "pathname": "/about",
+    "text": "About"
+  },
+  {
+    "id": "projects",
+    "pathname": "/projects?category=featured",
+    "text": "Projects"
+  },
+  {
+    "id": "contact",
+    "pathname": "/contact",
+    "text": "Contact"
+  }
+]

@@ -8,11 +8,11 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid',
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
     },
+    imageService: 'cloudflare',
   }),
   integrations: [
     react(),

@@ -34,9 +34,9 @@ function ProjectList({ projects }: ProjectListProps) {
   return (
     <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       <AnimatePresence mode="popLayout">
-        {filteredProjects.map(({ title, description, image, slug }, index) => (
+        {filteredProjects.map(({ id, title, description, image }, index) => (
           <motion.li
-            key={slug}
+            key={id}
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -44,10 +44,10 @@ function ProjectList({ projects }: ProjectListProps) {
             custom={index}
           >
             <ProjectCard
+              id={id}
               title={title}
               description={description}
               image={image}
-              slug={slug}
             />
           </motion.li>
         ))}

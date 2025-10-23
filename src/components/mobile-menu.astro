@@ -1,7 +1,9 @@
 ---
-import navigation from '@/data/navigation-links';
+import { getCollection } from 'astro:content';
 import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
+
+const navigation = await getCollection('navigation');
 ---
 
 <NavBar
@@ -12,14 +14,14 @@ import NavLink from '@/components/nav-link.astro';
 >
   <ul class="flex flex-col">
     {
-      navigation.map(({ pathname, text }) => (
+      navigation.map(({ data }) => (
         <li>
           <NavLink
-            href={pathname}
+            href={data.pathname}
             class="flex h-12 items-center px-4"
-            aria-label={text}
+            aria-label={data.text}
           >
-            {text}
+            {data.text}
           </NavLink>
         </li>
       ))

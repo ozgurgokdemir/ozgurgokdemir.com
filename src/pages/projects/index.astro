@@ -15,7 +15,7 @@ const projects = await Promise.all(
   projectsCollection.map(async (project) => ({
     ...project.data,
     image: await getImage({ src: project.data.image }),
-    slug: project.slug,
+    id: project.id,
   })),
 );
 ---

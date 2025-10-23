@@ -1,6 +1,6 @@
 ---
+import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
-import contactAndSocialLinks from '@/data/contact-and-social-links';
 import MainLayout from '@/layouts/main-layout.astro';
 import Frame from '@/components/frame.astro';
 import ContactForm from '@/components/contact-form.astro';
@@ -9,6 +9,8 @@ import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
 import FormTextarea from '@/components/form-textarea.astro';
 import Button from '@/components/button.astro';
+
+const contact = await getCollection('contact');
 ---
 
 <MainLayout
@@ -27,20 +29,20 @@ import Button from '@/components/button.astro';
       </p>
       <ul class="flex flex-col gap-4">
         {
-          contactAndSocialLinks.map(({ url, icon, text }) => (
+          contact.map(({ data }) => (
             <li class="w-fit">
               <a
-                href={url}
+                href={data.url}
                 target="_blank"
                 class="group flex items-center gap-3 text-base font-medium outline-2 outline-offset-2 outline-blue-500 transition-transform hover:translate-x-2 focus-visible:outline"
               >
                 <Icon
-                  name={icon}
+                  name={data.icon}
                   size={20}
                   class="text-white/80 transition-colors group-hover:text-white"
                 />
                 <span class="text-white/60 transition-colors group-hover:text-white">
-                  {text}
+                  {data.text}
                 </span>
               </a>
             </li>

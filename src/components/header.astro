@@ -1,6 +1,5 @@
 ---
-import navigation from '@/data/navigation-links';
-import links from '@/data/contact-and-social-links';
+import { getCollection } from 'astro:content';
 import Logo from '@/components/logo.astro';
 import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
@@ -8,8 +7,11 @@ import SocialLink from '@/components/social-link.astro';
 import HamburgerButton from '@/components/hamburger-button.astro';
 import MobileMenu from '@/components/mobile-menu.astro';
 
-const socialLinks = links.filter(({ title }) =>
-  ['LinkedIn', 'GitHub'].includes(title),
+const navigation = await getCollection('navigation');
+
+const contact = await getCollection(
+  'contact',
+  ({ data }) => data.id !== 'email',
 );
 ---
 
@@ -29,9 +31,9 @@ const socialLinks = links.filter(({ title }) =>
     >
       <ul class="flex items-center gap-8">
         {
-          navigation.map(({ pathname, text }) => (
+          navigation.map(({ data }) => (
             <li>
-              <NavLink href={pathname}>{text}</NavLink>
+              <NavLink href={data.pathname}>{data.text}</NavLink>
             </li>
           ))
         }
@@ -41,11 +43,11 @@ const socialLinks = links.filter(({ title }) =>
       class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
     >
       {
-        socialLinks.map(({ title, url, icon }) => (
+        contact.map(({ data }) => (
           <SocialLink
-            href={url}
-            alt={title}
-            icon={icon}
+            href={data.url}
+            alt={data.title}
+            icon={data.icon}
             class="w-[3.25rem] md:w-auto"
           />
         ))

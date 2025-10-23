@@ -1,7 +1,8 @@
-import { z, defineCollection } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
+import { glob, file } from 'astro/loaders';
 
-const projectsCollection = defineCollection({
-  type: 'content',
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/data/projects' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -16,27 +17,28 @@ const projectsCollection = defineCollection({
     }),
 });
 
-const navigationCollection = defineCollection({
-  type: 'data',
+const navigation = defineCollection({
+  loader: file('src/data/navigation.json'),
   schema: z.object({
+    id: z.string(),
     pathname: z.string(),
     text: z.string(),
-    order: z.number().default(0),
   }),
 });
 
-const socialCollection = defineCollection({
-  type: 'data',
+const contact = defineCollection({
+  loader: file('src/data/contact.json'),
   schema: z.object({
+    id: z.string(),
+    title: z.string(),
     url: z.string().url(),
     text: z.string(),
     icon: z.string(),
-    order: z.number().default(0),
   }),
 });
 
 export const collections = {
-  projects: projectsCollection,
-  navigation: navigationCollection,
-  social: socialCollection,
+  projects,
+  navigation,
+  contact,
 };

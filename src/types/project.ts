@@ -1,12 +1,12 @@
 import type { ImageMetadata, GetImageResult } from 'astro';
 
 export type Project = {
+  id: string;
   title: string;
   description: string;
   image: ImageMetadata;
   color: string;
   category: string;
-  slug: string;
   featured: boolean;
   livePreview?: string;
   sourceCode?: string;
