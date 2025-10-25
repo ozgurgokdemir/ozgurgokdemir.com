@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
+// import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { sortByOrder } from '@/utils/content-collections';
-import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
+// import heroImage from '@/assets/turkceduzelt.png';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
 import FeaturedProjectCard from '@/components/featured-project-card.astro';
@@ -28,82 +28,86 @@ const contact = await getCollection('contact');
   description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
 >
   <section
-    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:py-32 md:pt-56"
+    class="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-48 md:px-6 md:pt-48 md:pb-24 lg:px-8"
   >
-    <h1
-      class="text-5xl font-semibold text-white md:text-center md:text-[5rem] md:leading-tight"
-    >
-      Hi, I’m Özgür Gökdemir.
-      <br />
-      I’m a frontend developer.
-    </h1>
-    <p class="text-xl font-medium text-white/60">
-      I build high-performance and responsive web applications.
-    </p>
-    <div class="flex items-center gap-4 pt-2 md:pt-5">
-      <LinkButton href="/contact">
-        <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" size={20} />
-        Let's Talk
-      </LinkButton>
-      <LinkButton href="/projects?category=featured" variant="secondary">
-        View my work
-      </LinkButton>
+    <div class="flex flex-col gap-6 md:items-center">
+      <h1
+        class="text-5xl font-semibold tracking-tight md:text-center md:text-6xl lg:text-7xl"
+      >
+        Hi, I’m Özgür Gökdemir.
+        <br />
+        I’m a frontend developer.
+      </h1>
+      <p class="text-muted-foreground text-xl md:text-2xl">
+        I build high-performance and responsive web applications.
+      </p>
+      <div class="mt-2 flex items-center gap-4">
+        <LinkButton href="/contact">
+          <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" />
+          Let's Talk
+        </LinkButton>
+        <LinkButton href="/projects?category=featured" variant="outline">
+          View my work
+        </LinkButton>
+      </div>
     </div>
+    <Frame>
+      <div class="aspect-video"></div>
+      <!-- <Image
+        src={heroImage}
+        alt="hero image"
+        width={1200}
+        height={675}
+        class="w-full"
+      /> -->
+    </Frame>
   </section>
   <section
-    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-32"
+    class="mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:items-center md:gap-4 md:px-6 md:py-24 lg:px-8"
   >
-    <div class="flex flex-col items-start gap-6 md:gap-8 lg:pr-12">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        Get to know me.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
+    <div class="flex flex-col items-start gap-4 lg:pr-12">
+      <h2 class="text-3xl font-semibold">Get to know me.</h2>
+      <p class="text-muted-foreground text-lg">
         I’m a frontend developer based in Türkiye, specializing in building
         dynamic web applications using TypeScript, React, and Next.js. I develop
         interactive features and optimize user experiences to deliver fast,
         efficient, and user-friendly solutions. Whether working independently or
         as part of a team, I aim to meet both business and user needs.
       </p>
-      <LinkButton href="/about" variant="secondary" class="group gap-2">
+      <LinkButton href="/about" class="group mt-2">
         More about me
         <Icon
           name="heroicons:arrow-long-right-20-solid"
           size={20}
-          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+          class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
     </div>
-    <Frame border overlay>
-      <Image
-        src={ozgurGokdemir}
-        alt="Özgür Gökdemir"
-        width={500}
-        height={500}
-        class="w-full"
-      />
+    <Frame>
+      <div class="h-[528px]"></div>
     </Frame>
   </section>
-  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-32">
-    <div class="flex flex-col items-start gap-6 md:gap-8">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        A glimpse into my work.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
+  <section
+    class="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-24 md:px-6 md:py-24 lg:px-8"
+  >
+    <div class="flex flex-col items-start gap-4">
+      <h2 class="text-3xl font-semibold">A glimpse into my work.</h2>
+      <p class="text-muted-foreground text-lg">
         Here are some projects I've loved working on.
       </p>
-      <LinkButton href="/projects" variant="secondary" class="group gap-2">
+      <LinkButton href="/projects" class="group mt-2 gap-2">
         See all projects
         <Icon
           name="heroicons:arrow-long-right-20-solid"
           size={20}
-          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+          class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
     </div>
-    <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         featuredProjects.map((project) => (
-          <li class="md:even:-translate-y-36">
+          <li class="md:even:-translate-y-34">
             <FeaturedProjectCard
               href={`/projects/${project.id}`}
               title={project.data.title}
@@ -116,16 +120,17 @@ const contact = await getCollection('contact');
       }
     </ul>
   </section>
-  <section class="container grid gap-16 py-16 md:grid-cols-2 md:gap-8 md:py-32">
-    <div class="flex flex-col gap-6 md:items-start md:gap-8 md:pt-8 lg:pr-12">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        Get in touch.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
+  <section
+    class="mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:gap-4 md:px-6 md:pt-24 md:pb-48 lg:px-8"
+  >
+    <div class="flex flex-col gap-4 md:items-start md:pt-12 lg:pr-12">
+      <h2 class="text-3xl font-semibold">Get in touch.</h2>
+      <p class="text-muted-foreground text-lg">
         I’m always open to new opportunities and collaborations. Whether you
         have a project in mind or just want to say hello, feel free to reach
         out!
       </p>
+      <span class="bg-border h-px w-full"></span>
       <ul class="flex flex-col gap-4">
         {
           contact.map(({ data }) => (
@@ -133,14 +138,14 @@ const contact = await getCollection('contact');
               <a
                 href={data.url}
                 target="_blank"
-                class="group flex items-center gap-3 text-base font-medium outline-2 outline-offset-2 outline-blue-500 transition-transform hover:translate-x-2 focus-visible:outline"
+                class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-3 text-base font-medium transition-transform outline-none hover:translate-x-2 focus-visible:ring-[3px]"
               >
                 <Icon
                   name={data.icon}
                   size={20}
-                  class="text-white/80 transition-colors group-hover:text-white"
+                  class="text-muted-foreground group-hover:text-foreground transition-colors"
                 />
-                <span class="text-white/60 transition-colors group-hover:text-white">
+                <span class="text-muted-foreground group-hover:text-foreground transition-colors">
                   {data.text}
                 </span>
               </a>
@@ -149,8 +154,8 @@ const contact = await getCollection('contact');
         }
       </ul>
     </div>
-    <Frame border={{ lg: true }}>
-      <ContactForm class="grid gap-6 lg:p-8">
+    <Frame>
+      <ContactForm class="grid gap-6 md:p-8">
         <FormField>
           <FormLabel for="name">Name</FormLabel>
           <FormInput

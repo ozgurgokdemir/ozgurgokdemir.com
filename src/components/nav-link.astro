@@ -1,18 +1,12 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import LinkButton from '@/components/link-button.astro';
 
 type Props = HTMLAttributes<'a'>;
 
-const { class: className, ...props } = Astro.props;
+const { ...props } = Astro.props;
 ---
 
-<a
-  class:list={[
-    'text-base font-semibold text-white/60 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline aria-[current=page]:text-white',
-    className,
-  ]}
-  data-nav-link
-  {...props}
->
+<LinkButton variant="ghost" size="sm" data-nav-link {...props}>
   <slot />
-</a>
+</LinkButton>

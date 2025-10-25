@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
 import icon from 'astro-icon';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,9 +16,6 @@ export default defineConfig({
   }),
   integrations: [
     react(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
     icon({
       include: {
         heroicons: ['*'],
@@ -28,5 +25,8 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   site: 'https://ozgurgokdemir.com',
 });

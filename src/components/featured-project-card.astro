@@ -22,9 +22,9 @@ const {
 
 <a
   class:list={[
-    'group relative flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-2 outline-offset-2 outline-blue-500 focus-visible:outline',
-    'before:absolute before:inset-0 before:bg-gradient-radial-to-b before:from-white/20 before:to-white/15 before:opacity-0 before:transition-opacity hover:before:opacity-100',
-    'after:absolute after:inset-0 after:bg-gradient-radial-to-b after:from-white/20 after:to-white/10 after:transition-opacity hover:after:opacity-0',
+    'group focus-visible:border-ring focus-visible:ring-ring/50 relative flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-none focus-visible:ring-[3px]',
+    'before:absolute before:inset-0 before:bg-radial-[circle_farthest-side_at_top] before:from-white/20 before:to-white/15 before:opacity-0 before:transition-opacity hover:before:opacity-100',
+    'after:absolute after:inset-0 after:bg-radial-[circle_farthest-side_at_top] after:from-white/20 after:to-white/10 after:transition-opacity hover:after:opacity-0',
     className,
   ]}
   style={`--gradient-color:${color};`}
@@ -32,8 +32,8 @@ const {
 >
   <div
     class:list={[
-      'relative z-10 flex aspect-[3/2] items-end justify-center overflow-hidden rounded-lg px-5 md:px-10',
-      'before:absolute before:inset-0 before:bg-gradient-radial-to-b before:from-[--gradient-color] before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100',
+      'relative z-10 flex aspect-3/2 items-end justify-center overflow-hidden rounded-lg px-5 md:px-10',
+      'before:absolute before:inset-0 before:bg-radial-[circle_farthest-side_at_top] before:from-(--gradient-color) before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100',
       'after:absolute after:inset-0 after:bg-black/60',
     ]}
   >
@@ -44,8 +44,8 @@ const {
     />
   </div>
   <div class="z-10 flex flex-col p-2 md:gap-2 md:p-6">
-    <h3 class="text-lg font-semibold text-white md:text-2xl">{title}</h3>
-    <p class="truncate text-base font-medium text-white/60 md:text-lg">
+    <h3 class="text-lg font-semibold md:text-2xl">{title}</h3>
+    <p class="text-muted-foreground truncate font-medium md:text-lg">
       {description}
     </p>
   </div>

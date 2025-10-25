@@ -1,21 +1,19 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
-type NavBarVariants = VariantProps<typeof navBarStyles>;
-
-type Props = HTMLAttributes<'nav'> & NavBarVariants;
+type Props = HTMLAttributes<'nav'> & VariantProps<typeof navBarVariants>;
 
 const { orientation = 'vertical', class: className, ...props } = Astro.props;
 
-const navBarStyles = tv({
-  base: 'relative after:absolute',
+const navBarVariants = cva('relative after:absolute', {
   variants: {
     orientation: {
       vertical:
-        'after:left-0 after:top-[calc(var(--indicator-top)+0.75rem)] after:h-6 after:w-0.5 after:rounded-r-full after:bg-emerald-400 after:transition-[top]',
+        'after:left-0 after:top-[calc(var(--indicator-top)+0.5rem)] after:h-4 after:w-0.5 after:rounded-r-full after:bg-primary after:transition-[top]',
       horizontal:
-        'after:-bottom-2 after:left-[--indicator-left] after:h-0.5 after:w-[--indicator-width] after:rounded-full after:bg-emerald-400 after:transition-[width,left]',
+        'after:-bottom-1 after:left-[calc(var(--indicator-left)+0.375rem)] after:h-0.5 after:w-[calc(var(--indicator-width)-0.75rem)] after:rounded-full after:bg-primary after:transition-[width,left]',
     },
   },
   defaultVariants: {
@@ -25,7 +23,7 @@ const navBarStyles = tv({
 ---
 
 <nav
-  class={navBarStyles({ orientation, className })}
+  class={cn(navBarVariants({ orientation, className }))}
   data-nav-bar
   data-orientation={orientation}
   {...props}

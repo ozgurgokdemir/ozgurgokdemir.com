@@ -1,23 +1,18 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { tv } from 'tailwind-variants';
+import { cn } from '@/lib/utils';
 
 type Props = HTMLAttributes<'span'>;
 
 const { class: className, ...props } = Astro.props;
-
-const loadingEllipsisStyles = tv({
-  slots: {
-    base: 'flex items-center gap-1',
-    dot: 'size-1 animate-plop rounded-full bg-current',
-  },
-});
-
-const { base, dot } = loadingEllipsisStyles();
 ---
 
-<span class={base({ className })} {...props}>
-  <span class={dot()}></span>
-  <span class={dot()} style="animation-delay: 200ms;"></span>
-  <span class={dot()} style="animation-delay: 400ms;"></span>
+<span class={cn('flex items-center gap-1', className)} {...props}>
+  <span class="animate-plop size-1 rounded-full bg-current"></span>
+  <span
+    class="animate-plop size-1 rounded-full bg-current"
+    style="animation-delay: 200ms;"></span>
+  <span
+    class="animate-plop size-1 rounded-full bg-current"
+    style="animation-delay: 400ms;"></span>
 </span>

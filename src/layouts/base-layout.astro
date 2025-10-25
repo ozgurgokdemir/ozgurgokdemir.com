@@ -1,5 +1,5 @@
 ---
-import '@/styles/globals.css';
+import '@/global.css';
 import { ClientRouter } from 'astro:transitions';
 
 export type BaseLayoutProps = {
@@ -46,7 +46,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <ClientRouter />
   </head>
-  <body class="grid bg-black font-sans text-base font-medium text-white/60">
+  <body>
     <slot />
   </body>
 </html>
