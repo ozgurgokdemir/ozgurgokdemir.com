@@ -1,0 +1,62 @@
+[
+  {
+    "id": "typescript",
+    "label": "TypeScript",
+    "category": "Language",
+    "icon": "simple-icons:typescript"
+  },
+  {
+    "id": "react",
+    "label": "React",
+    "category": "Framework",
+    "icon": "simple-icons:react"
+  },
+  {
+    "id": "nextjs",
+    "label": "Next.js",
+    "category": "Framework",
+    "icon": "simple-icons:nextdotjs"
+  },
+  {
+    "id": "tailwindcss",
+    "label": "Tailwind CSS",
+    "category": "Styling",
+    "icon": "simple-icons:tailwindcss"
+  },
+  {
+    "id": "shadcnui",
+    "label": "shadcn/ui",
+    "category": "Components",
+    "icon": "simple-icons:shadcnui"
+  },
+  {
+    "id": "motion",
+    "label": "Motion",
+    "category": "Animation",
+    "icon": "simple-icons:framer"
+  },
+  {
+    "id": "prisma",
+    "label": "Prisma",
+    "category": "ORM",
+    "icon": "simple-icons:prisma"
+  },
+  {
+    "id": "reactquery",
+    "label": "React Query",
+    "category": "Data Fetching",
+    "icon": "simple-icons:reactquery"
+  },
+  {
+    "id": "cursor",
+    "label": "Cursor",
+    "category": "AI",
+    "icon": "simple-icons:claude"
+  },
+  {
+    "id": "cloudflare",
+    "label": "Cloudflare",
+    "category": "Platform",
+    "icon": "simple-icons:cloudflare"
+  }
+]

@@ -17,6 +17,16 @@ const projects = defineCollection({
     }),
 });
 
+const technologies = defineCollection({
+  loader: file('src/data/technologies.json'),
+  schema: z.object({
+    id: z.string(),
+    label: z.string(),
+    category: z.string(),
+    icon: z.string(),
+  }),
+});
+
 const navigation = defineCollection({
   loader: file('src/data/navigation.json'),
   schema: z.object({
@@ -39,6 +49,7 @@ const contact = defineCollection({
 
 export const collections = {
   projects,
+  technologies,
   navigation,
   contact,
 };
