@@ -33,7 +33,7 @@
     "id": "motion",
     "label": "Motion",
     "category": "Animation",
-    "icon": "simple-icons:framer"
+    "icon": "motion"
   },
   {
     "id": "prisma",
@@ -51,7 +51,7 @@
     "id": "cursor",
     "label": "Cursor",
     "category": "AI",
-    "icon": "simple-icons:claude"
+    "icon": "cursor"
   },
   {
     "id": "cloudflare",
