@@ -9,7 +9,7 @@ const { class: className, ...props } = Astro.props;
 
 <div
   class={cn(
-    'relative md:rounded-3xl md:p-2.25 before:md:block before:hidden md:bg-radial-[circle_farthest-side_at_top] from-white/25 before:absolute before:inset-px before:rounded-[calc(1.5rem-1px)] before:bg-background/75 before:backdrop-blur-lg',
+    'relative md:rounded-3xl md:p-2.25 before:md:block before:hidden md:bg-radial-[ellipse_100%_100%_at_top] from-white/25 before:absolute before:inset-px before:rounded-[calc(1.5rem-1px)] before:bg-background/75 before:backdrop-blur-lg',
     className,
   )}
   {...props}
