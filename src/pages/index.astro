@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-// import { Image } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { sortByOrder } from '@/utils/content-collections';
-// import heroImage from '@/assets/turkceduzelt.png';
+import heroImage from '@/assets/turkceduzelt.png';
+import BlurryGradient from '@/assets/blurry-gradient.svg';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
 import FeaturedProjectCard from '@/components/featured-project-card.astro';
@@ -46,7 +47,7 @@ const contact = await getCollection('contact');
       </p>
       <div class="mt-2 flex items-center gap-4">
         <LinkButton href="/contact">
-          <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" />
+          <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
         </LinkButton>
         <LinkButton href="/projects?category=featured" variant="outline">
@@ -55,14 +56,16 @@ const contact = await getCollection('contact');
       </div>
     </div>
     <Frame>
-      <div class="aspect-video"></div>
-      <!-- <Image
-        src={heroImage}
-        alt="hero image"
-        width={1200}
-        height={675}
-        class="w-full"
-      /> -->
+      <div
+        class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+      >
+        <BlurryGradient class="absolute h-full w-full" />
+        <Image
+          src={heroImage}
+          alt="hero image"
+          class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-md ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+        />
+      </div>
     </Frame>
   </section>
   <section
@@ -80,8 +83,8 @@ const contact = await getCollection('contact');
       <LinkButton href="/about" class="group mt-2">
         More about me
         <Icon
-          name="heroicons:arrow-long-right-20-solid"
-          size={20}
+          name="heroicons:arrow-up-right-16-solid"
+          size={16}
           class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
@@ -118,8 +121,8 @@ const contact = await getCollection('contact');
       <LinkButton href="/projects" class="group mt-2 gap-2">
         See all projects
         <Icon
-          name="heroicons:arrow-long-right-20-solid"
-          size={20}
+          name="heroicons:arrow-right-16-solid"
+          size={16}
           class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
@@ -206,7 +209,10 @@ const contact = await getCollection('contact');
             required
           />
         </FormField>
-        <Button type="submit" class="lg:w-fit">Send message</Button>
+        <Button type="submit" class="lg:w-fit">
+          <Icon name="heroicons:paper-airplane-16-solid" />
+          Send message
+        </Button>
       </ContactForm>
     </Frame>
   </section>
