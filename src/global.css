@@ -68,4 +68,8 @@
   body {
     @apply bg-background text-foreground grid font-sans text-base font-normal;
   }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
