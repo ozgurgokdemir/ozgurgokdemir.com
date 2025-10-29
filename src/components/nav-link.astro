@@ -2,11 +2,34 @@
 import type { HTMLAttributes } from 'astro/types';
 import LinkButton from '@/components/link-button.astro';
 
-type Props = HTMLAttributes<'a'>;
+type Props = HTMLAttributes<'a'> & {
+  section?: string;
+};
 
-const { ...props } = Astro.props;
+const { section, ...props } = Astro.props;
 ---
 
-<LinkButton variant="ghost" size="sm" data-nav-link {...props}>
+<LinkButton
+  variant="ghost"
+  size="sm"
+  data-nav-link
+  data-section={section}
+  {...props}
+>
   <slot />
 </LinkButton>
+
+<script>
+  const navLinks =
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  navLinks.forEach((navLink) => {
+    navLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = navLink.getAttribute('data-section');
+      if (!sectionId) return;
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+      section.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>

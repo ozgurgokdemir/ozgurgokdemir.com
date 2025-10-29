@@ -30,7 +30,9 @@ const contact = await getCollection(
         {
           navigation.map(({ data }) => (
             <li>
-              <NavLink href={data.pathname}>{data.text}</NavLink>
+              <NavLink href={data.pathname} section={data.id}>
+                {data.text}
+              </NavLink>
             </li>
           ))
         }

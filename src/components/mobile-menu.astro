@@ -46,6 +46,7 @@ const navigation = await getCollection('navigation');
           <li>
             <NavLink
               href={data.pathname}
+              section={data.id}
               class="flex items-center"
               aria-label={data.text}
             >

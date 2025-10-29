@@ -1,22 +1,22 @@
 [
   {
     "id": "home",
-    "pathname": "/",
+    "pathname": "",
     "text": "Home"
   },
   {
     "id": "about",
-    "pathname": "/about",
+    "pathname": "",
     "text": "About"
   },
   {
     "id": "projects",
-    "pathname": "/projects?category=featured",
+    "pathname": "",
     "text": "Projects"
   },
   {
     "id": "contact",
-    "pathname": "/contact",
+    "pathname": "",
     "text": "Contact"
   }
 ]

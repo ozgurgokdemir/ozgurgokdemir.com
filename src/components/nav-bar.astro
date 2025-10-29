@@ -32,9 +32,7 @@ const navBarVariants = cva('relative after:absolute', {
 </nav>
 
 <script>
-  import navigation from '@/utils/navigation';
-
-  function updateNavigation() {
+  function updateNavigation(currentSectionId: string) {
     const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
 
     const navigations = Array.from(navBars, (navBar) => ({
@@ -44,10 +42,11 @@ const navBarVariants = cva('relative after:absolute', {
 
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
-        const isCurrentPath = navigation.isCurrentPath(navLink.pathname);
-        navLink.setAttribute('aria-current', isCurrentPath ? 'page' : 'false');
+        const isCurrent = navLink.dataset.section === currentSectionId;
+        console.log({ currentSectionId });
+        navLink.setAttribute('aria-current', isCurrent ? 'page' : 'false');
 
-        if (!isCurrentPath) return;
+        if (!isCurrent) return;
 
         const activeLinkRect = navLink.getBoundingClientRect();
         const navBarRect = navBar.getBoundingClientRect();
@@ -71,7 +70,24 @@ const navBarVariants = cva('relative after:absolute', {
     });
   }
 
-  updateNavigation();
+  document.addEventListener('astro:page-load', () => {
+    const sections = document.querySelectorAll('section[id]');
 
-  document.addEventListener('astro:after-swap', updateNavigation);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const currentSectionId = entry.target.getAttribute('id');
+          if (!currentSectionId) return;
+          updateNavigation(currentSectionId);
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: `-40% 0px -60% 0px`,
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  });
 </script>
