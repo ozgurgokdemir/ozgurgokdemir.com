@@ -4,8 +4,8 @@ import { Icon } from 'astro-icon/components';
 
 <toast-notification
   class:list={[
-    'group fixed bottom-4 left-4 right-4 z-40 grid max-w-96 grid-cols-[auto_1fr_auto] items-center gap-x-4 overflow-hidden rounded-2xl border border-white/10 bg-black/60 p-4 backdrop-blur-lg transition-[visibility,opacity,transform] duration-300 aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:-translate-x-full aria-hidden:opacity-0 sm:bottom-8 sm:left-8 sm:right-auto',
-    'after:absolute after:left-0 after:top-1/2 after:h-[calc(100%-2rem)] after:w-0.5 after:-translate-y-1/2 after:rounded-r-full data-[status=error]:after:bg-red-500 data-[status=success]:after:bg-green-500',
+    'group bg-popover/80 fixed right-4 bottom-4 left-4 z-40 grid max-w-96 grid-cols-[auto_1fr_auto] items-center gap-x-4 overflow-hidden rounded-2xl border p-4 backdrop-blur-md transition-[visibility,opacity,transform] duration-300 aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:-translate-x-full aria-hidden:opacity-0 sm:right-auto sm:bottom-8 sm:left-8',
+    'data-[status=error]:after:bg-destructive data-[status=success]:after:bg-primary after:absolute after:top-1/2 after:left-0 after:h-[calc(100%-2rem)] after:w-0.5 after:-translate-y-1/2 after:rounded-r-full',
   ]}
   role="status"
   aria-hidden="true"
@@ -13,20 +13,24 @@ import { Icon } from 'astro-icon/components';
   <Icon
     name="heroicons:exclamation-triangle"
     size={24}
-    class="text-red-500 group-[&:not([data-status=error])]:hidden"
+    class="text-destructive group-[&:not([data-status=error])]:hidden"
   />
   <Icon
     name="heroicons:check-circle"
     size={24}
-    class="text-green-500 group-[&:not([data-status=success])]:hidden"
+    class="text-primary group-[&:not([data-status=success])]:hidden"
   />
-  <div class="text-lg font-semibold text-white" data-title></div>
+  <div class="text-popover-foreground text-lg font-semibold" data-title></div>
   <div
-    class="col-start-2 -col-end-1 row-start-2 text-base font-medium text-white/60"
+    class="text-muted-foreground col-start-2 -col-end-1 row-start-2 text-base font-medium"
     data-description
   >
   </div>
-  <button type="button" class="text-white/60 hover:text-white" data-close>
+  <button
+    type="button"
+    class="text-muted-foreground hover:text-popover-foreground"
+    data-close
+  >
     <Icon name="heroicons:x-mark-20-solid" size={20} />
   </button>
 </toast-notification>

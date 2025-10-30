@@ -43,7 +43,6 @@ const navBarVariants = cva('relative after:absolute', {
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
         const isCurrent = navLink.dataset.section === currentSectionId;
-        console.log({ currentSectionId });
         navLink.setAttribute('aria-current', isCurrent ? 'page' : 'false');
 
         if (!isCurrent) return;
