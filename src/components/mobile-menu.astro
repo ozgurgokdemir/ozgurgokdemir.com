@@ -17,7 +17,7 @@ const navigation = await getCollection('navigation');
   <Button
     variant="ghost"
     size="icon-sm"
-    class="group relative transition-colors duration-[--duration] [--color:var(--foreground)]"
+    class="group relative [--color:var(--foreground)]"
     style="--width:1rem;--thickness:0.125rem;--gap:0.25rem;--duration:300ms"
     aria-label="open menu"
     aria-controls="mobile-menu"
@@ -25,29 +25,29 @@ const navigation = await getCollection('navigation');
     data-hamburger-button
   >
     <span
-      class="absolute top-1/2 left-1/2 h-(--thickness) w-(--width) -translate-x-1/2 translate-y-[calc(-150%-var(--gap))] transition-transform duration-[calc(var(--duration)*2/3)] group-aria-expanded:-translate-y-1/2 group-aria-expanded:-rotate-45 group-aria-expanded:delay-[calc(var(--duration)*1/3)] before:absolute before:right-0 before:h-full before:w-full before:rounded-full before:bg-(--color) before:transition-[width] before:delay-[calc(var(--duration)*1/3)] before:duration-[calc(var(--duration)*2/3)] before:group-aria-expanded:w-[60%] before:group-aria-expanded:delay-0"
+      class="absolute top-1/2 left-1/2 h-(--thickness) w-(--width) -translate-x-1/2 translate-y-[calc(-150%-var(--gap))] transition-transform duration-[calc(var(--duration)*2/3)] group-aria-expanded:-translate-y-1/2 group-aria-expanded:-rotate-45 group-aria-expanded:delay-[calc(var(--duration)*1/3)] before:absolute before:right-0 before:h-full before:w-full before:rounded-full before:bg-(--color) before:transition-[width] before:delay-[calc(var(--duration)*1/3)] before:duration-[calc(var(--duration)*2/3)] group-aria-expanded:before:w-[60%] group-aria-expanded:before:delay-0"
     ></span>
     <span
       class="absolute top-1/2 left-1/2 h-(--thickness) w-(--width) -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--color) transition-transform duration-[calc(var(--duration)*2/3)] group-aria-expanded:rotate-45 group-aria-expanded:delay-[calc(var(--duration)*1/3)]"
     ></span>
     <span
-      class="absolute top-1/2 left-1/2 h-(--thickness) w-(--width) -translate-x-1/2 translate-y-[calc(50%+var(--gap))] transition-transform duration-[calc(var(--duration)*2/3)] group-aria-expanded:-translate-y-1/2 group-aria-expanded:-rotate-45 group-aria-expanded:delay-[calc(var(--duration)*1/3)] before:absolute before:right-0 before:h-full before:w-[60%] before:rounded-full before:bg-(--color) before:transition-[right] before:delay-[calc(var(--duration)*1/3)] before:duration-[calc(var(--duration)*2/3)] before:group-aria-expanded:right-[40%] before:group-aria-expanded:delay-0"
+      class="absolute top-1/2 left-1/2 h-(--thickness) w-(--width) -translate-x-1/2 translate-y-[calc(50%+var(--gap))] transition-transform duration-[calc(var(--duration)*2/3)] group-aria-expanded:-translate-y-1/2 group-aria-expanded:-rotate-45 group-aria-expanded:delay-[calc(var(--duration)*1/3)] before:absolute before:right-0 before:h-full before:w-[60%] before:rounded-full before:bg-(--color) before:transition-[right] before:delay-[calc(var(--duration)*1/3)] before:duration-[calc(var(--duration)*2/3)] group-aria-expanded:before:right-[40%] group-aria-expanded:before:delay-0"
     ></span>
   </Button>
   <NavBar
     orientation="vertical"
     id="mobile-menu"
-    class="group bg-popover/80 absolute top-9 right-0 z-40 w-36 overflow-hidden rounded-lg border p-1 backdrop-blur-md transition-[visibility,transform,opacity] duration-300 aria-hidden:invisible aria-hidden:-translate-y-4 aria-hidden:opacity-0"
+    class="group bg-popover/80 absolute top-10 right-0 z-40 w-36 overflow-hidden rounded-xl border p-1 backdrop-blur-md transition-[visibility,translate,opacity] duration-300 aria-hidden:invisible aria-hidden:-translate-y-4 aria-hidden:opacity-0"
     aria-hidden="true"
   >
-    <ul class="flex flex-col gap-1">
+    <ul class="flex flex-col">
       {
         navigation.map(({ data }) => (
           <li>
             <NavLink
               href={data.pathname}
               section={data.id}
-              class="flex items-center"
+              class="flex h-10 justify-start"
               aria-label={data.text}
             >
               {data.text}
