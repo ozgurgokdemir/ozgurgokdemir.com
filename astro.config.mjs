@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
-import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,7 +14,6 @@ export default defineConfig({
     imageService: 'cloudflare',
   }),
   integrations: [
-    react(),
     icon({
       include: {
         heroicons: ['*'],
