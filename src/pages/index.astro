@@ -7,7 +7,7 @@ import heroImage from '@/assets/turkceduzelt.png';
 import BlurryGradient from '@/assets/blurry-gradient.svg';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
-import FeaturedProjectCard from '@/components/featured-project-card.astro';
+import ProjectCard from '@/components/project-card.astro';
 import FormField from '@/components/form-field.astro';
 import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
@@ -134,7 +134,7 @@ const contact = await getCollection('contact');
       {
         featuredProjects.map((project) => (
           <li class="md:even:-translate-y-34">
-            <FeaturedProjectCard
+            <ProjectCard
               href={`/projects/${project.id}`}
               title={project.data.title}
               description={project.data.description}

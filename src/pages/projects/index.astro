@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { sortByOrder } from '@/utils/content-collections';
 import MainLayout from '@/layouts/main-layout.astro';
-import FeaturedProjectCard from '@/components/featured-project-card.astro';
+import ProjectCard from '@/components/project-card.astro';
 
 const projects = await getCollection('projects').then(sortByOrder);
 ---
@@ -18,14 +18,12 @@ const projects = await getCollection('projects').then(sortByOrder);
       Take a look at the projects <br class="hidden md:block" /> I’ve been building.
     </h1>
   </section>
-  <section
-    class="mx-auto grid max-w-7xl gap-4 px-4 pb-16 md:gap-2 md:px-6 md:pb-24 lg:px-8"
-  >
+  <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
     <ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {
         projects.map(({ id, data }) => (
           <li>
-            <FeaturedProjectCard
+            <ProjectCard
               href={`/projects/${id}`}
               title={data.title}
               description={data.description}
