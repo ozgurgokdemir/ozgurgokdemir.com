@@ -47,11 +47,11 @@ const contact = await getCollection('contact');
         I build high-performance and responsive web applications.
       </p>
       <div class="mt-2 flex items-center gap-4">
-        <LinkButton href="/contact">
+        <LinkButton id="contact-link" href="">
           <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
         </LinkButton>
-        <LinkButton href="/projects?category=featured" variant="outline">
+        <LinkButton href="/projects" variant="outline">
           View my work
         </LinkButton>
       </div>
@@ -63,7 +63,11 @@ const contact = await getCollection('contact');
         <BlurryGradient class="absolute h-full w-full" />
         <Image
           src={heroImage}
-          alt="hero image"
+          alt="featured project"
+          width={1280}
+          height={720}
+          layout="constrained"
+          priority={true}
           class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
         />
       </div>
@@ -82,7 +86,11 @@ const contact = await getCollection('contact');
         efficient, and user-friendly solutions. Whether working independently or
         as part of a team, I aim to meet both business and user needs.
       </p>
-      <LinkButton href="/about" class="group mt-2">
+      <LinkButton
+        href={contact.find(({ data }) => data.id === 'linkedin')?.data.url}
+        target="_blank"
+        class="group mt-2"
+      >
         More about me
         <Icon
           name="heroicons:arrow-up-right-16-solid"
@@ -221,3 +229,15 @@ const contact = await getCollection('contact');
     </Frame>
   </section>
 </MainLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const contactLink = document.getElementById('contact-link');
+    contactLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const section = document.getElementById('contact');
+      if (!section) return;
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
