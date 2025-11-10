@@ -3,19 +3,13 @@ import type { HTMLAttributes } from 'astro/types';
 import LinkButton from '@/components/link-button.astro';
 
 type Props = HTMLAttributes<'a'> & {
-  section?: string;
+  id: string;
 };
 
-const { section, ...props } = Astro.props;
+const { id, ...props } = Astro.props;
 ---
 
-<LinkButton
-  variant="ghost"
-  size="sm"
-  data-nav-link
-  data-section={section}
-  {...props}
->
+<LinkButton variant="ghost" size="sm" data-nav-link data-id={id} {...props}>
   <slot />
 </LinkButton>
 
@@ -24,8 +18,10 @@ const { section, ...props } = Astro.props;
     document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
   navLinks.forEach((navLink) => {
     navLink.addEventListener('click', (e) => {
+      const isHome = window.location.pathname === '/';
+      if (!isHome) return;
       e.preventDefault();
-      const sectionId = navLink.getAttribute('data-section');
+      const sectionId = navLink.getAttribute('data-id');
       if (!sectionId) return;
       const section = document.getElementById(sectionId);
       if (!section) return;

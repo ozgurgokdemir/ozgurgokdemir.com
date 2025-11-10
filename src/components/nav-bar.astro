@@ -7,13 +7,13 @@ type Props = HTMLAttributes<'nav'> & VariantProps<typeof navBarVariants>;
 
 const { orientation = 'vertical', class: className, ...props } = Astro.props;
 
-const navBarVariants = cva('relative after:absolute', {
+const navBarVariants = cva('relative after:absolute after:bg-primary', {
   variants: {
     orientation: {
       vertical:
-        'after:left-0 after:top-[calc(var(--indicator-top)+0.625rem-1px)] after:h-5 after:w-0.5 after:rounded-r-full after:bg-primary after:transition-[top]',
+        'after:left-0 after:top-[calc(var(--indicator-top)+0.625rem-1px)] after:h-5 after:w-0.5 after:rounded-r-full after:transition-[background-color,top]',
       horizontal:
-        'after:-bottom-1 after:left-[calc(var(--indicator-left)+0.375rem)] after:h-0.5 after:w-[calc(var(--indicator-width)-0.75rem)] after:rounded-full after:bg-primary after:transition-[width,left]',
+        'after:-bottom-1 after:left-[calc(var(--indicator-left)+0.375rem)] after:h-0.5 after:w-[calc(var(--indicator-width)-0.75rem)] after:rounded-full after:transition-[background-color,width,left]',
     },
   },
   defaultVariants: {
@@ -32,19 +32,21 @@ const navBarVariants = cva('relative after:absolute', {
 </nav>
 
 <script>
-  function updateNavigation(currentSectionId: string) {
-    const navBars = document.querySelectorAll<HTMLDivElement>('[data-nav-bar]');
+  let navigations: {
+    navBar: HTMLDivElement;
+    navLinks: NodeListOf<HTMLAnchorElement>;
+  }[] = [];
 
-    const navigations = Array.from(navBars, (navBar) => ({
-      navBar,
-      navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
-    }));
+  function updateNavigation(id: string, isHome: boolean) {
+    if (navigations.length === 0) return;
 
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
-        const isCurrent = navLink.dataset.section === currentSectionId;
-        navLink.setAttribute('aria-current', isCurrent ? 'page' : 'false');
-
+        const isCurrent = navLink.dataset.id === id;
+        navLink.setAttribute(
+          'aria-current',
+          isCurrent ? (isHome ? 'location' : 'page') : 'false',
+        );
         if (!isCurrent) return;
 
         const activeLinkRect = navLink.getBoundingClientRect();
@@ -69,24 +71,52 @@ const navBarVariants = cva('relative after:absolute', {
     });
   }
 
-  document.addEventListener('astro:page-load', () => {
-    const sections = document.querySelectorAll('section[id]');
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const currentSectionId = entry.target.getAttribute('id');
-          if (!currentSectionId) return;
-          updateNavigation(currentSectionId);
-        });
-      },
-      {
-        threshold: 0,
-        rootMargin: `-40% 0px -60% 0px`,
-      },
+  document.addEventListener('astro:after-swap', () => {
+    history.replaceState(
+      null,
+      '',
+      window.location.pathname + window.location.search,
     );
+  });
 
-    sections.forEach((section) => observer.observe(section));
+  document.addEventListener('astro:page-load', () => {
+    const isHome = window.location.pathname === '/';
+
+    if (navigations.length === 0) {
+      navigations = Array.from(
+        document.querySelectorAll<HTMLDivElement>('[data-nav-bar]'),
+      ).map((navBar) => ({
+        navBar,
+        navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+      }));
+    }
+
+    if (isHome) {
+      const sections = document.querySelectorAll('section[id]');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.getAttribute('id');
+            if (!id) return;
+            requestAnimationFrame(() => {
+              updateNavigation(id, isHome);
+            });
+          });
+        },
+        {
+          threshold: 0,
+          rootMargin: `-40% 0px -60% 0px`,
+        },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    } else {
+      const id = window.location.pathname.slice(1);
+      requestAnimationFrame(() => {
+        updateNavigation(id, isHome);
+      });
+    }
   });
 </script>

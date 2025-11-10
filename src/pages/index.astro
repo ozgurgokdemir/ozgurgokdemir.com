@@ -47,7 +47,7 @@ const contact = await getCollection('contact');
         I build high-performance and responsive web applications.
       </p>
       <div class="mt-2 flex items-center gap-4">
-        <LinkButton id="contact-link" href="">
+        <LinkButton id="contact-link" href="/#contact">
           <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
         </LinkButton>
@@ -237,7 +237,7 @@ const contact = await getCollection('contact');
       e.preventDefault();
       const section = document.getElementById('contact');
       if (!section) return;
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      section.scrollIntoView({ behavior: 'smooth' });
     });
   });
 </script>

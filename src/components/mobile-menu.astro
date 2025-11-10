@@ -45,8 +45,8 @@ const navigation = await getCollection('navigation');
         navigation.map(({ data }) => (
           <li>
             <NavLink
+              id={data.id}
               href={data.pathname}
-              section={data.id}
               class="flex h-10 justify-start"
               aria-label={data.text}
             >

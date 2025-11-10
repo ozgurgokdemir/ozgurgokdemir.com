@@ -1,22 +1,22 @@
 [
   {
     "id": "home",
-    "pathname": "",
+    "pathname": "/#home",
     "text": "Home"
   },
   {
     "id": "about",
-    "pathname": "",
+    "pathname": "/#about",
     "text": "About"
   },
   {
     "id": "projects",
-    "pathname": "",
+    "pathname": "/#projects",
     "text": "Projects"
   },
   {
     "id": "contact",
-    "pathname": "",
+    "pathname": "/#contact",
     "text": "Contact"
   }
 ]
