@@ -4,6 +4,8 @@ import ProjectDetailsLayout from '@/layouts/project-details-layout.astro';
 import { Image } from 'astro:assets';
 import LinkButton from '@/components/link-button.astro';
 import { Icon } from 'astro-icon/components';
+import Frame from '@/components/frame.astro';
+import BlurryGradient from '@/assets/blurry-gradient.svg';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -21,19 +23,21 @@ const { project } = Astro.props;
   description={project.data.description}
 >
   <section
-    class="relative before:absolute before:inset-0 before:-z-10 before:bg-gradient-radial-to-b before:from-[--gradient-color] before:opacity-50"
+    class="relative before:absolute before:inset-0 before:-z-10 before:bg-radial-[circle_farthest-side_at_top] before:from-(--gradient-color) before:opacity-30"
     style={`--gradient-color:${project.data.color};`}
   >
-    <div class="container flex flex-col gap-16 pt-32 md:gap-24 md:pt-36">
-      <div class="flex flex-col gap-6 md:items-center md:gap-8">
-        <h1
-          class="text-4xl font-semibold text-white md:text-[3.5rem] md:leading-none"
-        >
-          {project.data.title}
-        </h1>
-        <p class="text-lg font-semibold text-white/60">
-          {project.data.description}
-        </p>
+    <div
+      class="mx-auto flex max-w-7xl flex-col gap-16 px-4 pt-32 md:gap-24 md:px-6 md:pt-36 lg:px-8"
+    >
+      <div class="flex flex-col gap-4 md:flex-row md:justify-between">
+        <div class="flex flex-col gap-4 md:gap-2">
+          <h1 class="text-3xl font-semibold">
+            {project.data.title}
+          </h1>
+          <p class="text-muted-foreground text-lg">
+            {project.data.description}
+          </p>
+        </div>
         {
           (project.data.livePreview || project.data.sourceCode) && (
             <div class="mt-2 flex flex-wrap gap-4 md:flex-row">
@@ -41,13 +45,9 @@ const { project } = Astro.props;
                 <LinkButton
                   href={project.data.livePreview}
                   target="_blank"
-                  variant="tertiary"
+                  variant="outline"
                 >
-                  <Icon
-                    name="heroicons:eye-20-solid"
-                    size={20}
-                    class="text-white/60"
-                  />
+                  <Icon name="heroicons:eye-16-solid" size={16} />
                   Live preview
                 </LinkButton>
               )}
@@ -55,13 +55,9 @@ const { project } = Astro.props;
                 <LinkButton
                   href={project.data.sourceCode}
                   target="_blank"
-                  variant="tertiary"
+                  variant="outline"
                 >
-                  <Icon
-                    name="heroicons:code-bracket-20-solid"
-                    size={20}
-                    class="text-white/60"
-                  />
+                  <Icon name="heroicons:code-bracket-16-solid" size={16} />
                   Source code
                 </LinkButton>
               )}
@@ -69,15 +65,22 @@ const { project } = Astro.props;
           )
         }
       </div>
-      <div
-        class="relative after:absolute after:inset-0 after:bg-gradient-to-t after:from-black"
-      >
-        <Image
-          src={project.data.image}
-          alt={project.data.title}
-          class="rounded-lg"
-        />
-      </div>
+      <Frame>
+        <div
+          class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+        >
+          <BlurryGradient class="absolute h-full w-full" />
+          <Image
+            src={project.data.image}
+            alt={project.data.title}
+            width={1280}
+            height={720}
+            layout="constrained"
+            priority={true}
+            class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+          />
+        </div>
+      </Frame>
     </div>
   </section>
 </ProjectDetailsLayout>
