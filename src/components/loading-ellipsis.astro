@@ -8,11 +8,11 @@ const { class: className, ...props } = Astro.props;
 ---
 
 <span class={cn('flex items-center gap-1', className)} {...props}>
-  <span class="animate-plop size-1 rounded-full bg-current"></span>
+  <span class="animate-plop bg-muted-foreground size-1 rounded-[1px]"></span>
   <span
-    class="animate-plop size-1 rounded-full bg-current"
+    class="animate-plop bg-muted-foreground size-1 rounded-[1px]"
     style="animation-delay: 200ms;"></span>
   <span
-    class="animate-plop size-1 rounded-full bg-current"
+    class="animate-plop bg-muted-foreground size-1 rounded-[1px]"
     style="animation-delay: 400ms;"></span>
 </span>

@@ -23,7 +23,7 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(37.1% 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: oklch(80.8% 0.114 19.571);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 10%);
   --ring: oklch(0.556 0 0);
@@ -51,6 +51,19 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --spacing-header: var(--header-height);
+}
+
+@theme {
+  --animate-plop: plop 1s ease-in-out infinite;
+  @keyframes plop {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+  }
 }
 
 @layer base {

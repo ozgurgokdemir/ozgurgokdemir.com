@@ -4,25 +4,25 @@ import { Icon } from 'astro-icon/components';
 
 <toast-notification
   class:list={[
-    'group bg-popover/80 fixed right-4 bottom-4 left-4 z-40 grid max-w-96 grid-cols-[auto_1fr_auto] items-center gap-x-4 overflow-hidden rounded-2xl border p-4 backdrop-blur-md transition-[visibility,opacity,transform] duration-300 aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:-translate-x-full aria-hidden:opacity-0 sm:right-auto sm:bottom-8 sm:left-8',
-    'data-[status=error]:after:bg-destructive data-[status=success]:after:bg-primary after:absolute after:top-1/2 after:left-0 after:h-[calc(100%-2rem)] after:w-0.5 after:-translate-y-1/2 after:rounded-r-full',
+    'group bg-popover/80 fixed right-4 bottom-4 left-4 z-40 grid max-w-96 grid-cols-[auto_1fr_auto] items-center gap-x-4 overflow-hidden rounded-2xl border p-4 backdrop-blur-md transition-[visibility,opacity,translate] duration-300 aria-hidden:pointer-events-none aria-hidden:invisible aria-hidden:-translate-x-full aria-hidden:opacity-0 sm:right-auto sm:bottom-8 sm:left-8',
+    'data-[status=success]:after:bg-primary data-[status=error]:after:bg-destructive after:absolute after:top-1/2 after:left-0 after:h-[calc(100%-2rem)] after:w-0.5 after:-translate-y-1/2 after:rounded-r-full',
   ]}
   role="status"
   aria-hidden="true"
 >
   <Icon
-    name="heroicons:exclamation-triangle"
-    size={24}
+    name="heroicons:x-circle-16-solid"
+    size={16}
     class="text-destructive group-[&:not([data-status=error])]:hidden"
   />
   <Icon
-    name="heroicons:check-circle"
-    size={24}
+    name="heroicons:check-circle-16-solid"
+    size={16}
     class="text-primary group-[&:not([data-status=success])]:hidden"
   />
-  <div class="text-popover-foreground text-lg font-semibold" data-title></div>
+  <div class="text-popover-foreground text-lg font-medium" data-title></div>
   <div
-    class="text-muted-foreground col-start-2 -col-end-1 row-start-2 text-base font-medium"
+    class="text-muted-foreground col-start-2 -col-end-1 row-start-2 font-medium"
     data-description
   >
   </div>
