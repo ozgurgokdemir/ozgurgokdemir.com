@@ -32,13 +32,13 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
 </nav>
 
 <script>
-  let navigations: {
-    navBar: HTMLDivElement;
-    navLinks: NodeListOf<HTMLAnchorElement>;
-  }[] = [];
-
   function updateNavigation(id: string, isHome: boolean) {
-    if (navigations.length === 0) return;
+    const navigations = Array.from(
+      document.querySelectorAll<HTMLDivElement>('[data-nav-bar]'),
+    ).map((navBar) => ({
+      navBar,
+      navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+    }));
 
     navigations.forEach(({ navBar, navLinks }) => {
       navLinks.forEach((navLink) => {
@@ -72,26 +72,21 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
   }
 
   document.addEventListener('astro:after-swap', () => {
-    history.replaceState(
-      null,
-      '',
-      window.location.pathname + window.location.search,
-    );
+    if (location.pathname === '/' && location.hash) {
+      const newUrl = location.pathname + location.search;
+      history.replaceState(history.state, '', newUrl);
+    }
   });
 
   document.addEventListener('astro:page-load', () => {
-    const isHome = window.location.pathname === '/';
-
-    if (navigations.length === 0) {
-      navigations = Array.from(
-        document.querySelectorAll<HTMLDivElement>('[data-nav-bar]'),
-      ).map((navBar) => ({
-        navBar,
-        navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
-      }));
-    }
+    const isHome = location.pathname === '/';
 
     if (isHome) {
+      if (location.hash) {
+        const newUrl = location.pathname + location.search;
+        history.replaceState(history.state, '', newUrl);
+      }
+
       const sections = document.querySelectorAll('section[id]');
 
       const observer = new IntersectionObserver(
@@ -113,7 +108,7 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
 
       sections.forEach((section) => observer.observe(section));
     } else {
-      const id = window.location.pathname.slice(1);
+      const id = location.pathname.slice(1);
       requestAnimationFrame(() => {
         updateNavigation(id, isHome);
       });

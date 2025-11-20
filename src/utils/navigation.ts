@@ -26,7 +26,7 @@ function syncHistory() {
 
 function canGoBack() {
   const navigationHistory = getHistory();
-  return !!navigationHistory?.previous && history.state.index > 0;
+  return !!navigationHistory?.previous;
 }
 
 function isCurrentPath(pathname: string) {
