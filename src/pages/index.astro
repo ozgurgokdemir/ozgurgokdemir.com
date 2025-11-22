@@ -37,16 +37,26 @@ const contact = await getCollection('contact');
   >
     <div class="flex flex-col gap-6 md:items-center">
       <h1
-        class="text-5xl font-semibold tracking-tight md:text-center md:text-6xl lg:text-7xl"
+        class="translate-y-3 text-5xl font-semibold tracking-tight opacity-0 blur-md md:text-center md:text-6xl lg:text-7xl"
+        data-animate="fade-up"
+        data-stagger-index="0"
       >
-        Hi, I’m Özgür Gökdemir.
+        Hi, I'm Özgür Gökdemir.
         <br />
-        I’m a frontend developer.
+        I'm a frontend developer.
       </h1>
-      <p class="text-muted-foreground text-xl md:text-2xl">
+      <p
+        class="text-muted-foreground translate-y-3 text-xl opacity-0 blur-md md:text-2xl"
+        data-animate="fade-up"
+        data-stagger-index="1"
+      >
         I build high-performance and responsive web applications.
       </p>
-      <div class="mt-2 flex items-center gap-4">
+      <div
+        class="mt-2 flex translate-y-3 items-center gap-4 opacity-0 blur-md"
+        data-animate="fade-up"
+        data-stagger-index="2"
+      >
         <LinkButton id="contact-link" href="/#contact">
           <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
@@ -56,7 +66,11 @@ const contact = await getCollection('contact');
         </LinkButton>
       </div>
     </div>
-    <Frame>
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="3"
+    >
       <div
         class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
       >
@@ -77,10 +91,14 @@ const contact = await getCollection('contact');
     id="about"
     class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:items-center md:gap-4 md:px-6 md:py-24 lg:px-8"
   >
-    <div class="flex flex-col items-start gap-4 lg:pr-12">
+    <div
+      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md lg:pr-12"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
       <h2 class="text-3xl font-semibold">Get to know me.</h2>
       <p class="text-muted-foreground text-lg">
-        I’m a frontend developer based in Türkiye, specializing in building
+        I'm a frontend developer based in Türkiye, specializing in building
         dynamic web applications using TypeScript, React, and Next.js. I develop
         interactive features and optimize user experiences to deliver fast,
         efficient, and user-friendly solutions. Whether working independently or
@@ -99,15 +117,23 @@ const contact = await getCollection('contact');
         />
       </LinkButton>
     </div>
-    <Frame>
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="1"
+    >
       <div class="flex flex-col gap-4 md:p-6 lg:p-8">
         <h3 class="text-muted-foreground text-xs tracking-wider uppercase">
           Technologies
         </h3>
         <ul class="grid grid-cols-2 gap-2">
           {
-            technologies.map(({ data }) => (
-              <li>
+            technologies.map(({ data }, index) => (
+              <li
+                class="translate-y-3 opacity-0 blur-md"
+                data-stagger-index={index}
+                data-stagger-delay="100"
+              >
                 <Technology
                   label={data.label}
                   category={data.category}
@@ -124,7 +150,11 @@ const contact = await getCollection('contact');
     id="projects"
     class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-24 md:px-6 md:py-24 lg:px-8"
   >
-    <div class="flex flex-col items-start gap-4">
+    <div
+      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
       <h2 class="text-3xl font-semibold">A glimpse into my work.</h2>
       <p class="text-muted-foreground text-lg">
         Here are some projects I've loved working on.
@@ -138,10 +168,18 @@ const contact = await getCollection('contact');
         />
       </LinkButton>
     </div>
-    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <ul
+      class="grid grid-cols-1 gap-4 md:grid-cols-2"
+      data-animate="fade-up"
+      data-stagger-index="1"
+    >
       {
-        featuredProjects.map((project) => (
-          <li class="md:even:-translate-y-34">
+        featuredProjects.map((project, index) => (
+          <li
+            class="translate-y-3 opacity-0 blur-md md:even:-translate-y-34"
+            data-stagger-index={index}
+            data-stagger-delay="150"
+          >
             <ProjectCard
               href={`/projects/${project.id}`}
               title={project.data.title}
@@ -158,18 +196,26 @@ const contact = await getCollection('contact');
     id="contact"
     class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:gap-4 md:px-6 md:pt-24 md:pb-48 lg:px-8"
   >
-    <div class="flex flex-col gap-4 md:items-start md:pt-12 lg:pr-12">
+    <div
+      class="flex translate-y-3 flex-col gap-4 opacity-0 blur-md md:items-start md:pt-12 lg:pr-12"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
       <h2 class="text-3xl font-semibold">Get in touch.</h2>
       <p class="text-muted-foreground text-lg">
-        I’m always open to new opportunities and collaborations. Whether you
+        I'm always open to new opportunities and collaborations. Whether you
         have a project in mind or just want to say hello, feel free to reach
         out!
       </p>
       <span class="bg-border h-px w-full"></span>
       <ul class="flex flex-col gap-4">
         {
-          contact.map(({ data }) => (
-            <li class="w-fit">
+          contact.map(({ data }, index) => (
+            <li
+              class="w-fit translate-y-3 opacity-0 blur-md"
+              data-stagger-index={index}
+              data-stagger-delay="100"
+            >
               <a
                 href={data.url}
                 target="_blank"
@@ -189,7 +235,11 @@ const contact = await getCollection('contact');
         }
       </ul>
     </div>
-    <Frame>
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index={contact.length + 1}
+    >
       <ContactForm class="grid gap-6 md:p-6 lg:p-8">
         <FormField>
           <FormLabel for="name">Name</FormLabel>
@@ -231,7 +281,11 @@ const contact = await getCollection('contact');
 </MainLayout>
 
 <script>
+  import initScrollAnimations from '@/utils/scroll-animations.ts';
+
   document.addEventListener('astro:page-load', () => {
+    initScrollAnimations();
+
     const contactLink = document.getElementById('contact-link');
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();
