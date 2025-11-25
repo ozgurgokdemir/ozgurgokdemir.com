@@ -208,7 +208,7 @@ const contact = await getCollection('contact');
         out!
       </p>
       <span class="bg-border h-px w-full"></span>
-      <ul class="flex flex-col gap-4">
+      <ul class="flex flex-col gap-3">
         {
           contact.map(({ data }, index) => (
             <li
@@ -219,13 +219,12 @@ const contact = await getCollection('contact');
               <a
                 href={data.url}
                 target="_blank"
-                class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-3 text-base font-medium transition-transform outline-none hover:translate-x-2 focus-visible:ring-[3px]"
+                class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-2 text-base font-medium outline-none focus-visible:ring-[3px]"
               >
-                <Icon
-                  name={data.icon}
-                  size={20}
-                  class="text-muted-foreground group-hover:text-foreground transition-colors"
-                />
+                <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-lg transition-colors">
+                  <Icon name={data.icon} size={16} />
+                </div>
+                <span class="bg-border h-4 w-px" />
                 <span class="text-muted-foreground group-hover:text-foreground transition-colors">
                   {data.text}
                 </span>
