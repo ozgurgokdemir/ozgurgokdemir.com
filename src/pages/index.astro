@@ -280,11 +280,7 @@ const contact = await getCollection('contact');
 </MainLayout>
 
 <script>
-  import initScrollAnimations from '@/utils/scroll-animations.ts';
-
   document.addEventListener('astro:page-load', () => {
-    initScrollAnimations();
-
     const contactLink = document.getElementById('contact-link');
     contactLink?.addEventListener('click', (e) => {
       e.preventDefault();

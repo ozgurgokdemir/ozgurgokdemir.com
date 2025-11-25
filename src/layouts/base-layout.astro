@@ -50,6 +50,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 </html>
 
 <script>
+  import initScrollAnimations from '@/utils/scroll-animations';
   import navigation from '@/utils/navigation';
-  document.addEventListener('astro:page-load', navigation.syncHistory);
+
+  document.addEventListener('astro:page-load', () => {
+    initScrollAnimations();
+    navigation.syncHistory();
+  });
 </script>
