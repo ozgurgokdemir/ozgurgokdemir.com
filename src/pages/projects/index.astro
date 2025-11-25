@@ -1,48 +1,48 @@
 ---
 import { getCollection } from 'astro:content';
-import { getImage } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
 import { sortByOrder } from '@/utils/content-collections';
 import MainLayout from '@/layouts/main-layout.astro';
-import ProjectCategoryList from '@/components/project-category-list';
-import ProjectList from '@/components/project-list';
+import ProjectCard from '@/components/project-card.astro';
 
-const categories = ['Featured', 'SaaS', 'E-commerce', 'Business', 'Personal'];
-
-const projectsCollection = await getCollection('projects').then(sortByOrder);
-
-const projects = await Promise.all(
-  projectsCollection.map(async (project) => ({
-    ...project.data,
-    image: await getImage({ src: project.data.image }),
-    slug: project.slug,
-  })),
-);
+const projects = await getCollection('projects').then(sortByOrder);
 ---
 
 <MainLayout
   title="Projects - Özgür Gökdemir"
   description="Explore my web development projects, including ecommerce sites, SaaS apps, and responsive websites built with React, Next.js, and Tailwind CSS."
 >
-  <section class="container py-16 md:py-32">
+  <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-32 lg:px-8">
     <h1
-      class="text-4xl font-semibold text-white md:text-center md:text-[3.5rem] md:leading-tight"
+      data-animate="fade-up"
+      data-stagger-index="0"
+      class="translate-y-3 text-4xl font-semibold tracking-tight opacity-0 blur-md md:text-center md:text-5xl lg:text-6xl"
     >
-      Take a look at the projects <br class="hidden lg:block" /> I’ve been building.
+      Take a look at the projects <br class="hidden md:block" /> I’ve been building.
     </h1>
   </section>
-  <section class="container grid gap-4 pb-16 md:gap-2 md:pb-32">
-    <div
-      class="sticky top-[--header-height] z-20 -mx-4 -mt-3 overflow-x-hidden bg-black/80 backdrop-blur-lg before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:top-0 before:z-10 before:w-4 before:bg-gradient-to-r before:from-black after:pointer-events-none after:absolute after:bottom-0 after:right-0 after:top-0 after:z-10 after:w-4 after:bg-gradient-to-l after:from-black md:-mx-10 md:-mt-5 md:px-10"
+  <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
+    <ul
+      data-animate="fade-up"
+      data-stagger-index="1"
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
     >
-      <ProjectCategoryList {categories} client:only="react">
-        <Icon
-          name="heroicons:x-mark-20-solid"
-          size={20}
-          class="text-white/60 group-data-[current=false]:hidden"
-        />
-      </ProjectCategoryList>
-    </div>
-    <ProjectList {projects} client:only="react" />
+      {
+        projects.map(({ id, data }, index) => (
+          <li
+            class="translate-y-3 opacity-0 blur-md"
+            data-stagger-index={index + 1}
+            data-stagger-delay="150"
+          >
+            <ProjectCard
+              href={`/projects/${id}`}
+              title={data.title}
+              description={data.description}
+              image={data.image}
+              color={data.color}
+            />
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </MainLayout>

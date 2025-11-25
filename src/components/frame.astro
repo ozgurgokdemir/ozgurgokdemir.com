@@ -1,31 +1,22 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { cn } from '@/lib/utils';
 
-type FrameVariants = VariantProps<typeof frameStyles>;
+type Props = HTMLAttributes<'div'>;
 
-type Props = HTMLAttributes<'div'> & FrameVariants;
-
-const { border, overlay, class: className, ...props } = Astro.props;
-
-const frameStyles = tv(
-  {
-    base: 'relative z-0',
-    variants: {
-      border: {
-        true: 'rounded-2xl bg-gradient-radial-to-b from-white/25 p-px before:absolute before:inset-px before:-z-10 before:rounded-[0.9375rem] before:bg-black/75 before:backdrop-blur-lg',
-      },
-      overlay: {
-        true: 'after:absolute after:inset-px after:rounded-[0.9375rem] after:bg-gradient-to-b after:from-transparent after:to-black',
-      },
-    },
-  },
-  {
-    responsiveVariants: true,
-  },
-);
+const { class: className, ...props } = Astro.props;
 ---
 
-<div class={frameStyles({ border, overlay, className })} {...props}>
-  <slot />
+<div
+  class={cn(
+    'relative md:rounded-3xl md:p-2.25 before:md:block before:hidden md:bg-radial-[ellipse_100%_100%_at_top] from-white/25 before:absolute before:inset-px before:rounded-[calc(1.5rem-1px)] before:bg-background/75 before:backdrop-blur-lg',
+    className,
+  )}
+  {...props}
+>
+  <div
+    class="before:bg-background/75 relative isolate from-white/25 to-white/10 before:absolute before:inset-px before:-z-10 before:hidden before:rounded-[calc(1rem-1px)] before:backdrop-blur-lg md:rounded-2xl md:bg-radial-[circle_farthest-side_at_top] md:p-px before:md:block"
+  >
+    <slot />
+  </div>
 </div>

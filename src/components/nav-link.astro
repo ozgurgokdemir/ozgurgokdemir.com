@@ -1,18 +1,33 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import LinkButton from '@/components/link-button.astro';
 
-type Props = HTMLAttributes<'a'>;
+type Props = HTMLAttributes<'a'> & {
+  id: string;
+};
 
-const { class: className, ...props } = Astro.props;
+const { id, ...props } = Astro.props;
 ---
 
-<a
-  class:list={[
-    'text-base font-semibold text-white/60 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline aria-[current=page]:text-white',
-    className,
-  ]}
-  data-nav-link
-  {...props}
->
+<LinkButton variant="ghost" size="sm" data-nav-link data-id={id} {...props}>
   <slot />
-</a>
+</LinkButton>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const navLinks =
+      document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+    navLinks.forEach((navLink) => {
+      navLink.addEventListener('click', (e) => {
+        const isHome = window.location.pathname === '/';
+        if (!isHome) return;
+        e.preventDefault();
+        const sectionId = navLink.getAttribute('data-id');
+        if (!sectionId) return;
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+        section.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  });
+</script>

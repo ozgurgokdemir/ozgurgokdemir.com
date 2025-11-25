@@ -15,7 +15,6 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
     const contactForm = document.getElementById(
       'contact-form',
     ) as HTMLFormElement | null;
-
     if (!contactForm) return;
 
     async function handleSubmit(event: SubmitEvent) {
@@ -25,29 +24,41 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
 
       const formData = new FormData(contactForm);
 
+      const inputs = contactForm.querySelectorAll<
+        HTMLInputElement | HTMLTextAreaElement
+      >('input, textarea');
+      if (inputs.length === 0) return;
+
       const submitButton = contactForm.querySelector<HTMLButtonElement>(
         'button[type="submit"]',
       );
-
       if (!submitButton) return;
 
-      setButtonLoading(submitButton, true);
-
       const toast = document.querySelector('toast-notification');
+
+      setButtonState(submitButton, 'pending');
+
+      inputs.forEach((input) => (input.disabled = true));
 
       try {
         const { error } = await actions.sendMessage(formData);
         if (error) {
           throw new Error(error.message);
         }
+
+        setButtonState(submitButton, 'success');
+
         toast?.showToast({
           title: 'Message sent.',
           description:
             'Thank you for reaching out. I’ll get back to you as soon as possible.',
           status: 'success',
         });
+
         contactForm.reset();
       } catch {
+        setButtonState(submitButton, 'error');
+
         toast?.showToast({
           title: 'Failed to submit.',
           description: 'Message could not be sent. Please try again later.',
@@ -55,12 +66,19 @@ type Props = Omit<HTMLAttributes<'form'>, 'id'>;
         });
       }
 
-      setButtonLoading(submitButton, false);
+      inputs.forEach((input) => (input.disabled = false));
+
+      setTimeout(() => {
+        setButtonState(submitButton, 'idle');
+      }, 5000);
     }
 
-    function setButtonLoading(button: HTMLButtonElement, isLoading: boolean) {
-      button.dataset.loading = isLoading.toString();
-      button.disabled = isLoading;
+    function setButtonState(
+      button: HTMLButtonElement,
+      state: 'idle' | 'pending' | 'success' | 'error',
+    ) {
+      button.dataset.state = state;
+      button.disabled = state !== 'idle';
     }
 
     contactForm.addEventListener('submit', handleSubmit);

@@ -1,16 +1,13 @@
 {
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "astro",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "typescript", "astro"],
   "prettier.documentSelectors": ["**/*.astro"],
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "tailwindCSS.experimental.classRegex": [
     ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "files.associations": {
+    "wrangler.json": "jsonc"
+  }
 }

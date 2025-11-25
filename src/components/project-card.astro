@@ -1,0 +1,51 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+import BlurryGradient from '@/assets/blurry-gradient.svg';
+
+type Props = HTMLAttributes<'a'> & {
+  title: string;
+  description: string;
+  image: ImageMetadata;
+  color: string;
+};
+
+const {
+  title,
+  description,
+  image,
+  color,
+  class: className,
+  ...props
+} = Astro.props;
+---
+
+<a
+  class:list={[
+    'group focus-visible:border-ring focus-visible:ring-ring/50 @container relative flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-none focus-visible:ring-[3px]',
+    'before:absolute before:inset-0 before:bg-radial-[circle_farthest-side_at_top] before:from-white/20 before:to-white/15 before:opacity-0 before:transition-opacity hover:before:opacity-100',
+    'after:absolute after:inset-0 after:bg-radial-[circle_farthest-side_at_top] after:from-white/20 after:to-white/10 after:transition-opacity hover:after:opacity-0',
+    className,
+  ]}
+  style={`--gradient-color:${color};`}
+  {...props}
+>
+  <div class="relative z-10 flex aspect-video overflow-hidden rounded-lg">
+    <BlurryGradient class="absolute h-full w-full" />
+    <Image
+      src={image}
+      alt={description}
+      width={640}
+      height={360}
+      layout="constrained"
+      class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.375rem)] ring-black/10 transition-[scale] duration-300 select-none group-hover:scale-115"
+    />
+  </div>
+  <div class="z-10 flex flex-col p-2 @sm:p-4 @md:p-6">
+    <h3 class="truncate font-medium @md:text-lg">{title}</h3>
+    <p class="text-muted-foreground truncate text-sm font-medium @md:text-base">
+      {description}
+    </p>
+  </div>
+</a>

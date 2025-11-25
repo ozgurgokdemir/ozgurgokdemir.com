@@ -2,6 +2,7 @@
 import type { ComponentProps } from 'astro/types';
 import { Icon } from 'astro-icon/components';
 import Button from '@/components/button.astro';
+import { cn } from '@/lib/utils';
 
 type Props = Omit<ComponentProps<typeof Button>, 'variant' | 'id'> & {
   fallback?: string;
@@ -12,15 +13,15 @@ const { fallback = '/', class: className, ...props } = Astro.props;
 
 <Button
   id="back-button"
-  variant="tertiary"
-  class:list={['gap-2 backdrop-blur-lg', className]}
+  variant="outline"
+  class={cn('group', className)}
   data-fallback={fallback}
   {...props}
 >
   <Icon
-    name="heroicons:arrow-long-left-20-solid"
-    size={20}
-    class="text-white/60 transition-transform group-hover:-translate-x-1"
+    name="heroicons:arrow-left-16-solid"
+    size={16}
+    class="transition-transform group-hover:-translate-x-1"
   />
   Back
 </Button>

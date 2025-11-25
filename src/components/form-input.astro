@@ -8,7 +8,7 @@ const { class: className, ...props } = Astro.props;
 
 <input
   class:list={[
-    'h-10 rounded-lg bg-white/10 px-3 text-base font-medium text-white outline-2 outline-offset-2 outline-blue-500 transition-colors placeholder:text-white/40 focus-visible:outline',
+    'focus-visible:border-ring focus-visible:ring-ring/50 bg-input placeholder:text-muted-foreground/70 h-10 rounded-lg px-3 font-medium transition-colors outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50',
     className,
   ]}
   {...props}

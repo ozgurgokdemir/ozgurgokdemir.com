@@ -1,0 +1,25 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type Props = {
+  label: string;
+  category: string;
+  icon: string;
+};
+
+const { label, category, icon } = Astro.props;
+---
+
+<div class="bg-card flex items-center gap-2 rounded-2xl p-2 lg:gap-4">
+  <div
+    class="bg-background/50 grid size-12 shrink-0 place-items-center rounded-lg lg:size-16"
+  >
+    <Icon name={icon} size={32} class="size-6 lg:size-8" />
+  </div>
+  <div class="flex min-w-0 flex-col">
+    <h5 class="truncate text-sm font-medium lg:text-base">{label}</h5>
+    <span class="text-muted-foreground truncate text-xs font-medium lg:text-sm"
+      >{category}</span
+    >
+  </div>
+</div>

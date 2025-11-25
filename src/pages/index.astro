@@ -1,13 +1,13 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import { sortByOrder } from '@/utils/content-collections';
-import contactAndSocialLinks from '@/data/contact-and-social-links';
-import ozgurGokdemir from '@/assets/ozgur-gokdemir.png';
+import heroImage from '@/assets/turkceduzelt.png';
+import BlurryGradient from '@/assets/blurry-gradient.svg';
 import MainLayout from '@/layouts/main-layout.astro';
 import LinkButton from '@/components/link-button.astro';
-import FeaturedProjectCard from '@/components/featured-project-card.astro';
+import ProjectCard from '@/components/project-card.astro';
 import FormField from '@/components/form-field.astro';
 import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
@@ -15,11 +15,16 @@ import FormTextarea from '@/components/form-textarea.astro';
 import Button from '@/components/button.astro';
 import Frame from '@/components/frame.astro';
 import ContactForm from '@/components/contact-form.astro';
+import Technology from '@/components/technology.astro';
 
 const featuredProjects = await getCollection(
   'projects',
   ({ data }) => data.featured,
 ).then(sortByOrder);
+
+const technologies = await getCollection('technologies');
+
+const contact = await getCollection('contact');
 ---
 
 <MainLayout
@@ -27,84 +32,156 @@ const featuredProjects = await getCollection(
   description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
 >
   <section
-    class="container flex flex-col gap-6 py-16 md:items-center md:gap-8 md:py-32 md:pt-56"
+    id="home"
+    class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-48 md:px-6 md:pt-48 md:pb-24 lg:px-8"
   >
-    <h1
-      class="text-5xl font-semibold text-white md:text-center md:text-[5rem] md:leading-tight"
-    >
-      Hi, I’m Özgür Gökdemir.
-      <br />
-      I’m a frontend developer.
-    </h1>
-    <p class="text-xl font-medium text-white/60">
-      I build high-performance and responsive web applications.
-    </p>
-    <div class="flex items-center gap-4 pt-2 md:pt-5">
-      <LinkButton href="/contact">
-        <Icon name="heroicons:chat-bubble-left-ellipsis-20-solid" size={20} />
-        Let's Talk
-      </LinkButton>
-      <LinkButton href="/projects?category=featured" variant="secondary">
-        View my work
-      </LinkButton>
+    <div class="flex flex-col gap-6 md:items-center">
+      <h1
+        class="translate-y-3 text-5xl font-semibold tracking-tight opacity-0 blur-md md:text-center md:text-6xl lg:text-7xl"
+        data-animate="fade-up"
+        data-stagger-index="0"
+      >
+        Hi, I'm Özgür Gökdemir.
+        <br />
+        I'm a frontend developer.
+      </h1>
+      <p
+        class="text-muted-foreground translate-y-3 text-xl opacity-0 blur-md md:text-2xl"
+        data-animate="fade-up"
+        data-stagger-index="1"
+      >
+        I build high-performance and responsive web applications.
+      </p>
+      <div
+        class="mt-2 flex translate-y-3 items-center gap-4 opacity-0 blur-md"
+        data-animate="fade-up"
+        data-stagger-index="2"
+      >
+        <LinkButton id="contact-link" href="/#contact">
+          <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
+          Let's Talk
+        </LinkButton>
+        <LinkButton href="/projects" variant="outline">
+          View my work
+        </LinkButton>
+      </div>
     </div>
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="3"
+    >
+      <div
+        class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+      >
+        <BlurryGradient class="absolute h-full w-full" />
+        <Image
+          src={heroImage}
+          alt="featured project"
+          width={1280}
+          height={720}
+          layout="constrained"
+          priority={true}
+          class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+        />
+      </div>
+    </Frame>
   </section>
   <section
-    class="container grid gap-16 py-16 md:grid-cols-2 md:items-center md:gap-8 md:py-32"
+    id="about"
+    class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:items-center md:gap-4 md:px-6 md:py-24 lg:px-8"
   >
-    <div class="flex flex-col items-start gap-6 md:gap-8 lg:pr-12">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        Get to know me.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
-        I’m a frontend developer based in Türkiye, specializing in building
+    <div
+      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md lg:pr-12"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
+      <h2 class="text-3xl font-semibold">Get to know me.</h2>
+      <p class="text-muted-foreground text-lg">
+        I'm a frontend developer based in Türkiye, specializing in building
         dynamic web applications using TypeScript, React, and Next.js. I develop
         interactive features and optimize user experiences to deliver fast,
         efficient, and user-friendly solutions. Whether working independently or
         as part of a team, I aim to meet both business and user needs.
       </p>
-      <LinkButton href="/about" variant="secondary" class="group gap-2">
+      <LinkButton
+        href={contact.find(({ data }) => data.id === 'linkedin')?.data.url}
+        target="_blank"
+        class="group mt-2"
+      >
         More about me
         <Icon
-          name="heroicons:arrow-long-right-20-solid"
-          size={20}
-          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+          name="heroicons:arrow-up-right-16-solid"
+          size={16}
+          class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
     </div>
-    <Frame border overlay>
-      <Image
-        src={ozgurGokdemir}
-        alt="Özgür Gökdemir"
-        width={500}
-        height={500}
-        class="w-full"
-      />
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="1"
+    >
+      <div class="flex flex-col gap-4 md:p-6 lg:p-8">
+        <h3 class="text-muted-foreground text-xs tracking-wider uppercase">
+          Technologies
+        </h3>
+        <ul class="grid grid-cols-2 gap-2">
+          {
+            technologies.map(({ data }, index) => (
+              <li
+                class="translate-y-3 opacity-0 blur-md"
+                data-stagger-index={index}
+                data-stagger-delay="100"
+              >
+                <Technology
+                  label={data.label}
+                  category={data.category}
+                  icon={data.icon}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </Frame>
   </section>
-  <section class="container flex flex-col gap-16 py-16 md:gap-24 md:py-32">
-    <div class="flex flex-col items-start gap-6 md:gap-8">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        A glimpse into my work.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
+  <section
+    id="projects"
+    class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-24 md:px-6 md:py-24 lg:px-8"
+  >
+    <div
+      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
+      <h2 class="text-3xl font-semibold">A glimpse into my work.</h2>
+      <p class="text-muted-foreground text-lg">
         Here are some projects I've loved working on.
       </p>
-      <LinkButton href="/projects" variant="secondary" class="group gap-2">
+      <LinkButton href="/projects" class="group mt-2 gap-2">
         See all projects
         <Icon
-          name="heroicons:arrow-long-right-20-solid"
-          size={20}
-          class="text-emerald-400/60 transition-transform group-hover:translate-x-1"
+          name="heroicons:arrow-right-16-solid"
+          size={16}
+          class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
     </div>
-    <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+    <ul
+      class="grid grid-cols-1 gap-4 md:grid-cols-2"
+      data-animate="fade-up"
+      data-stagger-index="1"
+    >
       {
-        featuredProjects.map((project) => (
-          <li class="md:even:-translate-y-36">
-            <FeaturedProjectCard
-              href={`/projects/${project.slug}`}
+        featuredProjects.map((project, index) => (
+          <li
+            class="translate-y-3 opacity-0 blur-md md:even:-translate-y-34"
+            data-stagger-index={index}
+            data-stagger-delay="150"
+          >
+            <ProjectCard
+              href={`/projects/${project.id}`}
               title={project.data.title}
               description={project.data.description}
               image={project.data.image}
@@ -115,32 +192,41 @@ const featuredProjects = await getCollection(
       }
     </ul>
   </section>
-  <section class="container grid gap-16 py-16 md:grid-cols-2 md:gap-8 md:py-32">
-    <div class="flex flex-col gap-6 md:items-start md:gap-8 md:pt-8 lg:pr-12">
-      <h2 class="text-4xl font-semibold text-white md:text-5xl">
-        Get in touch.
-      </h2>
-      <p class="text-lg font-medium text-white/60">
-        I’m always open to new opportunities and collaborations. Whether you
+  <section
+    id="contact"
+    class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:gap-4 md:px-6 md:pt-24 md:pb-48 lg:px-8"
+  >
+    <div
+      class="flex translate-y-3 flex-col gap-4 opacity-0 blur-md md:items-start md:pt-12 lg:pr-12"
+      data-animate="fade-up"
+      data-stagger-index="0"
+    >
+      <h2 class="text-3xl font-semibold">Get in touch.</h2>
+      <p class="text-muted-foreground text-lg">
+        I'm always open to new opportunities and collaborations. Whether you
         have a project in mind or just want to say hello, feel free to reach
         out!
       </p>
-      <ul class="flex flex-col gap-4">
+      <span class="bg-border h-px w-full"></span>
+      <ul class="flex flex-col gap-3">
         {
-          contactAndSocialLinks.map(({ url, icon, text }) => (
-            <li class="w-fit">
+          contact.map(({ data }, index) => (
+            <li
+              class="w-fit translate-y-3 opacity-0 blur-md"
+              data-stagger-index={index}
+              data-stagger-delay="100"
+            >
               <a
-                href={url}
+                href={data.url}
                 target="_blank"
-                class="group flex items-center gap-3 text-base font-medium outline-2 outline-offset-2 outline-blue-500 transition-transform hover:translate-x-2 focus-visible:outline"
+                class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-2 text-base font-medium outline-none focus-visible:ring-[3px]"
               >
-                <Icon
-                  name={icon}
-                  size={20}
-                  class="text-white/80 transition-colors group-hover:text-white"
-                />
-                <span class="text-white/60 transition-colors group-hover:text-white">
-                  {text}
+                <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-lg transition-colors">
+                  <Icon name={data.icon} size={16} />
+                </div>
+                <span class="bg-border h-4 w-px" />
+                <span class="text-muted-foreground group-hover:text-foreground transition-colors">
+                  {data.text}
                 </span>
               </a>
             </li>
@@ -148,8 +234,12 @@ const featuredProjects = await getCollection(
         }
       </ul>
     </div>
-    <Frame border={{ lg: true }}>
-      <ContactForm class="grid gap-6 lg:p-8">
+    <Frame
+      class="translate-y-3 opacity-0 blur-md"
+      data-animate="fade-up"
+      data-stagger-index={contact.length + 1}
+    >
+      <ContactForm class="grid gap-6 md:p-6 lg:p-8">
         <FormField>
           <FormLabel for="name">Name</FormLabel>
           <FormInput
@@ -180,8 +270,23 @@ const featuredProjects = await getCollection(
             required
           />
         </FormField>
-        <Button type="submit" class="md:w-fit">Send message</Button>
+        <Button type="submit" class="lg:w-fit">
+          <Icon name="heroicons:paper-airplane-16-solid" />
+          Send message
+        </Button>
       </ContactForm>
     </Frame>
   </section>
 </MainLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const contactLink = document.getElementById('contact-link');
+    contactLink?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const section = document.getElementById('contact');
+      if (!section) return;
+      section.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>

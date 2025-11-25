@@ -1,57 +1,56 @@
 ---
-import navigation from '@/data/navigation-links';
-import links from '@/data/contact-and-social-links';
+import { getCollection } from 'astro:content';
 import Logo from '@/components/logo.astro';
 import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 import SocialLink from '@/components/social-link.astro';
-import HamburgerButton from '@/components/hamburger-button.astro';
 import MobileMenu from '@/components/mobile-menu.astro';
 
-const socialLinks = links.filter(({ title }) =>
-  ['LinkedIn', 'GitHub'].includes(title),
+const navigation = await getCollection('navigation');
+
+const contact = await getCollection(
+  'contact',
+  ({ data }) => data.id !== 'email',
 );
 ---
 
 <header
-  class="sticky top-0 z-30 before:absolute before:inset-0 before:-z-10 before:bg-black/80 before:backdrop-blur-lg"
+  class="before:bg-background/80 sticky top-0 z-30 before:absolute before:inset-0 before:-z-10 before:backdrop-blur-md"
   transition:persist
 >
   <div
-    class="container grid h-[--header-height] grid-cols-2 items-center border-b border-white/10 px-0 md:grid-cols-[1fr_auto_1fr] md:px-10"
+    class="h-header mx-auto grid max-w-7xl grid-cols-2 items-center border-b px-4 md:grid-cols-[1fr_auto_1fr] md:px-6 lg:px-8"
   >
-    <div class="inline-flex place-content-start self-stretch md:self-auto">
-      <Logo class="px-4 md:px-0" />
-    </div>
+    <Logo class="w-fit" />
     <NavBar
       orientation="horizontal"
       class="hidden place-content-center md:inline-block"
     >
-      <ul class="flex items-center gap-8">
+      <ul class="flex items-center gap-1">
         {
-          navigation.map(({ pathname, text }) => (
+          navigation.map(({ data }) => (
             <li>
-              <NavLink href={pathname}>{text}</NavLink>
+              <NavLink id={data.id} href={data.pathname}>
+                {data.text}
+              </NavLink>
             </li>
           ))
         }
       </ul>
     </NavBar>
-    <div
-      class="relative inline-flex place-content-end self-stretch md:gap-8 md:self-auto"
-    >
+    <div class="inline-flex place-content-end items-center gap-2">
       {
-        socialLinks.map(({ title, url, icon }) => (
-          <SocialLink
-            href={url}
-            alt={title}
-            icon={icon}
-            class="w-[3.25rem] md:w-auto"
-          />
+        contact.map(({ data }, index) => (
+          <>
+            <SocialLink href={data.url} alt={data.title} icon={data.icon} />
+            {index !== contact.length - 1 && (
+              <span class="bg-border h-4 w-px" />
+            )}
+          </>
         ))
       }
-      <HamburgerButton class="ml-1 w-[3.25rem] md:hidden" />
-      <MobileMenu />
+      <span class="bg-border h-4 w-px md:hidden"></span>
+      <MobileMenu class="-mr-2 md:hidden" />
     </div>
   </div>
 </header>

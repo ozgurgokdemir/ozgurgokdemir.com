@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import LinkButton from '@/components/link-button.astro';
 
 type Props = {
   href: string;
@@ -8,17 +9,15 @@ type Props = {
   class?: string;
 };
 
-const { href, alt, icon, class: className } = Astro.props;
+const { href, alt, icon } = Astro.props;
 ---
 
-<a
+<LinkButton
+  variant="ghost"
+  size="icon-sm"
   {href}
   target="_blank"
-  class:list={[
-    'grid place-items-center text-white/80 outline-2 outline-offset-2 outline-blue-500 transition-colors hover:text-white focus-visible:outline',
-    className,
-  ]}
   aria-label={alt}
 >
-  <Icon name={icon} size={20} />
-</a>
+  <Icon name={icon} size={16} />
+</LinkButton>

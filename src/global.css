@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/manrope.woff2') format('woff2');
+}
+
+:root {
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: #b3e8c2;
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(37.1% 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(80.8% 0.114 19.571);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.556 0 0);
+  --header-height: 4rem;
+}
+
+@theme inline {
+  --font-sans: 'Manrope', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --spacing-header: var(--header-height);
+}
+
+@theme {
+  --animate-plop: plop 1s ease-in-out infinite;
+  --duration-1500: 1500ms;
+  @keyframes plop {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer utilities {
+  .ease-spring {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply scheme-dark;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}

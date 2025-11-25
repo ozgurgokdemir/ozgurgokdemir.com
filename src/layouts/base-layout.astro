@@ -1,6 +1,6 @@
 ---
-import '@/styles/globals.css';
-import { ViewTransitions } from 'astro:transitions';
+import '@/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 export type BaseLayoutProps = {
   title: string;
@@ -33,8 +33,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
 
     <link
       rel="preload"
@@ -44,14 +42,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       crossorigin
     />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
-  <body class="grid bg-black font-sans text-base font-medium text-white/60">
+  <body>
     <slot />
   </body>
 </html>
 
 <script>
+  import initScrollAnimations from '@/utils/scroll-animations';
   import navigation from '@/utils/navigation';
-  document.addEventListener('astro:page-load', navigation.syncHistory);
+
+  document.addEventListener('astro:page-load', () => {
+    initScrollAnimations();
+    navigation.syncHistory();
+  });
 </script>

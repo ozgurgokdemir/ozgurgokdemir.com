@@ -1,42 +1,81 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { tv, type VariantProps } from 'tailwind-variants';
 import LoadingEllipsis from '@/components/loading-ellipsis.astro';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import { Icon } from 'astro-icon/components';
 
-export type ButtonVariants = VariantProps<typeof buttonStyles>;
-
-type Props = HTMLAttributes<'button'> & ButtonVariants;
+type Props = HTMLAttributes<'button'> & VariantProps<typeof buttonVariants>;
 
 const {
-  variant = 'primary',
+  variant,
+  size,
   type = 'button',
   class: className,
   ...props
 } = Astro.props;
 
-export const buttonStyles = tv({
-  base: 'group relative inline-flex h-10 items-center justify-center gap-3 rounded-full px-6 text-base font-semibold outline-2 outline-offset-2 outline-blue-500 transition-colors focus-visible:outline disabled:cursor-not-allowed',
-  variants: {
-    variant: {
-      primary:
-        'bg-emerald-400 text-black [&:not(:disabled)]:hover:bg-emerald-500',
-      secondary:
-        'bg-emerald-400/10 text-emerald-400 [&:not(:disabled)]:hover:bg-emerald-400/15',
-      tertiary: 'bg-white/10 text-white [&:not(:disabled)]:hover:bg-white/15',
+export const buttonVariants = cva(
+  "inline-flex group relative items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  {
+    variants: {
+      variant: {
+        primary:
+          'bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-muted',
+        secondary:
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-muted/30',
+        outline:
+          'border shadow-xs hover:text-accent-foreground bg-accent/20 border-input hover:bg-accent/30 disabled:bg-muted/30',
+        ghost: 'hover:bg-accent/50 hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
+      },
+      size: {
+        sm: 'h-8 rounded-lg gap-1.5 px-3',
+        lg: 'h-10 rounded-xl px-6',
+        'icon-sm': 'size-8',
+        'icon-lg': 'size-10',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'lg',
     },
   },
-});
+);
 ---
 
-<button {type} class={buttonStyles({ variant, className })} {...props}>
+<button
+  {type}
+  class={cn(buttonVariants({ variant, size, className }))}
+  data-state="idle"
+  {...props}
+>
   <span
-    class="invisible absolute inset-0 grid place-items-center opacity-0 transition-[visibility,opacity] group-data-[loading=true]:visible group-data-[loading=true]:opacity-100"
+    class="invisible contents scale-0 transition-[visibility,opacity,scale] group-data-[state=idle]:visible group-data-[state=idle]:scale-100 group-data-[state=idle]:opacity-100 group-data-[state=idle]:delay-150"
+  >
+    <slot />
+  </span>
+  <span
+    class="invisible absolute inset-0 grid scale-0 place-items-center opacity-0 transition-[visibility,opacity,scale] group-data-[state=pending]:visible group-data-[state=pending]:scale-100 group-data-[state=pending]:opacity-100 group-data-[state=pending]:delay-150"
   >
     <LoadingEllipsis />
   </span>
   <span
-    class="visible flex size-full items-center justify-center gap-3 transition-[visibility,opacity] group-data-[loading=true]:invisible group-data-[loading=true]:opacity-0"
+    class="invisible absolute inset-0 grid scale-0 place-items-center opacity-0 transition-[visibility,opacity,scale] group-data-[state=success]:visible group-data-[state=success]:scale-100 group-data-[state=success]:opacity-100 group-data-[state=success]:delay-150"
   >
-    <slot />
+    <Icon
+      name="heroicons:check-circle-16-solid"
+      size={16}
+      class="text-primary"
+    />
+  </span>
+  <span
+    class="invisible absolute inset-0 grid scale-0 place-items-center opacity-0 transition-[visibility,opacity,scale] group-data-[state=error]:visible group-data-[state=error]:scale-100 group-data-[state=error]:opacity-100 group-data-[state=error]:delay-150"
+  >
+    <Icon
+      name="heroicons:x-circle-16-solid"
+      size={16}
+      class="text-destructive"
+    />
   </span>
 </button>
