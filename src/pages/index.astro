@@ -34,11 +34,11 @@ const contact = await getCollection('contact');
   <section
     id="home"
     class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-48 md:px-6 md:pt-48 md:pb-24 lg:px-8"
+    data-animate
   >
     <div class="flex flex-col gap-6 md:items-center">
       <h1
-        class="translate-y-3 text-5xl font-semibold tracking-tight opacity-0 blur-md md:text-center md:text-6xl lg:text-7xl"
-        data-animate="fade-up"
+        class="text-5xl font-semibold tracking-tight md:text-center md:text-6xl lg:text-7xl"
         data-stagger-index="0"
       >
         Hi, I'm Özgür Gökdemir.
@@ -46,17 +46,12 @@ const contact = await getCollection('contact');
         I'm a frontend developer.
       </h1>
       <p
-        class="text-muted-foreground translate-y-3 text-xl opacity-0 blur-md md:text-2xl"
-        data-animate="fade-up"
+        class="text-muted-foreground text-xl md:text-2xl"
         data-stagger-index="1"
       >
         I build high-performance and responsive web applications.
       </p>
-      <div
-        class="mt-2 flex translate-y-3 items-center gap-4 opacity-0 blur-md"
-        data-animate="fade-up"
-        data-stagger-index="2"
-      >
+      <div class="mt-2 flex items-center gap-4" data-stagger-index="2">
         <LinkButton id="contact-link" href="/#contact">
           <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
@@ -66,11 +61,7 @@ const contact = await getCollection('contact');
         </LinkButton>
       </div>
     </div>
-    <Frame
-      class="translate-y-3 opacity-0 blur-md"
-      data-animate="fade-up"
-      data-stagger-index="3"
-    >
+    <Frame data-stagger-index="3">
       <div
         class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
       >
@@ -90,14 +81,13 @@ const contact = await getCollection('contact');
   <section
     id="about"
     class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:items-center md:gap-4 md:px-6 md:py-24 lg:px-8"
+    data-animate
   >
-    <div
-      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md lg:pr-12"
-      data-animate="fade-up"
-      data-stagger-index="0"
-    >
-      <h2 class="text-3xl font-semibold">Get to know me.</h2>
-      <p class="text-muted-foreground text-lg">
+    <div class="flex flex-col items-start gap-4 lg:pr-12">
+      <h2 class="text-3xl font-semibold" data-stagger-index="0">
+        Get to know me.
+      </h2>
+      <p class="text-muted-foreground text-lg" data-stagger-index="1">
         I'm a frontend developer based in Türkiye, specializing in building
         dynamic web applications using TypeScript, React, and Next.js. I develop
         interactive features and optimize user experiences to deliver fast,
@@ -108,6 +98,7 @@ const contact = await getCollection('contact');
         href={contact.find(({ data }) => data.id === 'linkedin')?.data.url}
         target="_blank"
         class="group mt-2"
+        data-stagger-index="2"
       >
         More about me
         <Icon
@@ -117,11 +108,7 @@ const contact = await getCollection('contact');
         />
       </LinkButton>
     </div>
-    <Frame
-      class="translate-y-3 opacity-0 blur-md"
-      data-animate="fade-up"
-      data-stagger-index="1"
-    >
+    <Frame data-stagger-index="3">
       <div class="flex flex-col gap-4 md:p-6 lg:p-8">
         <h3 class="text-muted-foreground text-xs tracking-wider uppercase">
           Technologies
@@ -129,11 +116,7 @@ const contact = await getCollection('contact');
         <ul class="grid grid-cols-2 gap-2">
           {
             technologies.map(({ data }, index) => (
-              <li
-                class="translate-y-3 opacity-0 blur-md"
-                data-stagger-index={index}
-                data-stagger-delay="100"
-              >
+              <li data-stagger-index={index + 3}>
                 <Technology
                   label={data.label}
                   category={data.category}
@@ -149,17 +132,20 @@ const contact = await getCollection('contact');
   <section
     id="projects"
     class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-24 md:px-6 md:py-24 lg:px-8"
+    data-animate
   >
-    <div
-      class="flex translate-y-3 flex-col items-start gap-4 opacity-0 blur-md"
-      data-animate="fade-up"
-      data-stagger-index="0"
-    >
-      <h2 class="text-3xl font-semibold">A glimpse into my work.</h2>
-      <p class="text-muted-foreground text-lg">
+    <div class="flex flex-col items-start gap-4">
+      <h2 class="text-3xl font-semibold" data-stagger-index="0">
+        A glimpse into my work.
+      </h2>
+      <p class="text-muted-foreground text-lg" data-stagger-index="1">
         Here are some projects I've loved working on.
       </p>
-      <LinkButton href="/projects" class="group mt-2 gap-2">
+      <LinkButton
+        href="/projects"
+        class="group mt-2 gap-2"
+        data-stagger-index="2"
+      >
         See all projects
         <Icon
           name="heroicons:arrow-right-16-solid"
@@ -168,18 +154,10 @@ const contact = await getCollection('contact');
         />
       </LinkButton>
     </div>
-    <ul
-      class="grid grid-cols-1 gap-4 md:grid-cols-2"
-      data-animate="fade-up"
-      data-stagger-index="1"
-    >
+    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         featuredProjects.map((project, index) => (
-          <li
-            class="translate-y-3 opacity-0 blur-md md:even:-translate-y-34"
-            data-stagger-index={index}
-            data-stagger-delay="150"
-          >
+          <li class="md:even:-translate-y-34" data-stagger-index={index + 3}>
             <ProjectCard
               href={`/projects/${project.id}`}
               title={project.data.title}
@@ -195,27 +173,22 @@ const contact = await getCollection('contact');
   <section
     id="contact"
     class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:gap-4 md:px-6 md:pt-24 md:pb-48 lg:px-8"
+    data-animate
   >
-    <div
-      class="flex translate-y-3 flex-col gap-4 opacity-0 blur-md md:items-start md:pt-12 lg:pr-12"
-      data-animate="fade-up"
-      data-stagger-index="0"
-    >
-      <h2 class="text-3xl font-semibold">Get in touch.</h2>
-      <p class="text-muted-foreground text-lg">
+    <div class="flex flex-col gap-4 md:items-start md:pt-12 lg:pr-12">
+      <h2 class="text-3xl font-semibold" data-stagger-index="0">
+        Get in touch.
+      </h2>
+      <p class="text-muted-foreground text-lg" data-stagger-index="1">
         I'm always open to new opportunities and collaborations. Whether you
         have a project in mind or just want to say hello, feel free to reach
         out!
       </p>
-      <span class="bg-border h-px w-full"></span>
+      <span class="bg-border h-px w-full" data-stagger-index="2"></span>
       <ul class="flex flex-col gap-3">
         {
           contact.map(({ data }, index) => (
-            <li
-              class="w-fit translate-y-3 opacity-0 blur-md"
-              data-stagger-index={index}
-              data-stagger-delay="100"
-            >
+            <li class="w-fit" data-stagger-index={index + 2}>
               <a
                 href={data.url}
                 target="_blank"
@@ -234,13 +207,9 @@ const contact = await getCollection('contact');
         }
       </ul>
     </div>
-    <Frame
-      class="translate-y-3 opacity-0 blur-md"
-      data-animate="fade-up"
-      data-stagger-index={contact.length + 1}
-    >
+    <Frame data-stagger-index={contact.length + 2}>
       <ContactForm class="grid gap-6 md:p-6 lg:p-8">
-        <FormField>
+        <FormField data-stagger-index={contact.length + 2}>
           <FormLabel for="name">Name</FormLabel>
           <FormInput
             type="text"
@@ -250,7 +219,7 @@ const contact = await getCollection('contact');
             required
           />
         </FormField>
-        <FormField>
+        <FormField data-stagger-index={contact.length + 3}>
           <FormLabel for="email">Email</FormLabel>
           <FormInput
             type="email"
@@ -260,7 +229,7 @@ const contact = await getCollection('contact');
             required
           />
         </FormField>
-        <FormField>
+        <FormField data-stagger-index={contact.length + 4}>
           <FormLabel for="message">Message</FormLabel>
           <FormTextarea
             rows={4}
@@ -270,7 +239,11 @@ const contact = await getCollection('contact');
             required
           />
         </FormField>
-        <Button type="submit" class="lg:w-fit">
+        <Button
+          type="submit"
+          class="lg:w-fit"
+          data-stagger-index={contact.length + 5}
+        >
           <Icon name="heroicons:paper-airplane-16-solid" />
           Send message
         </Button>

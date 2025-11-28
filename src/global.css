@@ -68,8 +68,15 @@
 }
 
 @layer utilities {
-  .ease-spring {
-    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  .scroll-animations-hidden {
+    transform: translateY(0.75rem);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  .scroll-animations-transition {
+    transition-property: opacity, transform, filter;
+    transition-duration: 1000ms;
+    transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
   }
 }
 
