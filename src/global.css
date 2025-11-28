@@ -69,14 +69,10 @@
 
 @layer utilities {
   .scroll-animations-hidden {
-    transform: translateY(0.75rem);
-    opacity: 0;
-    filter: blur(4px);
+    @apply translate-y-3 opacity-0 blur-md;
   }
   .scroll-animations-transition {
-    transition-property: opacity, transform, filter;
-    transition-duration: 1000ms;
-    transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+    @apply transition-[opacity,translate,filter] duration-1000 ease-[cubic-bezier(0.33,1,0.68,1)];
   }
 }
 

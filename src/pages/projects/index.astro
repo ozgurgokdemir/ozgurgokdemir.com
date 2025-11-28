@@ -13,7 +13,7 @@ const projects = await getCollection('projects').then(sortByOrder);
 >
   <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-32 lg:px-8">
     <h1
-      class="text-4xl font-semibold tracking-tight md:text-center md:text-5xl lg:text-6xl"
+      class="scroll-animations-hidden text-4xl font-semibold tracking-tight md:text-center md:text-5xl lg:text-6xl"
       data-animate
       data-stagger-index="0"
     >
@@ -28,7 +28,7 @@ const projects = await getCollection('projects').then(sortByOrder);
     >
       {
         projects.map(({ id, data }, index) => (
-          <li data-stagger-index={index + 1}>
+          <li class="scroll-animations-hidden" data-stagger-index={index + 1}>
             <ProjectCard
               href={`/projects/${id}`}
               title={data.title}
