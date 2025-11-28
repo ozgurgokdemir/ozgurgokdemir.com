@@ -13,26 +13,22 @@ const projects = await getCollection('projects').then(sortByOrder);
 >
   <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-32 lg:px-8">
     <h1
-      data-animate="fade-up"
+      class="scroll-animations-hidden text-4xl font-semibold tracking-tight md:text-center md:text-5xl lg:text-6xl"
+      data-animate
       data-stagger-index="0"
-      class="translate-y-3 text-4xl font-semibold tracking-tight opacity-0 blur-md md:text-center md:text-5xl lg:text-6xl"
     >
       Take a look at the projects <br class="hidden md:block" /> I’ve been building.
     </h1>
   </section>
   <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
     <ul
-      data-animate="fade-up"
-      data-stagger-index="1"
       class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+      data-animate
+      data-stagger-index="1"
     >
       {
         projects.map(({ id, data }, index) => (
-          <li
-            class="translate-y-3 opacity-0 blur-md"
-            data-stagger-index={index + 1}
-            data-stagger-delay="150"
-          >
+          <li class="scroll-animations-hidden" data-stagger-index={index + 1}>
             <ProjectCard
               href={`/projects/${id}`}
               title={data.title}
