@@ -108,7 +108,7 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
 
       sections.forEach((section) => observer.observe(section));
     } else {
-      const id = location.pathname.slice(1);
+      const id = location.pathname.split('/').filter(Boolean)[0];
       requestAnimationFrame(() => {
         updateNavigation(id, isHome);
       });
