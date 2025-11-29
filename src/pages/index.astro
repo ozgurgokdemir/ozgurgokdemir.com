@@ -46,7 +46,7 @@ const contact = await getCollection('contact');
         I'm a frontend developer.
       </h1>
       <p
-        class="text-muted-foreground scroll-animations-hidden text-xl md:text-2xl"
+        class="text-muted-foreground scroll-animations-hidden text-xl"
         data-stagger-index="1"
       >
         I build high-performance and responsive web applications.
@@ -97,11 +97,13 @@ const contact = await getCollection('contact');
         class="scroll-animations-hidden text-muted-foreground text-lg"
         data-stagger-index="1"
       >
-        I'm a frontend developer based in Türkiye, specializing in building
-        dynamic web applications using TypeScript, React, and Next.js. I develop
-        interactive features and optimize user experiences to deliver fast,
-        efficient, and user-friendly solutions. Whether working independently or
-        as part of a team, I aim to meet both business and user needs.
+        I've been building applications since I was 12 years old. My passion for
+        development started with Visual Basic and C# , where I created
+        interfaces and programmed their behavior. Eventually, my passion brought
+        me to the web. I specialize in building dynamic web applications,
+        especially SaaS and e-commerce. I enjoy developing interactive features
+        and optimizing performance, and I'm currently looking into TanStack
+        ecosystem to improve my skills.
       </p>
       <LinkButton
         href={contact.find(({ data }) => data.id === 'linkedin')?.data.url}
@@ -204,9 +206,9 @@ const contact = await getCollection('contact');
         class="scroll-animations-hidden text-muted-foreground text-lg"
         data-stagger-index="1"
       >
-        I'm always open to new opportunities and collaborations. Whether you
-        have a project in mind or just want to say hello, feel free to reach
-        out!
+        I'm always open to new projects, ideas, and opportunities. Please get in
+        touch if you have a question or simply want to say hello, and I will get
+        back to you as soon as I can.
       </p>
       <span
         class="scroll-animations-hidden bg-border h-px w-full"
@@ -295,12 +297,11 @@ const contact = await getCollection('contact');
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const contactLink = document.getElementById('contact-link');
-    contactLink?.addEventListener('click', (e) => {
+    document.getElementById('contact-link')?.addEventListener('click', (e) => {
       e.preventDefault();
-      const section = document.getElementById('contact');
-      if (!section) return;
-      section.scrollIntoView({ behavior: 'smooth' });
+      document
+        .getElementById('contact')
+        ?.scrollIntoView({ behavior: 'smooth' });
     });
   });
 </script>
