@@ -68,11 +68,13 @@
 }
 
 @layer utilities {
-  .scroll-animations-hidden {
-    @apply translate-y-3 opacity-0 blur-md;
-  }
-  .scroll-animations-transition {
-    @apply transition-[opacity,translate,filter] duration-1000 ease-[cubic-bezier(0.33,1,0.68,1)];
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-animations-hidden {
+      @apply translate-y-3 opacity-0 blur-md;
+    }
+    .scroll-animations-transition {
+      @apply transition-[opacity,translate,filter] duration-1000 ease-[cubic-bezier(0.33,1,0.68,1)];
+    }
   }
 }
 
