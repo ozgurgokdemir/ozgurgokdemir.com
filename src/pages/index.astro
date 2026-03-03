@@ -296,12 +296,18 @@ const contact = await getCollection('contact');
 </MainLayout>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    document.getElementById('contact-link')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document
-        .getElementById('contact')
-        ?.scrollIntoView({ behavior: 'smooth' });
+  import { runOnce } from '@/utils/runtime-registry';
+
+  runOnce('home:contact-link-handler', () => {
+    document.addEventListener('click', (event) => {
+      if (window.location.pathname !== '/') return;
+
+      const target = event.target as Element | null;
+      const contactLink = target?.closest<HTMLAnchorElement>('#contact-link');
+      if (!contactLink) return;
+
+      event.preventDefault();
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     });
   });
 </script>

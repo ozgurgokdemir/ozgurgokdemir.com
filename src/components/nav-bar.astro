@@ -32,86 +32,197 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
 </nav>
 
 <script>
-  function updateNavigation(id: string, isHome: boolean) {
-    const navigations = Array.from(
-      document.querySelectorAll<HTMLDivElement>('[data-nav-bar]'),
-    ).map((navBar) => ({
-      navBar,
-      navLinks: navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
-    }));
+  import { getOrCreateValue, runOnce } from '@/utils/runtime-registry';
 
+  type NavigationGroup = {
+    navBar: HTMLElement;
+    navLinks: HTMLAnchorElement[];
+  };
+
+  type NavScrollState = {
+    observer: IntersectionObserver | null;
+    frameId: number | null;
+    queuedId: string | null;
+    activeId: string | null;
+  };
+
+  function getNavigations() {
+    return Array.from(document.querySelectorAll<HTMLElement>('[data-nav-bar]')).map(
+      (navBar) => ({
+        navBar,
+        navLinks: Array.from(
+          navBar.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'),
+        ),
+      }),
+    );
+  }
+
+  function updateNavigation(
+    id: string,
+    isHome: boolean,
+    navigations: NavigationGroup[],
+  ) {
     navigations.forEach(({ navBar, navLinks }) => {
+      let activeLink: HTMLAnchorElement | null = null;
+
       navLinks.forEach((navLink) => {
         const isCurrent = navLink.dataset.id === id;
         navLink.setAttribute(
           'aria-current',
           isCurrent ? (isHome ? 'location' : 'page') : 'false',
         );
-        if (!isCurrent) return;
 
-        const activeLinkRect = navLink.getBoundingClientRect();
-        const navBarRect = navBar.getBoundingClientRect();
-
-        if (navBar.dataset.orientation === 'vertical') {
-          navBar.style.setProperty(
-            '--indicator-top',
-            `${activeLinkRect.top - navBarRect.top}px`,
-          );
-        } else {
-          navBar.style.setProperty(
-            '--indicator-width',
-            `${activeLinkRect.width / 2}px`,
-          );
-          navBar.style.setProperty(
-            '--indicator-left',
-            `${activeLinkRect.left - navBarRect.left + activeLinkRect.width / 4}px`,
-          );
+        if (isCurrent) {
+          activeLink = navLink;
         }
       });
+
+      if (!activeLink) return;
+
+      const activeLinkRect = activeLink.getBoundingClientRect();
+      const navBarRect = navBar.getBoundingClientRect();
+
+      if (navBar.dataset.orientation === 'vertical') {
+        navBar.style.setProperty(
+          '--indicator-top',
+          `${activeLinkRect.top - navBarRect.top}px`,
+        );
+      } else {
+        navBar.style.setProperty(
+          '--indicator-width',
+          `${activeLinkRect.width / 2}px`,
+        );
+        navBar.style.setProperty(
+          '--indicator-left',
+          `${activeLinkRect.left - navBarRect.left + activeLinkRect.width / 4}px`,
+        );
+      }
     });
   }
 
-  document.addEventListener('astro:after-swap', () => {
-    if (location.pathname === '/' && location.hash) {
-      const newUrl = location.pathname + location.search;
-      history.replaceState(history.state, '', newUrl);
+  function cleanupState(state: NavScrollState) {
+    state.observer?.disconnect();
+    state.observer = null;
+
+    if (state.frameId !== null) {
+      cancelAnimationFrame(state.frameId);
+      state.frameId = null;
     }
-  });
 
-  document.addEventListener('astro:page-load', () => {
-    const isHome = location.pathname === '/';
+    state.queuedId = null;
+    state.activeId = null;
+  }
 
-    if (isHome) {
-      if (location.hash) {
+  function scheduleNavigationUpdate(
+    id: string,
+    isHome: boolean,
+    navigations: NavigationGroup[],
+    state: NavScrollState,
+  ) {
+    if (!id || state.activeId === id || state.queuedId === id) return;
+
+    state.queuedId = id;
+
+    if (state.frameId !== null) return;
+
+    state.frameId = requestAnimationFrame(() => {
+      state.frameId = null;
+
+      if (!state.queuedId || state.queuedId === state.activeId) return;
+
+      updateNavigation(state.queuedId, isHome, navigations);
+      state.activeId = state.queuedId;
+      state.queuedId = null;
+    });
+  }
+
+  const navScrollState = getOrCreateValue<NavScrollState>('nav-bar:state', () => ({
+    observer: null,
+    frameId: null,
+    queuedId: null,
+    activeId: null,
+  }));
+
+  runOnce('nav-bar:global-handlers', () => {
+    document.addEventListener('astro:after-swap', () => {
+      if (location.pathname === '/' && location.hash) {
         const newUrl = location.pathname + location.search;
         history.replaceState(history.state, '', newUrl);
       }
+    });
 
-      const sections = document.querySelectorAll('section[id]');
+    document.addEventListener('astro:page-load', () => {
+      cleanupState(navScrollState);
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const id = entry.target.getAttribute('id');
+      const isHome = location.pathname === '/';
+      const navigations = getNavigations();
+
+      if (navigations.length === 0) return;
+
+      if (isHome) {
+        if (location.hash) {
+          const newUrl = location.pathname + location.search;
+          history.replaceState(history.state, '', newUrl);
+        }
+
+        const sections = Array.from(
+          document.querySelectorAll<HTMLElement>('section[id]'),
+        );
+
+        if (sections.length === 0) return;
+
+        navScrollState.observer = new IntersectionObserver(
+          (entries) => {
+            const intersectingEntries = entries.filter(
+              (entry) => entry.isIntersecting,
+            );
+
+            if (intersectingEntries.length === 0) return;
+
+            intersectingEntries.sort(
+              (a, b) => b.intersectionRatio - a.intersectionRatio,
+            );
+
+            const id = intersectingEntries[0]?.target.getAttribute('id');
+
             if (!id) return;
-            requestAnimationFrame(() => {
-              updateNavigation(id, isHome);
-            });
-          });
-        },
-        {
-          threshold: 0,
-          rootMargin: `-40% 0px -60% 0px`,
-        },
-      );
 
-      sections.forEach((section) => observer.observe(section));
-    } else {
+            scheduleNavigationUpdate(id, isHome, navigations, navScrollState);
+          },
+          {
+            threshold: [0, 0.2, 0.4, 0.6],
+            rootMargin: `-35% 0px -55% 0px`,
+          },
+        );
+
+        sections.forEach((section) => navScrollState.observer?.observe(section));
+
+        const viewportMidpoint =
+          (window.innerHeight || document.documentElement.clientHeight) * 0.45;
+
+        const initialSection =
+          sections.find((section) => {
+            const rect = section.getBoundingClientRect();
+            return rect.top <= viewportMidpoint && rect.bottom >= viewportMidpoint;
+          }) ?? sections[0];
+
+        if (initialSection) {
+          scheduleNavigationUpdate(
+            initialSection.id,
+            isHome,
+            navigations,
+            navScrollState,
+          );
+        }
+
+        return;
+      }
+
       const id = location.pathname.split('/').filter(Boolean)[0];
-      requestAnimationFrame(() => {
-        updateNavigation(id, isHome);
-      });
-    }
+
+      if (!id) return;
+
+      scheduleNavigationUpdate(id, isHome, navigations, navScrollState);
+    });
   });
 </script>

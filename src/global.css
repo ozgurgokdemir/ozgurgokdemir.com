@@ -73,7 +73,16 @@
       @apply translate-y-3 opacity-0 blur-md;
     }
     .scroll-animations-transition {
-      @apply transition-[opacity,translate,filter] duration-1000 ease-[cubic-bezier(0.33,1,0.68,1)];
+      transition-property: opacity, translate, filter;
+      transition-duration: var(--scroll-animations-duration, 1000ms);
+      transition-delay: calc(
+        var(--scroll-animations-stagger-index, 0) *
+          var(--scroll-animations-stagger-delay, 100ms)
+      );
+      @apply ease-[cubic-bezier(0.33,1,0.68,1)];
+    }
+    .scroll-animations-will-change {
+      will-change: transform, opacity;
     }
   }
 }
