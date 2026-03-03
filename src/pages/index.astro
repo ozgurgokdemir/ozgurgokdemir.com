@@ -127,7 +127,10 @@ const contact = await getCollection('contact');
         <ul class="grid grid-cols-2 gap-2">
           {
             technologies.map(({ data }, index) => (
-              <li data-stagger-index={index + 3}>
+              <li
+                class="scroll-animations-hidden"
+                data-stagger-index={index + 3}
+              >
                 <Technology
                   label={data.label}
                   category={data.category}
@@ -307,7 +310,9 @@ const contact = await getCollection('contact');
       if (!contactLink) return;
 
       event.preventDefault();
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      document
+        .getElementById('contact')
+        ?.scrollIntoView({ behavior: 'smooth' });
     });
   });
 </script>
