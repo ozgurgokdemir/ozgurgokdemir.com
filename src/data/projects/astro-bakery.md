@@ -7,5 +7,5 @@ livePreview: https://bakerysweetdelights.netlify.app
 sourceCode: https://github.com/ozgurgokdemir/astro-bakery
 category: Business
 featured: true
-order: 3
+order: 4
 ---

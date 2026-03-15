@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ProjectDetailsLayout from '@/layouts/project-details-layout.astro';
 import { Image } from 'astro:assets';
 import LinkButton from '@/components/link-button.astro';
@@ -16,81 +16,97 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const hasDetails = Boolean(project.body?.trim());
+const renderedProject = hasDetails ? await render(project) : null;
+const Content = renderedProject?.Content;
 ---
 
 <ProjectDetailsLayout
   title=`${project.data.title} - Özgür Gökdemir`
   description={project.data.description}
 >
-  <section
-    class="relative before:absolute before:inset-0 before:-z-10 before:bg-radial-[circle_farthest-side_at_top] before:from-(--gradient-color) before:opacity-30"
-    style={`--gradient-color:${project.data.color};`}
-  >
-    <div
-      class="mx-auto flex max-w-7xl flex-col gap-16 px-4 pt-32 md:gap-24 md:px-6 md:pt-36 lg:px-8"
-      data-animate
+  <div data-animate>
+    <section
+      class="relative before:absolute before:inset-0 before:-z-10 before:bg-radial-[circle_farthest-side_at_top] before:from-(--gradient-color) before:opacity-30"
+      style={`--gradient-color:${project.data.color};`}
     >
-      <div class="flex flex-col gap-4 md:flex-row md:justify-between">
-        <div class="flex flex-col gap-4 md:gap-2">
-          <h1
-            class="scroll-animations-hidden text-3xl font-semibold"
-            data-stagger-index="0"
-          >
-            {project.data.title}
-          </h1>
-          <p
-            class="text-muted-foreground scroll-animations-hidden text-lg"
-            data-stagger-index="1"
-          >
-            {project.data.description}
-          </p>
-        </div>
-        {
-          (project.data.livePreview || project.data.sourceCode) && (
-            <div
-              class="scroll-animations-hidden mt-2 flex flex-wrap gap-4 md:flex-row"
-              data-stagger-index="2"
-            >
-              {project.data.livePreview && (
-                <LinkButton
-                  href={project.data.livePreview}
-                  target="_blank"
-                  variant="outline"
-                >
-                  <Icon name="heroicons:eye-16-solid" size={16} />
-                  Live preview
-                </LinkButton>
-              )}
-              {project.data.sourceCode && (
-                <LinkButton
-                  href={project.data.sourceCode}
-                  target="_blank"
-                  variant="outline"
-                >
-                  <Icon name="heroicons:code-bracket-16-solid" size={16} />
-                  Source code
-                </LinkButton>
-              )}
-            </div>
-          )
-        }
-      </div>
-      <Frame class="scroll-animations-hidden" data-stagger-index="3">
+      <div
+        class="mx-auto flex max-w-7xl flex-col gap-16 px-4 pt-32 pb-16 md:gap-24 md:px-6 md:pt-36 md:pb-24 lg:px-8"
+      >
         <div
-          class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+          class="mx-auto flex w-full max-w-4xl flex-col gap-4 md:flex-row md:justify-between"
         >
-          <BlurryGradient class="absolute h-full w-full" />
-          <Image
-            src={project.data.image}
-            alt={project.data.title}
-            width={1280}
-            height={720}
-            layout="constrained"
-            priority={true}
-            class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
-          />
+          <div class="flex flex-col gap-4 md:gap-2">
+            <h1
+              class="scroll-animations-hidden text-3xl font-semibold"
+              data-stagger-index="0"
+            >
+              {project.data.title}
+            </h1>
+            <p
+              class="text-muted-foreground scroll-animations-hidden text-lg"
+              data-stagger-index="1"
+            >
+              {project.data.description}
+            </p>
+          </div>
+          {
+            (project.data.livePreview || project.data.sourceCode) && (
+              <div
+                class="scroll-animations-hidden mt-2 flex flex-wrap gap-4 md:flex-row"
+                data-stagger-index="2"
+              >
+                {project.data.livePreview && (
+                  <LinkButton
+                    href={project.data.livePreview}
+                    target="_blank"
+                    variant="outline"
+                  >
+                    <Icon name="heroicons:eye-16-solid" size={16} />
+                    Live preview
+                  </LinkButton>
+                )}
+                {project.data.sourceCode && (
+                  <LinkButton
+                    href={project.data.sourceCode}
+                    target="_blank"
+                    variant="outline"
+                  >
+                    <Icon name="heroicons:code-bracket-16-solid" size={16} />
+                    Source code
+                  </LinkButton>
+                )}
+              </div>
+            )
+          }
         </div>
-      </Frame>
-    </div>
-  </section>
+        <Frame class="scroll-animations-hidden" data-stagger-index="3">
+          <div
+            class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+          >
+            <BlurryGradient class="absolute h-full w-full" />
+            <Image
+              src={project.data.image}
+              alt={project.data.title}
+              width={1280}
+              height={720}
+              layout="constrained"
+              priority={true}
+              class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-xl ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+            />
+          </div>
+        </Frame>
+      </div>
+    </section>
+    {
+      Content && (
+        <article
+          class="project-details-prose scroll-animations-hidden px-4 pb-16 md:px-0 md:pb-24"
+          data-stagger-index="4"
+        >
+          <Content />
+        </article>
+      )
+    }
+  </div>
 </ProjectDetailsLayout>

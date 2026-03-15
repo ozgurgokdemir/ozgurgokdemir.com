@@ -87,6 +87,41 @@
   }
 }
 
+@layer components {
+  .project-details-prose {
+    @apply mx-auto flex max-w-4xl flex-col gap-4 text-base leading-8 text-white/92;
+  }
+
+  .project-details-prose > * {
+    @apply m-0;
+  }
+
+  .project-details-prose h2 {
+    @apply mt-6 text-2xl font-semibold tracking-tight text-white first:mt-0;
+  }
+
+  .project-details-prose p {
+    @apply text-muted-foreground text-base leading-8;
+  }
+
+  .project-details-prose ul {
+    @apply text-muted-foreground grid gap-3 pl-6;
+    list-style: disc;
+  }
+
+  .project-details-prose li::marker {
+    color: color-mix(in oklab, var(--color-primary) 70%, white);
+  }
+
+  .project-details-prose strong {
+    @apply font-semibold text-white;
+  }
+
+  .project-details-prose code {
+    @apply rounded-md bg-white/8 px-1.5 py-0.5 text-sm text-white;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
