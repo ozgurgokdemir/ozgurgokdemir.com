@@ -60,59 +60,82 @@ const navigation = await getCollection('navigation');
 </div>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    let isExpanded = false;
+  import { getOrCreateValue, runOnce } from '@/utils/runtime-registry';
 
-    const mobileMenu = document.getElementById(
-      'mobile-menu',
-    ) as HTMLDivElement | null;
+  type MobileMenuState = {
+    isExpanded: boolean;
+    mobileMenu: HTMLDivElement | null;
+    hamburgerButton: HTMLButtonElement | null;
+  };
 
-    const hamburgerButton = document.querySelector<HTMLButtonElement>(
+  function openMenu(state: MobileMenuState) {
+    if (!state.mobileMenu || !state.hamburgerButton) return;
+
+    state.mobileMenu.setAttribute('aria-hidden', 'false');
+    state.hamburgerButton.setAttribute('aria-expanded', 'true');
+    state.hamburgerButton.setAttribute('aria-label', 'close menu');
+    state.isExpanded = true;
+  }
+
+  function closeMenu(state: MobileMenuState) {
+    if (!state.mobileMenu || !state.hamburgerButton) return;
+
+    state.mobileMenu.setAttribute('aria-hidden', 'true');
+    state.hamburgerButton.setAttribute('aria-expanded', 'false');
+    state.hamburgerButton.setAttribute('aria-label', 'open menu');
+    state.isExpanded = false;
+  }
+
+  function toggleMenu(state: MobileMenuState) {
+    if (state.isExpanded) {
+      closeMenu(state);
+    } else {
+      openMenu(state);
+    }
+  }
+
+  function syncMenuElements(state: MobileMenuState) {
+    state.mobileMenu = document.getElementById('mobile-menu') as HTMLDivElement | null;
+    state.hamburgerButton = document.querySelector<HTMLButtonElement>(
       '[aria-controls="mobile-menu"]',
     );
 
-    if (!mobileMenu || !hamburgerButton) return;
+    if (!state.mobileMenu || !state.hamburgerButton) return;
 
-    const handleClick = (event: MouseEvent) => {
-      if (!isExpanded) return;
+    closeMenu(state);
+  }
 
-      const { clientX, clientY, target } = event;
-      const { left, right, top, bottom } = mobileMenu.getBoundingClientRect();
+  const mobileMenuState = getOrCreateValue<MobileMenuState>(
+    'mobile-menu:state',
+    () => ({
+      isExpanded: false,
+      mobileMenu: null,
+      hamburgerButton: null,
+    }),
+  );
 
-      const isClickOutsideMenu =
-        clientX < left || clientX > right || clientY < top || clientY > bottom;
+  runOnce('mobile-menu:global-handlers', () => {
+    document.addEventListener('click', (event) => {
+      const { mobileMenu, hamburgerButton } = mobileMenuState;
+      if (!mobileMenu || !hamburgerButton) return;
 
-      if (isClickOutsideMenu && !hamburgerButton.contains(target as Node)) {
-        closeMenu();
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      if (hamburgerButton.contains(target)) {
+        toggleMenu(mobileMenuState);
+        return;
       }
-    };
 
-    const openMenu = () => {
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      hamburgerButton.setAttribute('aria-expanded', 'true');
-      hamburgerButton.setAttribute('aria-label', 'close menu');
-      isExpanded = true;
-    };
+      if (!mobileMenuState.isExpanded) return;
 
-    const closeMenu = () => {
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      hamburgerButton.setAttribute('aria-expanded', 'false');
-      hamburgerButton.setAttribute('aria-label', 'open menu');
-      isExpanded = false;
-    };
-
-    const toggleMenu = () => {
-      if (isExpanded) {
-        closeMenu();
-      } else {
-        openMenu();
+      if (!mobileMenu.contains(target)) {
+        closeMenu(mobileMenuState);
       }
-    };
+    });
 
-    closeMenu();
-
-    hamburgerButton.addEventListener('click', toggleMenu);
-
-    document.addEventListener('click', handleClick);
+    document.addEventListener('astro:page-load', () => {
+      syncMenuElements(mobileMenuState);
+    });
   });
 </script>

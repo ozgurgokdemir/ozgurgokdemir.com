@@ -127,7 +127,10 @@ const contact = await getCollection('contact');
         <ul class="grid grid-cols-2 gap-2">
           {
             technologies.map(({ data }, index) => (
-              <li data-stagger-index={index + 3}>
+              <li
+                class="scroll-animations-hidden"
+                data-stagger-index={index + 3}
+              >
                 <Technology
                   label={data.label}
                   category={data.category}
@@ -296,9 +299,17 @@ const contact = await getCollection('contact');
 </MainLayout>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    document.getElementById('contact-link')?.addEventListener('click', (e) => {
-      e.preventDefault();
+  import { runOnce } from '@/utils/runtime-registry';
+
+  runOnce('home:contact-link-handler', () => {
+    document.addEventListener('click', (event) => {
+      if (window.location.pathname !== '/') return;
+
+      const target = event.target as Element | null;
+      const contactLink = target?.closest<HTMLAnchorElement>('#contact-link');
+      if (!contactLink) return;
+
+      event.preventDefault();
       document
         .getElementById('contact')
         ?.scrollIntoView({ behavior: 'smooth' });

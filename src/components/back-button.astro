@@ -27,23 +27,26 @@ const { fallback = '/', class: className, ...props } = Astro.props;
 </Button>
 
 <script>
+  import { runOnce } from '@/utils/runtime-registry';
   import navigation from '@/utils/navigation';
 
-  document.addEventListener('astro:page-load', () => {
-    const backButton = document.getElementById(
-      'back-button',
-    ) as HTMLButtonElement | null;
+  runOnce('back-button:page-load-handler', () => {
+    document.addEventListener('astro:page-load', () => {
+      const backButton = document.getElementById(
+        'back-button',
+      ) as HTMLButtonElement | null;
 
-    if (!backButton) return;
+      if (!backButton) return;
 
-    const handleNavigateBack = () => {
-      if (navigation.canGoBack()) {
-        navigation.back();
-      } else {
-        navigation.navigate(backButton.dataset.fallback ?? '/');
-      }
-    };
+      const handleNavigateBack = () => {
+        if (navigation.canGoBack()) {
+          navigation.back();
+        } else {
+          navigation.navigate(backButton.dataset.fallback ?? '/');
+        }
+      };
 
-    backButton.addEventListener('click', handleNavigateBack);
+      backButton.onclick = handleNavigateBack;
+    });
   });
 </script>

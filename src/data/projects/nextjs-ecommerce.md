@@ -7,5 +7,5 @@ livePreview: https://nextjs-ecommerce-taupe-six.vercel.app
 sourceCode: https://github.com/ozgurgokdemir/nextjs-ecommerce
 category: E-commerce
 featured: true
-order: 0
+order: 1
 ---
