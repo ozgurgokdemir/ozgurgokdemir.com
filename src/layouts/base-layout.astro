@@ -50,9 +50,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 </html>
 
 <script>
+  import hashNavigationData from '@/data/navigation.json';
   import { getValue, runOnce, setValue } from '@/utils/runtime-registry';
+  import { initHashNavigation } from '@/utils/hash-navigation';
   import { ScrollAnimations } from '@/utils/scroll-animations';
   import navigation from '@/utils/navigation';
+
+  initHashNavigation(
+    hashNavigationData.map(({ pathname, id }) => {
+      const url = new URL(pathname, window.location.origin);
+
+      return {
+        pathname: url.pathname,
+        hash: url.hash,
+        sectionId: id,
+      };
+    }),
+  );
 
   runOnce('base-layout:page-load-handler', () => {
     document.addEventListener('astro:page-load', () => {

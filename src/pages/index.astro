@@ -55,7 +55,10 @@ const contact = await getCollection('contact');
         class="scroll-animations-hidden mt-2 flex items-center gap-4"
         data-stagger-index="2"
       >
-        <LinkButton id="contact-link" href="/#contact">
+        <LinkButton
+          id="contact-link"
+          href="/#contact"
+        >
           <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
           Let's Talk
         </LinkButton>
@@ -298,21 +301,4 @@ const contact = await getCollection('contact');
   </section>
 </MainLayout>
 
-<script>
-  import { runOnce } from '@/utils/runtime-registry';
 
-  runOnce('home:contact-link-handler', () => {
-    document.addEventListener('click', (event) => {
-      if (window.location.pathname !== '/') return;
-
-      const target = event.target as Element | null;
-      const contactLink = target?.closest<HTMLAnchorElement>('#contact-link');
-      if (!contactLink) return;
-
-      event.preventDefault();
-      document
-        .getElementById('contact')
-        ?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>

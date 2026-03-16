@@ -9,29 +9,12 @@ type Props = HTMLAttributes<'a'> & {
 const { id, ...props } = Astro.props;
 ---
 
-<LinkButton variant="ghost" size="sm" data-nav-link data-id={id} {...props}>
+<LinkButton
+  variant="ghost"
+  size="sm"
+  data-nav-link
+  data-id={id}
+  {...props}
+>
   <slot />
 </LinkButton>
-
-<script>
-  import { runOnce } from '@/utils/runtime-registry';
-
-  runOnce('nav-link:click-handler', () => {
-    document.addEventListener('click', (event) => {
-      if (window.location.pathname !== '/') return;
-
-      const target = event.target as Element | null;
-      const navLink = target?.closest<HTMLAnchorElement>('[data-nav-link]');
-      if (!navLink) return;
-
-      const sectionId = navLink.getAttribute('data-id');
-      if (!sectionId) return;
-
-      const section = document.getElementById(sectionId);
-      if (!section) return;
-
-      event.preventDefault();
-      section.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>
