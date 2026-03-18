@@ -63,19 +63,16 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
     navigations: NavigationGroup[],
   ) {
     navigations.forEach(({ navBar, navLinks }) => {
-      let activeLink: HTMLAnchorElement | null = null;
-
       navLinks.forEach((navLink) => {
         const isCurrent = navLink.dataset.id === id;
         navLink.setAttribute(
           'aria-current',
           isCurrent ? (isHome ? 'location' : 'page') : 'false',
         );
-
-        if (isCurrent) {
-          activeLink = navLink;
-        }
       });
+
+      const activeLink =
+        navLinks.find((navLink) => navLink.dataset.id === id) ?? null;
 
       if (!activeLink) return;
 
@@ -144,13 +141,6 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
   }));
 
   runOnce('nav-bar:global-handlers', () => {
-    document.addEventListener('astro:after-swap', () => {
-      if (location.pathname === '/' && location.hash) {
-        const newUrl = location.pathname + location.search;
-        history.replaceState(history.state, '', newUrl);
-      }
-    });
-
     document.addEventListener('astro:page-load', () => {
       cleanupState(navScrollState);
 
@@ -160,11 +150,6 @@ const navBarVariants = cva('relative after:absolute after:bg-primary', {
       if (navigations.length === 0) return;
 
       if (isHome) {
-        if (location.hash) {
-          const newUrl = location.pathname + location.search;
-          history.replaceState(history.state, '', newUrl);
-        }
-
         const sections = Array.from(
           document.querySelectorAll<HTMLElement>('section[id]'),
         );
