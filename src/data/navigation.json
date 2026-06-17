@@ -2,21 +2,25 @@
   {
     "id": "home",
     "pathname": "/#home",
-    "text": "Home"
+    "text": "Home",
+    "order": 1
   },
   {
     "id": "about",
     "pathname": "/#about",
-    "text": "About"
+    "text": "About",
+    "order": 2
   },
   {
     "id": "projects",
     "pathname": "/#projects",
-    "text": "Projects"
+    "text": "Projects",
+    "order": 3
   },
   {
     "id": "contact",
     "pathname": "/#contact",
-    "text": "Contact"
+    "text": "Contact",
+    "order": 4
   }
 ]

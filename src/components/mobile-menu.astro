@@ -5,12 +5,13 @@ import NavLink from '@/components/nav-link.astro';
 import Button from './button.astro';
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/lib/utils';
+import { sortByOrder } from '@/utils/content-collections';
 
 type Props = HTMLAttributes<'div'>;
 
 const { class: className } = Astro.props;
 
-const navigation = await getCollection('navigation');
+const navigation = await getCollection('navigation').then(sortByOrder);
 ---
 
 <div class={cn('relative inline-flex', className)}>
@@ -95,7 +96,9 @@ const navigation = await getCollection('navigation');
   }
 
   function syncMenuElements(state: MobileMenuState) {
-    state.mobileMenu = document.getElementById('mobile-menu') as HTMLDivElement | null;
+    state.mobileMenu = document.getElementById(
+      'mobile-menu',
+    ) as HTMLDivElement | null;
     state.hamburgerButton = document.querySelector<HTMLButtonElement>(
       '[aria-controls="mobile-menu"]',
     );

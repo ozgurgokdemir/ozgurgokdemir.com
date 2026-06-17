@@ -1,5 +1,6 @@
 import { defineAction } from 'astro:actions';
-import { z } from 'astro:schema';
+import { z } from 'astro/zod';
+import { env } from 'cloudflare:workers';
 import { Resend } from 'resend';
 
 export const server = {
@@ -7,12 +8,10 @@ export const server = {
     accept: 'form',
     input: z.object({
       name: z.string(),
-      email: z.string().email(),
+      email: z.email(),
       message: z.string(),
     }),
-    handler: async ({ name, email, message }, context) => {
-      const { env } = context.locals.runtime;
-
+    handler: async ({ name, email, message }) => {
       const resend = new Resend(env.RESEND_API_KEY);
 
       const { error } = await resend.emails.send({

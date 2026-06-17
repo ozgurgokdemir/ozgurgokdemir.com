@@ -1,0 +1,74 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import fa6Brands from '@iconify-json/fa6-brands/icons.json';
+import heroicons from '@iconify-json/heroicons/icons.json';
+import simpleIcons from '@iconify-json/simple-icons/icons.json';
+
+type IconifyCollection = {
+  width?: number;
+  height?: number;
+  icons: Record<string, IconifyIcon>;
+  aliases?: Record<string, IconifyAlias>;
+};
+
+type IconifyIcon = {
+  body: string;
+  width?: number;
+  height?: number;
+  left?: number;
+  top?: number;
+};
+
+type IconifyAlias = Omit<IconifyIcon, 'body'> & {
+  parent: string;
+};
+
+type Props = HTMLAttributes<'svg'> & {
+  name: string;
+  size?: number | string;
+  title?: string;
+  desc?: string;
+};
+
+const collections: Record<string, IconifyCollection> = {
+  'fa6-brands': fa6Brands,
+  heroicons,
+  'simple-icons': simpleIcons,
+};
+
+function getIcon(collection: IconifyCollection, iconName: string) {
+  const icon = collection.icons[iconName];
+  if (icon) return icon;
+
+  const alias = collection.aliases?.[iconName];
+  const parent = alias ? collection.icons[alias.parent] : undefined;
+  return parent ? { ...parent, ...alias } : undefined;
+}
+
+const { name, size, width, height, title, desc, ...props } = Astro.props;
+const [collectionName, iconName] = name.split(':');
+const collection = collections[collectionName ?? ''];
+const icon = collection && iconName ? getIcon(collection, iconName) : undefined;
+
+if (!icon) {
+  throw new Error(`Unable to locate icon "${name}".`);
+}
+
+const iconWidth = icon.width ?? collection.width ?? 16;
+const iconHeight = icon.height ?? collection.height ?? 16;
+const left = icon.left ?? 0;
+const top = icon.top ?? 0;
+const resolvedWidth = width ?? size ?? iconWidth;
+const resolvedHeight = height ?? size ?? iconHeight;
+---
+
+<svg
+  viewBox={`${left} ${top} ${iconWidth} ${iconHeight}`}
+  width={resolvedWidth}
+  height={resolvedHeight}
+  {...props}
+>
+  {title && <title>{title}</title>}
+  {desc && <desc>{desc}</desc>}
+  <Fragment set:html={icon.body} />
+</svg>

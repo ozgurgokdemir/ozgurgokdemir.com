@@ -5,13 +5,14 @@ import NavBar from '@/components/nav-bar.astro';
 import NavLink from '@/components/nav-link.astro';
 import SocialLink from '@/components/social-link.astro';
 import MobileMenu from '@/components/mobile-menu.astro';
+import { sortByOrder } from '@/utils/content-collections';
 
-const navigation = await getCollection('navigation');
+const navigation = await getCollection('navigation').then(sortByOrder);
 
 const contact = await getCollection(
   'contact',
   ({ data }) => data.id !== 'email',
-);
+).then(sortByOrder);
 ---
 
 <header
