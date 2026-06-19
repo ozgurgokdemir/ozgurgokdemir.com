@@ -20,7 +20,9 @@ import Technology from '@/components/technology.astro';
 const featuredProjects = await getCollection(
   'projects',
   ({ data }) => data.featured,
-).then(sortByOrder);
+)
+  .then(sortByOrder)
+  .then((projects) => projects.slice(0, 6));
 
 const technologies = await getCollection('technologies').then(sortByOrder);
 
@@ -31,105 +33,71 @@ const contact = await getCollection('contact').then(sortByOrder);
   title="Özgür Gökdemir — Frontend Developer"
   description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
 >
-  <section
-    id="home"
-    class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-48 md:px-6 md:pt-48 md:pb-24 lg:px-8"
-    data-animate
-  >
-    <div class="flex flex-col gap-6 md:items-center">
-      <h1
-        class="scroll-animations-hidden text-5xl font-semibold tracking-tight md:text-center md:text-6xl lg:text-7xl"
-        data-stagger-index="0"
-      >
-        Hi, I'm Özgür Gökdemir.
-        <br />
-        I'm a frontend developer.
-      </h1>
-      <p
-        class="text-muted-foreground scroll-animations-hidden text-xl"
-        data-stagger-index="1"
-      >
-        I build high-performance and responsive web applications.
-      </p>
-      <div
-        class="scroll-animations-hidden mt-2 flex items-center gap-4"
-        data-stagger-index="2"
-      >
-        <LinkButton id="contact-link" href="/#contact">
-          <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
-          Let's Talk
-        </LinkButton>
-        <LinkButton href="/projects" variant="outline">
-          View my work
-        </LinkButton>
+  <div class="px-4">
+    <section
+      id="home"
+      class="scroll-mt-header mx-auto flex max-w-[90rem] flex-col gap-16 py-16 md:gap-24 md:py-24"
+      data-animate
+    >
+      <div class="flex flex-col gap-6 md:items-center">
+        <h1
+          class="scroll-animations-hidden max-w-5xl text-5xl font-semibold tracking-tight md:text-center"
+          data-stagger-index="0"
+        >
+          I build thoughtful software products from interface to backend.
+        </h1>
+        <div
+          class="scroll-animations-hidden mt-2 flex items-center gap-4"
+          data-stagger-index="1"
+        >
+          <LinkButton id="contact-link" href="/#contact">
+            <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
+            Let's Talk
+          </LinkButton>
+          <LinkButton href="/projects" variant="outline">
+            View my work
+          </LinkButton>
+        </div>
       </div>
-    </div>
-    <Frame class="scroll-animations-hidden" data-stagger-index="3">
-      <div
-        class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
-      >
-        <BlurryGradient class="absolute h-full w-full" />
-        <Image
-          src={heroImage}
-          alt="featured project"
-          width={1280}
-          height={720}
-          layout="constrained"
-          priority={true}
-          class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-lg ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
-        />
-      </div>
-    </Frame>
-  </section>
-  <section
-    id="about"
-    class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:items-center md:gap-4 md:px-6 md:py-24 lg:px-8"
-    data-animate
-  >
-    <div class="flex flex-col items-start gap-4 lg:pr-12">
+      <Frame class="scroll-animations-hidden" data-stagger-index="2">
+        <div
+          class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
+        >
+          <BlurryGradient class="absolute h-full w-full" />
+          <Image
+            src={heroImage}
+            alt="featured project"
+            width={1280}
+            height={720}
+            layout="constrained"
+            priority={true}
+            class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-lg ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+          />
+        </div>
+      </Frame>
+    </section>
+  </div>
+  <div class="px-4">
+    <section
+      id="about"
+      class="scroll-mt-header mx-auto flex max-w-[90rem] flex-col gap-16 py-16 md:py-24"
+      data-animate
+    >
       <h2
         class="scroll-animations-hidden text-3xl font-semibold"
         data-stagger-index="0"
       >
-        Get to know me.
+        A little about me and the tools behind my work.
       </h2>
-      <p
-        class="scroll-animations-hidden text-muted-foreground text-lg"
-        data-stagger-index="1"
-      >
-        I've been building applications since I was 12 years old. My passion for
-        development started with Visual Basic and C# , where I created
-        interfaces and programmed their behavior. Eventually, my passion brought
-        me to the web. I specialize in building dynamic web applications,
-        especially SaaS and e-commerce. I enjoy developing interactive features
-        and optimizing performance, and I'm currently looking into TanStack
-        ecosystem to improve my skills.
-      </p>
-      <LinkButton
-        href={contact.find(({ data }) => data.id === 'linkedin')?.data.url}
-        target="_blank"
-        class="group scroll-animations-hidden mt-2"
-        data-stagger-index="2"
-      >
-        More about me
-        <Icon
-          name="heroicons:arrow-up-right-16-solid"
-          size={16}
-          class="transition-transform group-hover:translate-x-1"
-        />
-      </LinkButton>
-    </div>
-    <Frame class="scroll-animations-hidden" data-stagger-index="3">
-      <div class="flex flex-col gap-4 md:p-6 lg:p-8">
-        <h3 class="text-muted-foreground text-xs tracking-wider uppercase">
-          Technologies
-        </h3>
-        <ul class="grid grid-cols-2 gap-2">
+      <div class="grid gap-16 md:grid-cols-3 md:gap-4">
+        <ul
+          class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:col-span-2 md:auto-cols-fr md:grid-flow-col md:grid-cols-none md:grid-rows-4"
+        >
           {
             technologies.map(({ data }, index) => (
               <li
                 class="scroll-animations-hidden"
-                data-stagger-index={index + 3}
+                data-stagger-index={index + 1}
               >
                 <Technology
                   label={data.label}
@@ -140,31 +108,60 @@ const contact = await getCollection('contact').then(sortByOrder);
             ))
           }
         </ul>
+        <div
+          class="text-muted-foreground scroll-animations-hidden flex flex-col items-start gap-4 text-lg font-semibold lg:pl-12"
+          data-stagger-index={technologies.length + 1}
+        >
+          <p>
+            I’m a full-stack developer focused on building thoughtful, practical
+            software products. I care about the details that make an interface
+            feel polished, and the systems behind it that make a product
+            reliable.
+          </p>
+          <p>
+            My work spans frontend interfaces, backend APIs, SaaS products,
+            e-commerce experiences, and mobile applications. I enjoy working
+            across the product, from shaping user flows and interaction details
+            to designing data models, integrations, authentication, and
+            deployment.
+          </p>
+        </div>
       </div>
-    </Frame>
-  </section>
-  <section
-    id="projects"
-    class="scroll-mt-header mx-auto flex max-w-7xl flex-col gap-16 px-4 py-16 md:gap-24 md:px-6 md:py-24 lg:px-8"
-    data-animate
-  >
-    <div class="flex flex-col items-start gap-4">
-      <h2
-        class="scroll-animations-hidden text-3xl font-semibold"
-        data-stagger-index="0"
-      >
-        A glimpse into my work.
-      </h2>
-      <p
-        class="scroll-animations-hidden text-muted-foreground text-lg"
-        data-stagger-index="1"
-      >
-        Here are some projects I've loved working on.
-      </p>
+    </section>
+  </div>
+  <div class="px-4">
+    <section
+      id="projects"
+      class="scroll-mt-header mx-auto flex max-w-[90rem] flex-col gap-16 py-16 md:py-24"
+      data-animate
+    >
+      <div class="flex flex-col items-start gap-4">
+        <h2
+          class="scroll-animations-hidden text-3xl font-semibold"
+          data-stagger-index="0"
+        >
+          Here are some projects I've loved working on.
+        </h2>
+      </div>
+      <ul class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {
+          featuredProjects.map((project, index) => (
+            <li class="scroll-animations-hidden" data-stagger-index={index + 1}>
+              <ProjectCard
+                href={`/projects/${project.id}`}
+                title={project.data.title}
+                description={project.data.description}
+                image={project.data.image}
+                color={project.data.color}
+              />
+            </li>
+          ))
+        }
+      </ul>
       <LinkButton
         href="/projects"
-        class="group scroll-animations-hidden mt-2 gap-2"
-        data-stagger-index="2"
+        class="group scroll-animations-hidden gap-2 self-center"
+        data-stagger-index={featuredProjects.length + 1}
       >
         See all projects
         <Icon
@@ -173,127 +170,111 @@ const contact = await getCollection('contact').then(sortByOrder);
           class="transition-transform group-hover:translate-x-1"
         />
       </LinkButton>
-    </div>
-    <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {
-        featuredProjects.map((project, index) => (
-          <li
-            class="scroll-animations-hidden md:even:-translate-y-34"
-            data-stagger-index={index + 3}
-          >
-            <ProjectCard
-              href={`/projects/${project.id}`}
-              title={project.data.title}
-              description={project.data.description}
-              image={project.data.image}
-              color={project.data.color}
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-  <section
-    id="contact"
-    class="scroll-mt-header mx-auto grid max-w-7xl gap-16 px-4 py-16 md:grid-cols-2 md:gap-4 md:px-6 md:pt-24 md:pb-48 lg:px-8"
-    data-animate
-  >
-    <div class="flex flex-col gap-4 md:items-start md:pt-12 lg:pr-12">
-      <h2
-        class="scroll-animations-hidden text-3xl font-semibold"
-        data-stagger-index="0"
-      >
-        Get in touch.
-      </h2>
-      <p
-        class="scroll-animations-hidden text-muted-foreground text-lg"
-        data-stagger-index="1"
-      >
-        I'm always open to new projects, ideas, and opportunities. Please get in
-        touch if you have a question or simply want to say hello, and I will get
-        back to you as soon as I can.
-      </p>
-      <span
-        class="scroll-animations-hidden bg-border h-px w-full"
-        data-stagger-index="2"></span>
-      <ul class="flex flex-col gap-3">
-        {
-          contact.map(({ data }, index) => (
-            <li
-              class="scroll-animations-hidden w-fit"
-              data-stagger-index={index + 2}
-            >
-              <a
-                href={data.url}
-                target="_blank"
-                class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-2 text-base font-medium outline-none focus-visible:ring-[3px]"
-              >
-                <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-lg transition-colors">
-                  <Icon name={data.icon} size={16} />
-                </div>
-                <span class="bg-border h-4 w-px" />
-                <span class="text-muted-foreground group-hover:text-foreground transition-colors">
-                  {data.text}
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <Frame
-      class="scroll-animations-hidden"
-      data-stagger-index={contact.length + 2}
+    </section>
+  </div>
+  <div class="px-4">
+    <section
+      id="contact"
+      class="scroll-mt-header mx-auto grid max-w-[90rem] gap-16 py-16 md:grid-cols-2 md:gap-4 md:pt-24 md:pb-48"
+      data-animate
     >
-      <ContactForm class="grid gap-6 md:p-6 lg:p-8">
-        <FormField
-          class="scroll-animations-hidden"
-          data-stagger-index={contact.length + 2}
+      <div class="flex flex-col gap-4 md:items-start md:pt-12 lg:pr-12">
+        <h2
+          class="scroll-animations-hidden text-3xl font-semibold"
+          data-stagger-index="0"
         >
-          <FormLabel for="name">Name</FormLabel>
-          <FormInput
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Jane Doe"
-            required
-          />
-        </FormField>
-        <FormField
-          class="scroll-animations-hidden"
-          data-stagger-index={contact.length + 3}
+          Get in touch.
+        </h2>
+        <p
+          class="scroll-animations-hidden text-muted-foreground text-lg"
+          data-stagger-index="1"
         >
-          <FormLabel for="email">Email</FormLabel>
-          <FormInput
-            type="email"
-            name="email"
-            id="email"
-            placeholder="jane@example.com"
-            required
-          />
-        </FormField>
-        <FormField
-          class="scroll-animations-hidden"
-          data-stagger-index={contact.length + 4}
-        >
-          <FormLabel for="message">Message</FormLabel>
-          <FormTextarea
-            rows={4}
-            name="message"
-            id="message"
-            placeholder="Tell me about your project"
-            required
-          />
-        </FormField>
-        <Button
-          type="submit"
-          class="scroll-animations-hidden lg:w-fit"
-          data-stagger-index={contact.length + 5}
-        >
-          <Icon name="heroicons:paper-airplane-16-solid" />
-          Send message
-        </Button>
-      </ContactForm>
-    </Frame>
-  </section>
+          I'm always open to new projects, ideas, and opportunities. Please get
+          in touch if you have a question or simply want to say hello, and I
+          will get back to you as soon as I can.
+        </p>
+        <span
+          class="scroll-animations-hidden bg-border h-px w-full"
+          data-stagger-index="2"></span>
+        <ul class="flex flex-col gap-3">
+          {
+            contact.map(({ data }, index) => (
+              <li
+                class="scroll-animations-hidden w-fit"
+                data-stagger-index={index + 2}
+              >
+                <a
+                  href={data.url}
+                  target="_blank"
+                  class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-2 text-base font-medium outline-none focus-visible:ring-[3px]"
+                >
+                  <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-lg transition-colors">
+                    <Icon name={data.icon} size={16} />
+                  </div>
+                  <span class="bg-border h-4 w-px" />
+                  <span class="text-muted-foreground group-hover:text-foreground transition-colors">
+                    {data.text}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <Frame
+        class="scroll-animations-hidden"
+        data-stagger-index={contact.length + 2}
+      >
+        <ContactForm class="grid gap-6 md:p-6 lg:p-8">
+          <FormField
+            class="scroll-animations-hidden"
+            data-stagger-index={contact.length + 2}
+          >
+            <FormLabel for="name">Name</FormLabel>
+            <FormInput
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Jane Doe"
+              required
+            />
+          </FormField>
+          <FormField
+            class="scroll-animations-hidden"
+            data-stagger-index={contact.length + 3}
+          >
+            <FormLabel for="email">Email</FormLabel>
+            <FormInput
+              type="email"
+              name="email"
+              id="email"
+              placeholder="jane@example.com"
+              required
+            />
+          </FormField>
+          <FormField
+            class="scroll-animations-hidden"
+            data-stagger-index={contact.length + 4}
+          >
+            <FormLabel for="message">Message</FormLabel>
+            <FormTextarea
+              rows={4}
+              name="message"
+              id="message"
+              placeholder="Tell me about your project"
+              required
+            />
+          </FormField>
+          <Button
+            type="submit"
+            class="scroll-animations-hidden lg:w-fit"
+            data-stagger-index={contact.length + 5}
+          >
+            <Icon name="heroicons:paper-airplane-16-solid" />
+            Send message
+          </Button>
+        </ContactForm>
+      </Frame>
+    </section>
+  </div>
 </MainLayout>

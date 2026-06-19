@@ -16,11 +16,11 @@ const contact = await getCollection(
 ---
 
 <header
-  class="before:bg-background/80 sticky top-0 z-30 before:absolute before:inset-0 before:-z-10 before:backdrop-blur-md"
+  class="before:bg-background/80 h-header sticky top-0 z-30 border-b px-4 before:absolute before:inset-0 before:-z-10 before:backdrop-blur-md"
   transition:persist
 >
   <div
-    class="h-header mx-auto grid max-w-7xl grid-cols-2 items-center border-b px-4 md:grid-cols-[1fr_auto_1fr] md:px-6 lg:px-8"
+    class="mx-auto grid h-full max-w-[90rem] grid-cols-2 items-center md:grid-cols-[1fr_auto_1fr]"
   >
     <Logo class="w-fit" />
     <NavBar
