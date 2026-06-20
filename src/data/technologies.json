@@ -28,45 +28,53 @@
     "order": 4
   },
   {
-    "id": "zod",
-    "label": "Zod",
-    "category": "Validation",
-    "icon": "simple-icons:zod",
-    "order": 5
-  },
-  {
     "id": "tanstackquery",
     "label": "TanStack Query",
     "category": "Data Fetching",
     "icon": "simple-icons:tanstack",
+    "order": 5
+  },
+  {
+    "id": "zod",
+    "label": "Zod",
+    "category": "Validation",
+    "icon": "simple-icons:zod",
     "order": 6
+  },
+
+  {
+    "id": "postgresql",
+    "label": "PostgreSQL",
+    "category": "Database",
+    "icon": "simple-icons:postgresql",
+    "order": 7
   },
   {
     "id": "prisma",
     "label": "Prisma",
     "category": "ORM",
     "icon": "simple-icons:prisma",
-    "order": 7
+    "order": 8
   },
   {
     "id": "expo",
     "label": "Expo",
     "category": "Mobile",
     "icon": "simple-icons:expo",
-    "order": 8
+    "order": 9
   },
   {
     "id": "hono",
     "label": "Hono",
     "category": "Edge APIs",
     "icon": "simple-icons:hono",
-    "order": 9
+    "order": 10
   },
   {
     "id": "cloudflare",
     "label": "Cloudflare",
     "category": "Platform",
     "icon": "simple-icons:cloudflare",
-    "order": 10
+    "order": 11
   }
 ]
