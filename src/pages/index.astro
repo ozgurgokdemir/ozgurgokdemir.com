@@ -16,6 +16,7 @@ import Button from '@/components/button.astro';
 import Frame from '@/components/frame.astro';
 import ContactForm from '@/components/contact-form.astro';
 import Technology from '@/components/technology.astro';
+import { stagger } from '@/utils/stagger';
 
 const featuredProjects = await getCollection(
   'projects',
@@ -39,15 +40,15 @@ const contact = await getCollection('contact').then(sortByOrder);
       class="scroll-mt-header mx-auto flex max-w-[90rem] flex-col gap-16 py-16 md:gap-24 md:py-24"
       data-animate
     >
-      <div class="flex flex-col gap-6 md:items-center">
+      <div class="flex flex-col items-center gap-6">
         <h1
-          class="scroll-animations-hidden max-w-5xl text-5xl font-semibold tracking-tight md:text-center"
+          class="scroll-animations-hidden max-w-5xl text-center text-3xl font-semibold tracking-tight md:text-5xl"
           data-stagger-index="0"
         >
           I build thoughtful software products from interface to backend.
         </h1>
         <div
-          class="scroll-animations-hidden mt-2 flex items-center gap-4"
+          class="scroll-animations-hidden mt-2 flex items-center justify-center gap-4"
           data-stagger-index="1"
         >
           <LinkButton id="contact-link" href="/#contact">
@@ -84,20 +85,23 @@ const contact = await getCollection('contact').then(sortByOrder);
       data-animate
     >
       <h2
-        class="scroll-animations-hidden text-3xl font-semibold"
+        class="scroll-animations-hidden text-2xl font-semibold md:text-3xl"
         data-stagger-index="0"
       >
         A little about me and the tools behind my work.
       </h2>
       <div class="grid gap-16 md:grid-cols-3 md:gap-4">
         <ul
-          class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:col-span-2 md:auto-cols-fr md:grid-flow-col md:grid-cols-none md:grid-rows-4"
+          class="order-2 grid grid-cols-2 gap-2 md:order-1 md:col-span-2 md:auto-cols-fr md:grid-flow-col md:grid-cols-none md:grid-rows-4"
         >
           {
             technologies.map(({ data }, index) => (
               <li
                 class="scroll-animations-hidden"
-                data-stagger-index={index + 1}
+                data-stagger-index={stagger({
+                  default: index + 2,
+                  768: index + 1,
+                })}
               >
                 <Technology
                   label={data.label}
@@ -109,8 +113,11 @@ const contact = await getCollection('contact').then(sortByOrder);
           }
         </ul>
         <div
-          class="text-muted-foreground scroll-animations-hidden flex flex-col items-start gap-4 text-lg lg:pl-12"
-          data-stagger-index={technologies.length + 1}
+          class="text-muted-foreground scroll-animations-hidden order-1 flex flex-col items-start gap-4 text-lg md:order-2 lg:pl-12"
+          data-stagger-index={stagger({
+            default: 1,
+            768: technologies.length + 1,
+          })}
         >
           <p>
             I’m a full-stack developer focused on building thoughtful, practical
@@ -137,7 +144,7 @@ const contact = await getCollection('contact').then(sortByOrder);
     >
       <div class="flex flex-col items-start gap-4">
         <h2
-          class="scroll-animations-hidden text-3xl font-semibold"
+          class="scroll-animations-hidden text-2xl font-semibold md:text-3xl"
           data-stagger-index="0"
         >
           Here are some projects I've loved working on.
@@ -179,83 +186,40 @@ const contact = await getCollection('contact').then(sortByOrder);
       data-animate
     >
       <h2
-        class="scroll-animations-hidden text-center text-3xl font-semibold"
+        class="scroll-animations-hidden text-center text-2xl font-semibold md:text-3xl"
         data-stagger-index="0"
       >
         Have a project in mind? Let's talk about it.
       </h2>
       <div class="grid w-full gap-16 md:grid-cols-6 md:gap-4">
         <div
-          class="scroll-animations-hidden bg-card rounded-2xl md:col-span-2 md:col-start-2"
-          data-stagger-index={contact.length + 2}
+          class="flex flex-col gap-4 md:order-2 md:col-span-2 md:items-start lg:pl-12"
         >
-          <ContactForm class="grid gap-6 p-6 lg:p-8">
-            <FormField
-              class="scroll-animations-hidden"
-              data-stagger-index={contact.length + 2}
-            >
-              <FormLabel for="name">Name</FormLabel>
-              <FormInput
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Jane Doe"
-                required
-              />
-            </FormField>
-            <FormField
-              class="scroll-animations-hidden"
-              data-stagger-index={contact.length + 3}
-            >
-              <FormLabel for="email">Email</FormLabel>
-              <FormInput
-                type="email"
-                name="email"
-                id="email"
-                placeholder="jane@example.com"
-                required
-              />
-            </FormField>
-            <FormField
-              class="scroll-animations-hidden"
-              data-stagger-index={contact.length + 4}
-            >
-              <FormLabel for="message">Message</FormLabel>
-              <FormTextarea
-                rows={4}
-                name="message"
-                id="message"
-                placeholder="Tell me about your project"
-                required
-              />
-            </FormField>
-            <Button
-              type="submit"
-              class="scroll-animations-hidden"
-              data-stagger-index={contact.length + 5}
-            >
-              <Icon name="heroicons:paper-airplane-16-solid" />
-              Send message
-            </Button>
-          </ContactForm>
-        </div>
-        <div class="flex flex-col gap-4 md:col-span-2 md:items-start lg:pl-12">
           <p
             class="scroll-animations-hidden text-muted-foreground text-lg"
-            data-stagger-index="1"
+            data-stagger-index={stagger({
+              default: 1,
+              768: contact.length + 3,
+            })}
           >
             I'm open to new projects, ideas, and opportunities. If you have
             something in mind, send me a message and I'll get back to you.
           </p>
           <span
             class="scroll-animations-hidden bg-border h-px w-full"
-            data-stagger-index="2"></span>
+            data-stagger-index={stagger({
+              default: 2,
+              768: contact.length + 4,
+            })}></span>
           <ul class="flex flex-col gap-3">
             {
               contact.map(({ data }, index) => (
                 <li
                   class="scroll-animations-hidden w-fit"
-                  data-stagger-index={index + 2}
+                  data-stagger-index={stagger({
+                    default: index + 3,
+                    768: index + contact.length + 5,
+                  })}
                 >
                   <a
                     href={data.url}
@@ -274,6 +238,75 @@ const contact = await getCollection('contact').then(sortByOrder);
               ))
             }
           </ul>
+        </div>
+        <div
+          class="scroll-animations-hidden bg-card rounded-2xl md:order-1 md:col-span-2 md:col-start-2"
+          data-stagger-index={stagger({
+            default: contact.length + 3,
+            768: 1,
+          })}
+        >
+          <ContactForm class="grid gap-6 p-5 md:p-6 lg:p-8">
+            <FormField
+              class="scroll-animations-hidden"
+              data-stagger-index={stagger({
+                default: contact.length + 4,
+                768: 2,
+              })}
+            >
+              <FormLabel for="name">Name</FormLabel>
+              <FormInput
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Jane Doe"
+                required
+              />
+            </FormField>
+            <FormField
+              class="scroll-animations-hidden"
+              data-stagger-index={stagger({
+                default: contact.length + 5,
+                768: 3,
+              })}
+            >
+              <FormLabel for="email">Email</FormLabel>
+              <FormInput
+                type="email"
+                name="email"
+                id="email"
+                placeholder="jane@example.com"
+                required
+              />
+            </FormField>
+            <FormField
+              class="scroll-animations-hidden"
+              data-stagger-index={stagger({
+                default: contact.length + 6,
+                768: 4,
+              })}
+            >
+              <FormLabel for="message">Message</FormLabel>
+              <FormTextarea
+                rows={4}
+                name="message"
+                id="message"
+                placeholder="Tell me about your project"
+                required
+              />
+            </FormField>
+            <Button
+              type="submit"
+              class="scroll-animations-hidden"
+              data-stagger-index={stagger({
+                default: contact.length + 7,
+                768: 5,
+              })}
+            >
+              <Icon name="heroicons:paper-airplane-16-solid" />
+              Send message
+            </Button>
+          </ContactForm>
         </div>
       </div>
     </section>

@@ -74,10 +74,7 @@ export class ScrollAnimations {
 
         preparedElements.add(target);
 
-        const staggerIndex = this.getNumericDataAttribute(
-          target.dataset.staggerIndex,
-          fallbackIndex,
-        );
+        const staggerIndex = this.getStaggerIndex(target, fallbackIndex);
         const staggerDelay = this.getNumericDataAttribute(
           target.dataset.staggerDelay,
           this.defaultStaggerDelay,
@@ -95,7 +92,10 @@ export class ScrollAnimations {
           '--scroll-animations-stagger-delay',
           `${staggerDelay}ms`,
         );
-        target.style.setProperty('--scroll-animations-duration', `${duration}ms`);
+        target.style.setProperty(
+          '--scroll-animations-duration',
+          `${duration}ms`,
+        );
 
         target.classList.add(this.hiddenClass, this.transitionClass);
       });
@@ -108,10 +108,7 @@ export class ScrollAnimations {
       let longestTransition = 0;
 
       targets.forEach((target, fallbackIndex) => {
-        const staggerIndex = this.getNumericDataAttribute(
-          target.dataset.staggerIndex,
-          fallbackIndex,
-        );
+        const staggerIndex = this.getStaggerIndex(target, fallbackIndex);
         const staggerDelay = this.getNumericDataAttribute(
           target.dataset.staggerDelay,
           this.defaultStaggerDelay,
@@ -126,6 +123,10 @@ export class ScrollAnimations {
           staggerIndex * staggerDelay + duration,
         );
 
+        target.style.setProperty(
+          '--scroll-animations-stagger-index',
+          String(staggerIndex),
+        );
         target.classList.add(this.willChangeClass);
       });
 
@@ -181,6 +182,64 @@ export class ScrollAnimations {
   private getNumericDataAttribute(value: string | undefined, fallback: number) {
     const parsed = Number.parseInt(value ?? '', 10);
     return Number.isNaN(parsed) ? fallback : parsed;
+  }
+
+  private getStaggerIndex(target: HTMLElement, fallback: number) {
+    const value = target.dataset.staggerIndex;
+    const numericValue = Number.parseInt(value ?? '', 10);
+
+    if (!Number.isNaN(numericValue)) return numericValue;
+    if (!value) return fallback;
+
+    try {
+      const config = JSON.parse(value) as unknown;
+      if (!this.isStaggerIndexConfig(config)) return fallback;
+
+      const viewportWidth = window.innerWidth;
+      let staggerIndex = this.getNumericDataAttribute(
+        String(config.default),
+        fallback,
+      );
+
+      this.getSortedBreakpointEntries(config).forEach(
+        ([minWidth, breakpointValue]) => {
+          if (viewportWidth < minWidth) return;
+
+          staggerIndex = this.getNumericDataAttribute(
+            String(breakpointValue),
+            staggerIndex,
+          );
+        },
+      );
+
+      return staggerIndex;
+    } catch {
+      return fallback;
+    }
+  }
+
+  private isStaggerIndexConfig(
+    value: unknown,
+  ): value is Record<string, number | string> & { default: number | string } {
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      !Array.isArray(value) &&
+      'default' in value
+    );
+  }
+
+  private getSortedBreakpointEntries(
+    config: Record<string, number | string>,
+  ): [number, number | string][] {
+    return Object.entries(config)
+      .filter(([breakpoint]) => breakpoint !== 'default')
+      .map(
+        ([breakpoint, value]) =>
+          [Number.parseInt(breakpoint, 10), value] as [number, number | string],
+      )
+      .filter(([breakpoint]) => !Number.isNaN(breakpoint))
+      .sort(([a], [b]) => a - b);
   }
 
   destroy() {
