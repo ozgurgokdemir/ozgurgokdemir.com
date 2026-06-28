@@ -13,7 +13,6 @@ import FormLabel from '@/components/form-label.astro';
 import FormInput from '@/components/form-input.astro';
 import FormTextarea from '@/components/form-textarea.astro';
 import Button from '@/components/button.astro';
-import Frame from '@/components/frame.astro';
 import ContactForm from '@/components/contact-form.astro';
 import Technology from '@/components/technology.astro';
 import { stagger } from '@/utils/stagger';
@@ -60,22 +59,21 @@ const contact = await getCollection('contact').then(sortByOrder);
           </LinkButton>
         </div>
       </div>
-      <Frame class="scroll-animations-hidden" data-stagger-index="2">
-        <div
-          class="relative aspect-video overflow-hidden rounded-2xl bg-cover bg-center"
-        >
-          <BlurryGradient class="absolute h-full w-full" />
-          <Image
-            src={heroImage}
-            alt="featured project"
-            width={1280}
-            height={720}
-            layout="constrained"
-            priority={true}
-            class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-lg ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
-          />
-        </div>
-      </Frame>
+      <div
+        class="scroll-animations-hidden relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center"
+        data-stagger-index="2"
+      >
+        <BlurryGradient class="absolute h-full w-full" />
+        <Image
+          src={heroImage}
+          alt="featured project"
+          width={1280}
+          height={720}
+          layout="constrained"
+          priority={true}
+          class="pointer-events-none absolute top-1/10 left-1/8 scale-110 skew-x-4 -skew-y-12 rounded-lg ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 select-none md:rounded-2xl"
+        />
+      </div>
     </section>
   </div>
   <div class="px-4">
@@ -226,7 +224,7 @@ const contact = await getCollection('contact').then(sortByOrder);
                     target="_blank"
                     class="group focus-visible:border-ring focus-visible:ring-ring/50 flex items-center gap-2 text-base font-medium outline-none focus-visible:ring-[3px]"
                   >
-                    <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-lg transition-colors">
+                    <div class="group-hover:bg-accent/50 bg-card grid size-8 place-items-center rounded-full transition-colors">
                       <Icon name={data.icon} size={16} />
                     </div>
                     <span class="bg-border h-4 w-px" />
@@ -240,13 +238,13 @@ const contact = await getCollection('contact').then(sortByOrder);
           </ul>
         </div>
         <div
-          class="scroll-animations-hidden bg-card rounded-2xl md:order-1 md:col-span-2 md:col-start-2"
+          class="scroll-animations-hidden bg-card rounded-[1.25rem] md:order-1 md:col-span-2 md:col-start-2"
           data-stagger-index={stagger({
             default: contact.length + 3,
             768: 1,
           })}
         >
-          <ContactForm class="grid gap-6 p-5 md:p-6 lg:p-8">
+          <ContactForm class="grid gap-6 p-4 md:p-6 lg:p-8">
             <FormField
               class="scroll-animations-hidden"
               data-stagger-index={stagger({

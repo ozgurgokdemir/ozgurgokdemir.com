@@ -23,7 +23,7 @@ const {
 
 <a
   class:list={[
-    'group focus-visible:border-ring focus-visible:ring-ring/50 @container relative flex flex-col gap-2 overflow-hidden rounded-2xl p-2 outline-none focus-visible:ring-[3px]',
+    'group focus-visible:border-ring focus-visible:ring-ring/50 @container relative flex flex-col gap-2 overflow-hidden rounded-[1.25rem] p-2 outline-none focus-visible:ring-[3px]',
     'before:absolute before:inset-0 before:bg-radial-[circle_farthest-side_at_top] before:from-white/20 before:to-white/15 before:opacity-0 before:transition-opacity hover:before:opacity-100',
     'after:absolute after:inset-0 after:bg-radial-[circle_farthest-side_at_top] after:from-white/20 after:to-white/10 after:transition-opacity hover:after:opacity-0',
     className,
@@ -31,7 +31,7 @@ const {
   style={`--gradient-color:${color};`}
   {...props}
 >
-  <div class="relative z-10 flex aspect-video overflow-hidden rounded-lg">
+  <div class="relative z-10 flex aspect-video overflow-hidden rounded-xl">
     <BlurryGradient class="absolute h-full w-full" />
     <Image
       src={image}

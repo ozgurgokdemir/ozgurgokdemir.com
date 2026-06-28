@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 
 export const buttonVariants = cva(
-  "inline-flex group relative items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  "inline-flex group relative items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
   {
     variants: {
       variant: {
@@ -30,8 +30,8 @@ export const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        sm: 'h-8 rounded-lg gap-1.5 px-3',
-        lg: 'h-10 rounded-xl px-6',
+        sm: 'h-8 gap-1.5 px-3',
+        lg: 'h-10 px-6',
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',
       },
