@@ -27,11 +27,39 @@ const featuredProjects = await getCollection(
 const technologies = await getCollection('technologies').then(sortByOrder);
 
 const contact = await getCollection('contact').then(sortByOrder);
+
+const siteURL = Astro.site ?? new URL(Astro.url.origin);
+const homeURL = new URL('/', siteURL).toString();
+const emailContact = contact.find(({ id }) => id === 'email');
+const sameAs = contact
+  .filter(({ id }) => id !== 'email')
+  .map(({ data }) => data.url);
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Özgür Gökdemir',
+    url: homeURL,
+    jobTitle: 'Full-Stack Developer',
+    email: emailContact?.data.url,
+    sameAs,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Özgür Gökdemir',
+    url: homeURL,
+    inLanguage: 'en-US',
+  },
+];
 ---
 
 <MainLayout
-  title="Özgür Gökdemir — Frontend Developer"
-  description="Özgür Gökdemir is a frontend developer specializing in building responsive and high-performance web applications using TypeScript, React, and Next.js."
+  title="Özgür Gökdemir"
+  description="Özgür Gökdemir is a full-stack developer who builds frontend interfaces, backend APIs, SaaS products, e-commerce platforms, and mobile applications."
+  type="profile"
+  imageAlt="Özgür Gökdemir portfolio preview"
+  {jsonLd}
 >
   <div class="px-4">
     <section
@@ -66,7 +94,7 @@ const contact = await getCollection('contact').then(sortByOrder);
         <BlurryGradient class="absolute h-full w-full" />
         <Image
           src={heroImage}
-          alt="featured project"
+          alt="DesignToken Studio project interface"
           width={1536}
           height={864}
           layout="constrained"
@@ -125,7 +153,7 @@ const contact = await getCollection('contact').then(sortByOrder);
           </p>
           <p>
             My work spans frontend interfaces, backend APIs, SaaS products,
-            e-commerce experiences, and mobile applications. I enjoy working
+            e-commerce platforms, and mobile applications. I enjoy working
             across the product, from shaping user flows and interaction details
             to designing data models, integrations, authentication, and
             deployment.

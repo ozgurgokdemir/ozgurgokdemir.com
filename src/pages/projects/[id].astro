@@ -18,11 +18,61 @@ const { project } = Astro.props;
 const hasDetails = Boolean(project.body?.trim());
 const renderedProject = hasDetails ? await render(project) : null;
 const Content = renderedProject?.Content;
+const siteURL = Astro.site ?? new URL(Astro.url.origin);
+const pageTitle = `${project.data.title} - Özgür Gökdemir`;
+const projectURL = new URL(`/projects/${project.id}/`, siteURL).toString();
+const projectImageAlt = `${project.data.title} project preview`;
+const projectLinks = [project.data.livePreview, project.data.sourceCode].filter(
+  Boolean,
+);
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.data.title,
+    description: project.data.description,
+    url: projectURL,
+    image: new URL('/open-graph-image.png', siteURL).toString(),
+    creator: {
+      '@type': 'Person',
+      name: 'Özgür Gökdemir',
+      url: new URL('/', siteURL).toString(),
+    },
+    sameAs: projectLinks,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: new URL('/', siteURL).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Projects',
+        item: new URL('/projects/', siteURL).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: project.data.title,
+        item: projectURL,
+      },
+    ],
+  },
+];
 ---
 
 <ProjectDetailsLayout
-  title=`${project.data.title} - Özgür Gökdemir`
+  title={pageTitle}
   description={project.data.description}
+  type="article"
+  imageAlt={projectImageAlt}
+  {jsonLd}
 >
   <div data-animate>
     <section
@@ -86,7 +136,7 @@ const Content = renderedProject?.Content;
           <BlurryGradient class="absolute h-full w-full" />
           <Image
             src={project.data.image}
-            alt={project.data.title}
+            alt={projectImageAlt}
             width={1536}
             height={864}
             layout="constrained"
