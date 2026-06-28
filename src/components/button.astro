@@ -21,7 +21,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-muted',
+          'bg-primary text-primary-foreground hover:bg-[color-mix(in_oklab,var(--color-primary)_80%,white)] active:bg-primary disabled:bg-muted',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-muted/30',
         outline:

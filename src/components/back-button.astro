@@ -1,6 +1,6 @@
 ---
 import type { ComponentProps } from 'astro/types';
-import Icon from '@/components/icon.astro';
+import AnimatedArrow from '@/components/animated-arrow.astro';
 import Button from '@/components/button.astro';
 import { cn } from '@/lib/utils';
 
@@ -18,11 +18,7 @@ const { fallback = '/', class: className, ...props } = Astro.props;
   data-fallback={fallback}
   {...props}
 >
-  <Icon
-    name="heroicons:arrow-left-16-solid"
-    size={16}
-    class="transition-transform group-hover:-translate-x-1"
-  />
+  <AnimatedArrow direction="left" />
   Back
 </Button>
 

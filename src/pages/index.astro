@@ -15,6 +15,7 @@ import FormTextarea from '@/components/form-textarea.astro';
 import Button from '@/components/button.astro';
 import ContactForm from '@/components/contact-form.astro';
 import Technology from '@/components/technology.astro';
+import AnimatedArrow from '@/components/animated-arrow.astro';
 import { stagger } from '@/utils/stagger';
 
 const featuredProjects = await getCollection(
@@ -197,11 +198,7 @@ const jsonLd = [
         data-stagger-index={featuredProjects.length + 1}
       >
         See all projects
-        <Icon
-          name="heroicons:arrow-right-16-solid"
-          size={16}
-          class="transition-transform group-hover:translate-x-1"
-        />
+        <AnimatedArrow />
       </LinkButton>
     </section>
   </div>
