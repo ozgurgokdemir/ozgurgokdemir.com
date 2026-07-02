@@ -60,7 +60,7 @@ const imageClass = [
   aria-label={ariaLabel ?? (hasMultipleImages ? 'Image showcase' : undefined)}
   tabindex={hasMultipleImages ? (tabindex ?? 0) : tabindex}
   class:list={[
-    'image-showcase focus-visible:border-ring focus-visible:ring-ring/50 group relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:data-[pointer-active=true]:cursor-none',
+    'image-showcase focus-visible:border-ring focus-visible:ring-ring/50 group relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:cursor-none',
     className,
   ]}
   data-image-showcase
@@ -94,14 +94,14 @@ const imageClass = [
       <>
         <button
           type="button"
-          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 left-0 z-20 w-1/2 rounded-l-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:group-data-[pointer-active=true]:cursor-none"
+          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 left-0 z-20 w-1/2 rounded-l-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:cursor-none"
           data-image-direction="previous"
           aria-label="Show previous image"
           tabindex="-1"
         />
         <button
           type="button"
-          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 right-0 z-20 w-1/2 rounded-r-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:group-data-[pointer-active=true]:cursor-none"
+          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 right-0 z-20 w-1/2 rounded-r-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:cursor-none"
           data-image-direction="next"
           aria-label="Show next image"
           tabindex="-1"
@@ -111,7 +111,7 @@ const imageClass = [
           data-image-cursor
           aria-hidden="true"
         >
-          <div class="border-input bg-accent/30 text-accent-foreground invisible grid size-full scale-50 place-items-center rounded-full border opacity-0 backdrop-blur-sm transition-[opacity,scale,visibility]! duration-100 ease-out group-data-[pointer-active=true]:visible group-data-[pointer-active=true]:scale-100 group-data-[pointer-active=true]:opacity-100 motion-reduce:transition-none">
+          <div class="border-input bg-accent/30 text-accent-foreground invisible grid size-full scale-75 place-items-center rounded-full border opacity-0 backdrop-blur-sm transition-[opacity,scale,visibility]! ease-out group-data-[pointer-active=true]:visible group-data-[pointer-active=true]:scale-100 group-data-[pointer-active=true]:opacity-100 motion-reduce:transition-none">
             <Icon
               name="heroicons:chevron-left-16-solid"
               size={20}
