@@ -1,0 +1,318 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { HTMLAttributes } from 'astro/types';
+import { Image } from 'astro:assets';
+import BlurryGradient from '@/assets/blurry-gradient.svg';
+import Icon from '@/components/icon.astro';
+
+type ImageShowcaseImage = {
+  src: ImageMetadata;
+  alt: string;
+  title?: string;
+};
+
+type Props = HTMLAttributes<'div'> & {
+  images: ImageShowcaseImage[];
+  priority?: boolean;
+};
+
+const {
+  images,
+  priority = false,
+  class: className,
+  role,
+  tabindex,
+  'aria-label': ariaLabel,
+  ...props
+} = Astro.props;
+
+if (images.length === 0) {
+  throw new Error('ImageShowcase requires at least one image.');
+}
+
+const hasMultipleImages = images.length > 1;
+const initialTitle = images[0].title ?? images[0].alt;
+
+const itemClass = [
+  'group/showcase-item pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-750 ease-[cubic-bezier(0.33,1,0.68,1)]',
+  'data-[state=active]:z-10 data-[state=active]:opacity-100',
+  'data-[state=enter-next]:z-20 data-[state=enter-next]:opacity-0',
+  'data-[state=enter-previous]:z-20 data-[state=enter-previous]:opacity-0',
+  'data-[state=exit-next]:z-10 data-[state=exit-next]:opacity-0',
+  'data-[state=exit-previous]:z-10 data-[state=exit-previous]:opacity-0',
+  'motion-reduce:transition-none',
+].join(' ');
+
+const imageClass = [
+  'pointer-events-none absolute top-1/10 left-1/8 origin-center scale-110 skew-x-4 -skew-y-12 rounded-lg ring-[clamp(0.25rem,1vw,0.5rem)] ring-black/10 transition-[scale] duration-750 select-none ease-[cubic-bezier(0.33,1,0.68,1)] md:rounded-2xl',
+  'group-data-[state=active]/showcase-item:scale-110',
+  'group-data-[state=enter-next]/showcase-item:scale-[1.078]',
+  'group-data-[state=enter-previous]/showcase-item:scale-[1.122]',
+  'group-data-[state=exit-next]/showcase-item:scale-[1.122]',
+  'group-data-[state=exit-previous]/showcase-item:scale-[1.078]',
+  'motion-reduce:scale-110 motion-reduce:transition-none',
+].join(' ');
+---
+
+<div
+  {...props}
+  role={role ?? (hasMultipleImages ? 'group' : undefined)}
+  aria-label={ariaLabel ?? (hasMultipleImages ? 'Image showcase' : undefined)}
+  tabindex={hasMultipleImages ? (tabindex ?? 0) : tabindex}
+  class:list={[
+    'image-showcase focus-visible:border-ring focus-visible:ring-ring/50 group relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:data-[pointer-active=true]:cursor-none',
+    className,
+  ]}
+  data-image-showcase
+  data-hover-direction="next"
+>
+  <BlurryGradient class="absolute h-full w-full" />
+  {
+    images.map((image, index) => (
+      <div
+        class={itemClass}
+        data-showcase-item
+        data-state={index === 0 ? 'active' : 'hidden'}
+        data-title={image.title ?? image.alt}
+        aria-hidden={index === 0 ? 'false' : 'true'}
+      >
+        <Image
+          src={image.src}
+          alt={image.alt}
+          width={1536}
+          height={864}
+          layout="constrained"
+          priority={priority && index === 0}
+          class={imageClass}
+        />
+      </div>
+    ))
+  }
+
+  {
+    hasMultipleImages && (
+      <>
+        <button
+          type="button"
+          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 left-0 z-20 w-1/2 rounded-l-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:group-data-[pointer-active=true]:cursor-none"
+          data-image-direction="previous"
+          aria-label="Show previous image"
+          tabindex="-1"
+        />
+        <button
+          type="button"
+          class="focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 right-0 z-20 w-1/2 rounded-r-[1.25rem] border-0 bg-transparent p-0 outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:group-data-[pointer-active=true]:cursor-none"
+          data-image-direction="next"
+          aria-label="Show next image"
+          tabindex="-1"
+        />
+        <div
+          class="pointer-events-none absolute top-0 left-0 z-30 hidden size-12 translate-x-[calc(var(--image-showcase-cursor-x)-50%)] translate-y-[calc(var(--image-showcase-cursor-y)-50%)] place-items-center transition-none [--image-showcase-cursor-x:50%] [--image-showcase-cursor-y:50%] [@media(hover:hover)_and_(pointer:fine)]:grid"
+          data-image-cursor
+          aria-hidden="true"
+        >
+          <div class="border-input bg-accent/30 text-accent-foreground invisible grid size-full scale-50 place-items-center rounded-full border opacity-0 backdrop-blur-sm transition-[opacity,scale,visibility]! duration-100 ease-out group-data-[pointer-active=true]:visible group-data-[pointer-active=true]:scale-100 group-data-[pointer-active=true]:opacity-100 motion-reduce:transition-none">
+            <Icon
+              name="heroicons:chevron-left-16-solid"
+              size={20}
+              class="hidden group-data-[hover-direction=previous]:block"
+            />
+            <Icon
+              name="heroicons:chevron-right-16-solid"
+              size={20}
+              class="hidden group-data-[hover-direction=next]:block"
+            />
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  <span class="sr-only" aria-live="polite" data-image-status>
+    {initialTitle}
+  </span>
+</div>
+
+<script>
+  import { runOnce } from '@/utils/runtime-registry';
+
+  type NavigationDirection = 'previous' | 'next';
+  type ShowcaseItemState =
+    | 'active'
+    | 'hidden'
+    | 'enter-next'
+    | 'enter-previous'
+    | 'exit-next'
+    | 'exit-previous';
+
+  const initializedShowcases = new WeakSet<HTMLElement>();
+  const transitionDuration = 750;
+
+  function getWrappedIndex(index: number, length: number) {
+    return (index + length) % length;
+  }
+
+  function initializeShowcase(showcase: HTMLElement) {
+    if (initializedShowcases.has(showcase)) return;
+
+    const items = Array.from(
+      showcase.querySelectorAll<HTMLElement>('[data-showcase-item]'),
+    );
+    const zones = Array.from(
+      showcase.querySelectorAll<HTMLButtonElement>('[data-image-direction]'),
+    );
+    const status = showcase.querySelector<HTMLElement>('[data-image-status]');
+    const cursor = showcase.querySelector<HTMLElement>('[data-image-cursor]');
+
+    if (items.length < 2 || zones.length === 0) return;
+
+    initializedShowcases.add(showcase);
+
+    let currentIndex = Math.max(
+      items.findIndex((item) => item.dataset.state === 'active'),
+      0,
+    );
+    let cleanupTimeoutId: number | undefined;
+
+    const setItemState = (
+      item: HTMLElement,
+      state: ShowcaseItemState,
+      isActive: boolean,
+    ) => {
+      item.dataset.state = state;
+      item.setAttribute('aria-hidden', String(!isActive));
+    };
+
+    const updateStatus = () => {
+      if (!status) return;
+
+      status.textContent =
+        items[currentIndex].dataset.title ?? `Image ${currentIndex + 1}`;
+    };
+
+    const applyRestingItems = () => {
+      items.forEach((item, index) => {
+        setItemState(
+          item,
+          index === currentIndex ? 'active' : 'hidden',
+          index === currentIndex,
+        );
+      });
+    };
+
+    const setCurrentIndex = (
+      nextIndex: number,
+      direction: NavigationDirection = 'next',
+    ) => {
+      const previousIndex = currentIndex;
+      const resolvedIndex = getWrappedIndex(nextIndex, items.length);
+      if (resolvedIndex === currentIndex) return;
+
+      currentIndex = resolvedIndex;
+
+      items.forEach((item, index) => {
+        if (index === currentIndex) {
+          setItemState(
+            item,
+            direction === 'previous' ? 'enter-previous' : 'enter-next',
+            false,
+          );
+          return;
+        }
+
+        if (index === previousIndex) {
+          setItemState(
+            item,
+            direction === 'previous' ? 'exit-previous' : 'exit-next',
+            false,
+          );
+          return;
+        }
+
+        setItemState(item, 'hidden', false);
+      });
+
+      items[currentIndex].getBoundingClientRect();
+
+      requestAnimationFrame(() => {
+        setItemState(items[currentIndex], 'active', true);
+        updateStatus();
+      });
+
+      if (cleanupTimeoutId) {
+        window.clearTimeout(cleanupTimeoutId);
+      }
+
+      cleanupTimeoutId = window.setTimeout(() => {
+        applyRestingItems();
+        cleanupTimeoutId = undefined;
+      }, transitionDuration);
+    };
+
+    const navigate = (direction: NavigationDirection) => {
+      setCurrentIndex(
+        currentIndex + (direction === 'previous' ? -1 : 1),
+        direction,
+      );
+    };
+
+    const setHoverDirection = (direction: NavigationDirection) => {
+      showcase.dataset.hoverDirection = direction;
+    };
+
+    zones.forEach((zone) => {
+      const direction = zone.dataset.imageDirection as
+        | NavigationDirection
+        | undefined;
+
+      if (!direction) return;
+
+      zone.onclick = () => navigate(direction);
+      zone.onmouseenter = () => setHoverDirection(direction);
+      zone.onfocus = () => setHoverDirection(direction);
+    });
+
+    showcase.onmousemove = (event) => {
+      if (!cursor) return;
+
+      const rect = showcase.getBoundingClientRect();
+      const x = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
+      const y = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
+
+      showcase.dataset.pointerActive = 'true';
+      cursor.style.setProperty('--image-showcase-cursor-x', `${x}px`);
+      cursor.style.setProperty('--image-showcase-cursor-y', `${y}px`);
+      setHoverDirection(x < rect.width / 2 ? 'previous' : 'next');
+    };
+
+    showcase.onmouseenter = () => {
+      showcase.dataset.pointerActive = 'true';
+    };
+
+    showcase.onmouseleave = () => {
+      delete showcase.dataset.pointerActive;
+    };
+
+    showcase.onkeydown = (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        navigate('previous');
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        navigate('next');
+      }
+    };
+
+    updateStatus();
+  }
+
+  runOnce('image-showcase:page-load-handler', () => {
+    document.addEventListener('astro:page-load', () => {
+      document
+        .querySelectorAll<HTMLElement>('[data-image-showcase]')
+        .forEach(initializeShowcase);
+    });
+  });
+</script>
