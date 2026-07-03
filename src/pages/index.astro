@@ -72,15 +72,15 @@ const jsonLd = [
       class="scroll-mt-header mx-auto flex max-w-360 flex-col gap-16 py-16 md:gap-24 md:py-24"
       data-animate
     >
-      <div class="grid items-start gap-6 md:grid-cols-3 md:items-end md:gap-4">
+      <div class="grid items-start gap-6 lg:grid-cols-3 lg:items-end lg:gap-4">
         <h1
-          class="scroll-animations-hidden max-w-5xl text-left text-3xl font-semibold tracking-tight md:col-span-2 md:text-5xl"
+          class="scroll-animations-hidden max-w-5xl text-left text-3xl font-semibold tracking-tight md:text-5xl lg:col-span-2"
           data-stagger-index="0"
         >
           I build thoughtful software products from interface to backend.
         </h1>
         <div
-          class="scroll-animations-hidden flex items-center justify-start gap-4 md:justify-end lg:pl-12"
+          class="scroll-animations-hidden flex items-center justify-start gap-4 lg:justify-end lg:pl-12"
           data-stagger-index="1"
         >
           <LinkButton id="contact-link" href="/#contact">
@@ -114,7 +114,7 @@ const jsonLd = [
       </h2>
       <div class="grid gap-16 md:grid-cols-3 md:gap-4">
         <ul
-          class="order-2 grid grid-cols-2 gap-2 md:order-1 md:col-span-2 md:auto-cols-fr md:grid-flow-col md:grid-cols-none md:grid-rows-4"
+          class="order-2 grid grid-cols-2 gap-2 md:order-1 md:col-span-2 md:auto-cols-fr md:grid-flow-col md:grid-cols-none md:grid-rows-4 md:self-start"
         >
           {
             technologies.map(({ data }, index) => (
@@ -211,7 +211,7 @@ const jsonLd = [
       </h2>
       <div class="grid w-full gap-16 md:grid-cols-6 md:gap-4">
         <div
-          class="flex flex-col gap-4 md:order-2 md:col-span-2 md:items-start lg:pl-12"
+          class="flex flex-col gap-4 md:order-2 md:col-span-3 md:items-start lg:col-span-2 lg:pl-12"
         >
           <p
             class="scroll-animations-hidden text-muted-foreground text-lg"
@@ -258,7 +258,7 @@ const jsonLd = [
           </ul>
         </div>
         <div
-          class="scroll-animations-hidden bg-card rounded-[1.25rem] md:order-1 md:col-span-2 md:col-start-2"
+          class="scroll-animations-hidden bg-card rounded-[1.25rem] md:order-1 md:col-span-3 lg:col-span-2 lg:col-start-2"
           data-stagger-index={stagger({
             default: contact.length + 3,
             768: 1,
