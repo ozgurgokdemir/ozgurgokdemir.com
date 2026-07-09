@@ -262,8 +262,7 @@ const imageClass = [
 
     zones.forEach((zone) => {
       const direction = zone.dataset.imageDirection as
-        | NavigationDirection
-        | undefined;
+        NavigationDirection | undefined;
 
       if (!direction) return;
 
