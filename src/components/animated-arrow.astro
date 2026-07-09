@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { cn } from '@/lib/utils';
+
+type Props = HTMLAttributes<'span'> & {
+  direction?: 'left' | 'right';
+};
+
+const { direction = 'right', class: className, ...props } = Astro.props;
+
+const center = 8;
+const headTip = 11.5;
+const headLength = 4;
+const tailLength = 10;
+const headStart = headTip - headLength;
+const tailStart = center - tailLength / 2;
+
+const headPath = `M${headStart} ${center - headLength} ${headTip} ${center} ${headStart} ${center + headLength}`;
+const tailPath = `M${tailStart} ${center}h${tailLength}`;
+---
+
+<span
+  class={cn(
+    'pointer-events-none grid size-4 place-items-center',
+    direction === 'left' && '-scale-x-100',
+    className,
+  )}
+  aria-hidden="true"
+  {...props}
+>
+  <svg viewBox="0 0 16 16" class="size-4 overflow-visible [grid-area:1/1]">
+    <g
+      class="-translate-x-px transition-all ease-in-out group-hover:translate-x-0.5"
+    >
+      <path
+        d={headPath}
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.75"></path>
+    </g>
+    <path
+      d={tailPath}
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="1.75"
+      class="origin-center scale-x-50 opacity-0 transition-all ease-in-out group-hover:scale-x-100 group-hover:opacity-100"
+    ></path>
+  </svg>
+</span>

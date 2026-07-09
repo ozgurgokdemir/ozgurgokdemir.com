@@ -5,40 +5,68 @@ import MainLayout from '@/layouts/main-layout.astro';
 import ProjectCard from '@/components/project-card.astro';
 
 const projects = await getCollection('projects').then(sortByOrder);
+const pageTitle = 'Projects - Özgür Gökdemir';
+const pageDescription =
+  'Explore full-stack projects by Özgür Gökdemir, including SaaS products, e-commerce platforms, responsive websites, and mobile applications.';
+const siteURL = Astro.site ?? new URL(Astro.url.origin);
+const projectsURL = new URL('/projects/', siteURL).toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: pageTitle,
+  description: pageDescription,
+  url: projectsURL,
+  inLanguage: 'en-US',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: projects.map(({ id, data }, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: new URL(`/projects/${id}/`, siteURL).toString(),
+      name: data.title,
+    })),
+  },
+};
 ---
 
 <MainLayout
-  title="Projects - Özgür Gökdemir"
-  description="Explore my web development projects, including ecommerce sites, SaaS apps, and responsive websites built with React, Next.js, and Tailwind CSS."
+  title={pageTitle}
+  description={pageDescription}
+  imageAlt="Özgür Gökdemir projects preview"
+  {jsonLd}
 >
-  <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-32 lg:px-8">
-    <h1
-      class="scroll-animations-hidden text-4xl font-semibold tracking-tight md:text-center md:text-5xl lg:text-6xl"
-      data-animate
-      data-stagger-index="0"
-    >
-      Take a look at the projects <br class="hidden md:block" /> I’ve been building.
-    </h1>
-  </section>
-  <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8">
-    <ul
-      class="scroll-animations-hidden grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
-      data-animate
-      data-stagger-index="1"
-    >
-      {
-        projects.map(({ id, data }, index) => (
-          <li class="scroll-animations-hidden" data-stagger-index={index + 1}>
-            <ProjectCard
-              href={`/projects/${id}`}
-              title={data.title}
-              description={data.description}
-              image={data.image}
-              color={data.color}
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+  <div class="px-4">
+    <section class="mx-auto max-w-360 py-16 md:py-24">
+      <h1
+        class="scroll-animations-hidden text-3xl font-semibold tracking-tight md:text-center md:text-5xl"
+        data-animate
+        data-stagger-index="0"
+      >
+        Take a look at the projects <br class="hidden md:block" /> I’ve been building.
+      </h1>
+    </section>
+  </div>
+  <div class="px-4">
+    <section class="mx-auto max-w-360 pb-16 md:pb-24">
+      <ul
+        class="scroll-animations-hidden grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+        data-animate
+        data-stagger-index="1"
+      >
+        {
+          projects.map(({ id, data }, index) => (
+            <li class="scroll-animations-hidden" data-stagger-index={index + 1}>
+              <ProjectCard
+                href={`/projects/${id}`}
+                title={data.title}
+                description={data.description}
+                image={data.image}
+                color={data.color}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
 </MainLayout>

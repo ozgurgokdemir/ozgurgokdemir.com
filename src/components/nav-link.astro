@@ -9,12 +9,6 @@ type Props = HTMLAttributes<'a'> & {
 const { id, ...props } = Astro.props;
 ---
 
-<LinkButton
-  variant="ghost"
-  size="sm"
-  data-nav-link
-  data-id={id}
-  {...props}
->
+<LinkButton variant="ghost" size="sm" data-nav-link data-id={id} {...props}>
   <slot />
 </LinkButton>

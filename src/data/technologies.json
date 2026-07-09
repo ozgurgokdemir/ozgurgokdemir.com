@@ -3,60 +3,78 @@
     "id": "typescript",
     "label": "TypeScript",
     "category": "Language",
-    "icon": "simple-icons:typescript"
+    "icon": "simple-icons:typescript",
+    "order": 1
   },
   {
     "id": "react",
     "label": "React",
-    "category": "Framework",
-    "icon": "simple-icons:react"
+    "category": "UI Library",
+    "icon": "simple-icons:react",
+    "order": 2
   },
   {
     "id": "nextjs",
     "label": "Next.js",
     "category": "Framework",
-    "icon": "simple-icons:nextdotjs"
+    "icon": "simple-icons:nextdotjs",
+    "order": 3
   },
   {
     "id": "tailwindcss",
     "label": "Tailwind CSS",
     "category": "Styling",
-    "icon": "simple-icons:tailwindcss"
+    "icon": "simple-icons:tailwindcss",
+    "order": 4
   },
   {
-    "id": "shadcnui",
-    "label": "shadcn/ui",
-    "category": "Components",
-    "icon": "simple-icons:shadcnui"
+    "id": "tanstackquery",
+    "label": "TanStack Query",
+    "category": "Data Fetching",
+    "icon": "simple-icons:tanstack",
+    "order": 5
   },
   {
-    "id": "motion",
-    "label": "Motion",
-    "category": "Animation",
-    "icon": "motion"
+    "id": "zod",
+    "label": "Zod",
+    "category": "Validation",
+    "icon": "simple-icons:zod",
+    "order": 6
+  },
+
+  {
+    "id": "postgresql",
+    "label": "PostgreSQL",
+    "category": "Database",
+    "icon": "simple-icons:postgresql",
+    "order": 7
   },
   {
     "id": "prisma",
     "label": "Prisma",
     "category": "ORM",
-    "icon": "simple-icons:prisma"
+    "icon": "simple-icons:prisma",
+    "order": 8
   },
   {
-    "id": "reactquery",
-    "label": "React Query",
-    "category": "Data Fetching",
-    "icon": "simple-icons:reactquery"
+    "id": "expo",
+    "label": "Expo",
+    "category": "Mobile",
+    "icon": "simple-icons:expo",
+    "order": 9
   },
   {
-    "id": "cursor",
-    "label": "Cursor",
-    "category": "AI",
-    "icon": "cursor"
+    "id": "hono",
+    "label": "Hono",
+    "category": "Edge APIs",
+    "icon": "simple-icons:hono",
+    "order": 10
   },
   {
     "id": "cloudflare",
     "label": "Cloudflare",
     "category": "Platform",
-    "icon": "simple-icons:cloudflare"
+    "icon": "simple-icons:cloudflare",
+    "order": 11
   }
 ]

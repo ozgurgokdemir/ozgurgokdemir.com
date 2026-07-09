@@ -1,12 +1,12 @@
 ---
 title: 'DesignToken Studio'
-description: 'A design system platform.'
+description: 'Design system platform.'
 image: '../../assets/designtokenstudio.png'
 color: '#4f46e5'
 livePreview: https://designtokenstudio.com
 category: SaaS
 featured: true
-order: 0
+order: 1
 ---
 
 ## Overview

@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import LogoIcon from '@/icons/logo.svg';
 
 type Props = {
   class?: string;
@@ -15,6 +15,6 @@ const { class: className } = Astro.props;
     className,
   ]}
 >
-  <Icon name="logo" size={24} />
+  <LogoIcon class="size-6" />
   <span class="text-2xl leading-none font-semibold text-white">Özgür</span>
 </a>

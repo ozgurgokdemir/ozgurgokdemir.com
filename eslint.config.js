@@ -7,6 +7,9 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 /** @type {import("eslint").Linter.Config} */
 export default [
   {
+    ignores: ['.astro/**', 'dist/**', 'worker-configuration.d.ts'],
+  },
+  {
     languageOptions: { globals: globals.browser },
   },
   pluginJs.configs.recommended,
