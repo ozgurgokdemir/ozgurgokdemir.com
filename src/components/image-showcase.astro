@@ -81,6 +81,8 @@ const imageClass = [
           alt={image.alt}
           width={1536}
           height={864}
+          widths={[640, 768, 960, 1280, 1440, 1536]}
+          sizes="(min-width: 1472px) 1440px, calc(100vw - 2rem)"
           layout="constrained"
           priority={priority && index === 0}
           class={imageClass}
