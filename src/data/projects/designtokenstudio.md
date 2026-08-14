@@ -3,7 +3,9 @@ title: 'DesignToken Studio'
 description: 'Design system platform.'
 image: '../../assets/designtokenstudio.png'
 color: '#4f46e5'
-livePreview: https://designtokenstudio.com
+links:
+  - type: web-app
+    url: https://designtokenstudio.com
 category: SaaS
 featured: true
 order: 1

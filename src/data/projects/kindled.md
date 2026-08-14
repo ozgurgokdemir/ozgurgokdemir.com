@@ -3,8 +3,11 @@ title: 'Kindled'
 description: 'Game save progress analyzer.'
 image: '../../assets/kindled.png'
 color: '#c45100'
-livePreview: https://kindled.ozgurgokdemir.com
-sourceCode: https://github.com/ozgurgokdemir/save-analyzer
+links:
+  - type: web-app
+    url: https://kindled.ozgurgokdemir.com
+  - type: source
+    url: https://github.com/ozgurgokdemir/save-analyzer
 category: Gaming
 featured: true
 order: 4

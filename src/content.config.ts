@@ -12,8 +12,20 @@ const projects = defineCollection({
       color: z.string(),
       category: z.string(),
       featured: z.boolean().default(false),
-      livePreview: z.url().optional(),
-      sourceCode: z.url().optional(),
+      links: z
+        .array(
+          z.object({
+            type: z.enum([
+              'website',
+              'web-app',
+              'app-store',
+              'google-play',
+              'source',
+            ]),
+            url: z.url(),
+          }),
+        )
+        .default([]),
       order: z.number().optional(),
     }),
 });

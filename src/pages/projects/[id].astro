@@ -22,9 +22,20 @@ const siteURL = Astro.site ?? new URL(Astro.url.origin);
 const pageTitle = `${project.data.title} - Özgür Gökdemir`;
 const projectURL = new URL(`/projects/${project.id}/`, siteURL).toString();
 const projectImageAlt = `${project.data.title} project preview`;
-const projectLinks = [project.data.livePreview, project.data.sourceCode].filter(
-  Boolean,
-);
+const linkDetails = {
+  website: { label: 'View site', icon: 'heroicons:eye-16-solid' },
+  'web-app': { label: 'View app', icon: 'heroicons:eye-16-solid' },
+  'app-store': {
+    label: 'View on the App Store',
+    icon: 'heroicons:device-phone-mobile-16-solid',
+  },
+  'google-play': {
+    label: 'Get it on Google Play',
+    icon: 'heroicons:device-phone-mobile-16-solid',
+  },
+  source: { label: 'Source code', icon: 'heroicons:code-bracket-16-solid' },
+} as const;
+const projectLinks = project.data.links.map(({ url }) => url);
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -100,31 +111,25 @@ const jsonLd = [
             </p>
           </div>
           {
-            (project.data.livePreview || project.data.sourceCode) && (
+            project.data.links.length > 0 && (
               <div
                 class="scroll-animations-hidden mt-2 flex flex-wrap gap-4 md:flex-row"
                 data-stagger-index="2"
               >
-                {project.data.livePreview && (
-                  <LinkButton
-                    href={project.data.livePreview}
-                    target="_blank"
-                    variant="outline"
-                  >
-                    <Icon name="heroicons:eye-16-solid" size={16} />
-                    Live preview
-                  </LinkButton>
-                )}
-                {project.data.sourceCode && (
-                  <LinkButton
-                    href={project.data.sourceCode}
-                    target="_blank"
-                    variant="outline"
-                  >
-                    <Icon name="heroicons:code-bracket-16-solid" size={16} />
-                    Source code
-                  </LinkButton>
-                )}
+                {project.data.links.map((link) => {
+                  const details = linkDetails[link.type];
+
+                  return (
+                    <LinkButton
+                      href={link.url}
+                      target="_blank"
+                      variant="outline"
+                    >
+                      <Icon name={details.icon} size={16} />
+                      {details.label}
+                    </LinkButton>
+                  );
+                })}
               </div>
             )
           }

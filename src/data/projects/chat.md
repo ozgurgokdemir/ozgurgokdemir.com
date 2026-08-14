@@ -3,7 +3,9 @@ title: 'Chat'
 description: 'Real-time communication platform.'
 image: '../../assets/chat.png'
 color: '#1971c2'
-livePreview: https://chat.ozgurgokdemir.com
+links:
+  - type: web-app
+    url: https://chat.ozgurgokdemir.com
 category: Communication
 featured: true
 order: 2
