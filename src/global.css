@@ -1,13 +1,5 @@
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'Manrope';
-  font-style: normal;
-  font-weight: 200 800;
-  font-display: swap;
-  src: url('/manrope.woff2') format('woff2');
-}
-
 :root {
   --background: oklch(0 0 0);
   --foreground: oklch(0.985 0 0);
@@ -31,7 +23,7 @@
 }
 
 @theme inline {
-  --font-sans: 'Manrope', sans-serif;
+  --font-sans: var(--font-manrope);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

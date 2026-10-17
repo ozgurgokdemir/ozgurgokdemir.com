@@ -1,5 +1,6 @@
 ---
 import '@/global.css';
+import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 
 export type BaseLayoutProps = {
@@ -73,13 +74,7 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
 
-    <link
-      rel="preload"
-      href="/manrope.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <Font cssVariable="--font-manrope" preload />
 
     <ClientRouter />
   </head>
