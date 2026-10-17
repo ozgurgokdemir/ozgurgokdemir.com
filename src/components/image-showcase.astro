@@ -114,7 +114,7 @@ const imageClass = [
           data-image-cursor
           aria-hidden="true"
         >
-          <div class="border-input bg-accent/30 text-accent-foreground invisible grid size-full scale-75 place-items-center rounded-full border opacity-0 backdrop-blur-sm transition-[opacity,scale,visibility]! ease-out group-data-[pointer-active=true]:visible group-data-[pointer-active=true]:scale-100 group-data-[pointer-active=true]:opacity-100 motion-reduce:transition-none">
+          <div class="border-input bg-accent/30 text-accent-foreground invisible grid size-full scale-75 place-items-center rounded-full border opacity-0 backdrop-blur-sm transition-[opacity,scale,visibility]! ease-out group-data-[pointer-active=true]:visible group-data-[pointer-active=true]:scale-100 group-data-[pointer-active=true]:opacity-100 group-data-[pointer-active=true]:group-data-[pointer-pressed=true]:scale-90 motion-reduce:transition-none">
             <Icon
               name="heroicons:chevron-left-16-solid"
               size={20}
@@ -150,6 +150,7 @@ const imageClass = [
 
   const initializedShowcases = new WeakSet<HTMLElement>();
   const transitionDuration = 750;
+  const minPressDuration = 150;
 
   function getWrappedIndex(index: number, length: number) {
     return (index + length) % length;
@@ -276,6 +277,8 @@ const imageClass = [
 
     let lastPointer: { x: number; y: number } | undefined;
     let scrollFrameId: number | undefined;
+    let pressedAt = 0;
+    let releaseTimeoutId: number | undefined;
 
     const updateCursor = (clientX: number, clientY: number) => {
       if (!cursor) return;
@@ -333,7 +336,41 @@ const imageClass = [
     showcase.onmouseleave = () => {
       lastPointer = undefined;
       delete showcase.dataset.pointerActive;
+      clearPressed();
     };
+
+    const clearPressed = () => {
+      window.clearTimeout(releaseTimeoutId);
+      releaseTimeoutId = undefined;
+      delete showcase.dataset.pointerPressed;
+    };
+
+    // Trackpad taps release within a few ms, so hold the pressed state long
+    // enough for the scale transition to be visible.
+    const releasePointer = () => {
+      if (!showcase.dataset.pointerPressed) return;
+
+      const remaining = minPressDuration - (performance.now() - pressedAt);
+
+      if (remaining <= 0) {
+        clearPressed();
+        return;
+      }
+
+      releaseTimeoutId = window.setTimeout(clearPressed, remaining);
+    };
+
+    showcase.onpointerdown = (event) => {
+      if (event.pointerType !== 'mouse' || event.button !== 0) return;
+
+      window.clearTimeout(releaseTimeoutId);
+      releaseTimeoutId = undefined;
+      pressedAt = performance.now();
+      showcase.dataset.pointerPressed = 'true';
+    };
+
+    showcase.onpointerup = releasePointer;
+    showcase.onpointercancel = releasePointer;
 
     showcase.onkeydown = (event) => {
       if (event.key === 'ArrowLeft') {
