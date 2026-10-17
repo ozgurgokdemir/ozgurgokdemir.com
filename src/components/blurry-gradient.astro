@@ -1,0 +1,22 @@
+---
+// Pre-rendered from the original SVG blur; a live feGaussianBlur is expensive to rasterize.
+// Served as-is (no <Image> re-encoding) so the smooth gradient keeps its quality.
+import blurryGradient from '@/assets/blurry-gradient.webp';
+
+type Props = {
+  eager?: boolean;
+};
+
+const { eager = false } = Astro.props;
+---
+
+<img
+  src={blurryGradient.src}
+  width={blurryGradient.width}
+  height={blurryGradient.height}
+  alt=""
+  aria-hidden="true"
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  class="pointer-events-none absolute h-full w-full object-cover select-none"
+/>
