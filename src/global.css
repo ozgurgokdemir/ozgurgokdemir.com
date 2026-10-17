@@ -84,6 +84,24 @@
     .scroll-animations-will-change {
       will-change: transform, opacity;
     }
+
+    .entrance-animation {
+      animation: entrance var(--entrance-duration, 1000ms)
+        cubic-bezier(0.33, 1, 0.68, 1)
+        calc(
+          var(--entrance-stagger-index, 0) *
+            var(--entrance-stagger-delay, 100ms)
+        )
+        backwards;
+    }
+  }
+}
+
+@keyframes entrance {
+  from {
+    opacity: 0.01;
+    translate: 0 calc(var(--spacing) * 3);
+    filter: blur(var(--blur-md));
   }
 }
 

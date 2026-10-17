@@ -70,18 +70,17 @@ const jsonLd = [
     <section
       id="home"
       class="scroll-mt-header mx-auto flex max-w-360 flex-col gap-16 py-16 md:gap-24 md:py-24"
-      data-animate
     >
       <div class="grid items-start gap-6 lg:grid-cols-3 lg:items-end lg:gap-4">
         <h1
-          class="scroll-animations-hidden max-w-5xl text-left text-3xl font-semibold tracking-tight md:text-5xl lg:col-span-2"
-          data-stagger-index="0"
+          class="entrance-animation max-w-5xl text-left text-3xl font-semibold tracking-tight md:text-5xl lg:col-span-2"
+          style="--entrance-stagger-index: 0"
         >
           I build thoughtful software products from interface to backend.
         </h1>
         <div
-          class="scroll-animations-hidden flex items-center justify-start gap-4 lg:justify-end lg:pl-12"
-          data-stagger-index="1"
+          class="entrance-animation flex items-center justify-start gap-4 lg:justify-end lg:pl-12"
+          style="--entrance-stagger-index: 1"
         >
           <LinkButton id="contact-link" href="/#contact">
             <Icon name="heroicons:chat-bubble-left-ellipsis-16-solid" />
@@ -95,8 +94,8 @@ const jsonLd = [
       <ImageShowcase
         images={heroImages}
         priority={true}
-        class="scroll-animations-hidden"
-        data-stagger-index="2"
+        class="entrance-animation"
+        style="--entrance-stagger-index: 2"
       />
     </section>
   </div>
