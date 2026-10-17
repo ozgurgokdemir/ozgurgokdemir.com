@@ -85,6 +85,7 @@ const imageClass = [
           sizes="(min-width: 1472px) 1440px, calc(100vw - 2rem)"
           layout="constrained"
           priority={priority && index === 0}
+          fetchpriority={index === 0 ? undefined : 'low'}
           class={imageClass}
         />
       </div>

@@ -17,6 +17,7 @@ const { eager = false } = Astro.props;
   alt=""
   aria-hidden="true"
   loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : undefined}
   decoding="async"
   class="pointer-events-none absolute h-full w-full object-cover select-none"
 />
