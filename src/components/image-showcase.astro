@@ -60,7 +60,7 @@ const imageClass = [
   aria-label={ariaLabel ?? (hasMultipleImages ? 'Image showcase' : undefined)}
   tabindex={hasMultipleImages ? (tabindex ?? 0) : tabindex}
   class:list={[
-    'image-showcase focus-visible:border-ring focus-visible:ring-ring/50 group relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:cursor-none',
+    'image-showcase focus-visible:border-ring focus-visible:ring-ring/50 group relative isolate aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center outline-none focus-visible:ring-[3px] [@media(hover:hover)_and_(pointer:fine)]:cursor-none',
     className,
   ]}
   data-image-showcase
@@ -274,12 +274,26 @@ const imageClass = [
       zone.onfocus = () => setHoverDirection(direction);
     });
 
-    showcase.onmousemove = (event) => {
+    let lastPointer: { x: number; y: number } | undefined;
+    let scrollFrameId: number | undefined;
+
+    const updateCursor = (clientX: number, clientY: number) => {
       if (!cursor) return;
 
       const rect = showcase.getBoundingClientRect();
-      const x = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
-      const y = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
+      const isInside =
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom;
+
+      if (!isInside) {
+        delete showcase.dataset.pointerActive;
+        return;
+      }
+
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
       showcase.dataset.pointerActive = 'true';
       cursor.style.setProperty('--image-showcase-cursor-x', `${x}px`);
@@ -287,11 +301,37 @@ const imageClass = [
       setHoverDirection(x < rect.width / 2 ? 'previous' : 'next');
     };
 
-    showcase.onmouseenter = () => {
-      showcase.dataset.pointerActive = 'true';
+    const handleScroll = () => {
+      if (!showcase.isConnected) {
+        window.removeEventListener('scroll', handleScroll, { capture: true });
+        return;
+      }
+
+      if (!lastPointer || scrollFrameId !== undefined) return;
+
+      scrollFrameId = requestAnimationFrame(() => {
+        scrollFrameId = undefined;
+        if (lastPointer) updateCursor(lastPointer.x, lastPointer.y);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, {
+      capture: true,
+      passive: true,
+    });
+
+    showcase.onmousemove = (event) => {
+      lastPointer = { x: event.clientX, y: event.clientY };
+      updateCursor(event.clientX, event.clientY);
+    };
+
+    showcase.onmouseenter = (event) => {
+      lastPointer = { x: event.clientX, y: event.clientY };
+      updateCursor(event.clientX, event.clientY);
     };
 
     showcase.onmouseleave = () => {
+      lastPointer = undefined;
       delete showcase.dataset.pointerActive;
     };
 
