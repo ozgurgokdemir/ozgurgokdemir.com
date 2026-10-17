@@ -4,7 +4,7 @@ import ProjectDetailsLayout from '@/layouts/project-details-layout.astro';
 import { Image } from 'astro:assets';
 import LinkButton from '@/components/link-button.astro';
 import Icon from '@/components/icon.astro';
-import BlurryGradient from '@/assets/blurry-gradient.svg';
+import BlurryGradient from '@/components/blurry-gradient.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -138,7 +138,7 @@ const jsonLd = [
           class="scroll-animations-hidden relative aspect-video overflow-hidden rounded-[1.25rem] bg-cover bg-center"
           data-stagger-index="3"
         >
-          <BlurryGradient class="absolute h-full w-full" />
+          <BlurryGradient eager />
           <Image
             src={project.data.image}
             alt={projectImageAlt}
